@@ -172,7 +172,94 @@
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
 <h1 id="problem-1">Problem 1</h1>
-<p>something</p>
+<h1 id="projectile-motion-analysis-and-simulation">Projectile Motion Analysis and Simulation</h1>
+<h2 id="1-theoretical-foundation">1. Theoretical Foundation</h2>
+<p>Projectile motion is a classic example of motion under constant acceleration, where the only force acting is gravity (assuming no air resistance for now). We derive the equations from first principles using Newton’s second law.</p>
+<h3 id="governing-equations">Governing Equations</h3>
+<p>In a 2D Cartesian coordinate system:</p>
+<ul>
+<li>
+<p><strong>Horizontal motion:</strong> No forces act, so acceleration <span class="arithmatex">\(a_x = 0\)</span> and velocity remains constant:
+  <span class="arithmatex">\(v_x = v_0 \cos\theta\)</span>
+<span class="arithmatex">\(x(t) = v_0 \cos\theta \cdot t\)</span></p>
+</li>
+<li>
+<p><strong>Vertical motion:</strong> Gravity acts downward with acceleration <span class="arithmatex">\(a_y = -g\)</span>:
+  <span class="arithmatex">\(v_y = v_0 \sin\theta - g t\)</span>
+<span class="arithmatex">\(y(t) = v_0 \sin\theta \cdot t - \frac{1}{2} g t^2\)</span></p>
+</li>
+</ul>
+<p>These parametric equations describe a parabolic trajectory.</p>
+<h3 id="family-of-solutions">Family of Solutions</h3>
+<p>The trajectory depends on initial conditions:
+- Higher <span class="arithmatex">\(v_0\)</span> results in a larger range and peak height.
+- Changing <span class="arithmatex">\(\theta\)</span> alters the steepness and symmetry.
+- Varying <span class="arithmatex">\(g\)</span> (e.g., on the Moon, <span class="arithmatex">\(g \approx 1.6 \text{ m/s}^2\)</span>) changes the scale.</p>
+<hr/>
+<h2 id="2-analysis-of-the-range">2. Analysis of the Range</h2>
+<p>The range <span class="arithmatex">\(R\)</span> is the horizontal distance when <span class="arithmatex">\(y = 0\)</span> (assuming equal launch and landing height).</p>
+<h3 id="time-of-flight">Time of Flight</h3>
+<p>Setting <span class="arithmatex">\(y(t) = 0\)</span> and solving for <span class="arithmatex">\(t\)</span>:
+<span class="arithmatex">\(t = \frac{2 v_0 \sin\theta}{g}\)</span></p>
+<h3 id="range-equation">Range Equation</h3>
+<p>Substituting into <span class="arithmatex">\(x(t)\)</span>:
+<span class="arithmatex">\(R = \frac{v_0^2 \sin 2\theta}{g}\)</span></p>
+<h3 id="dependence-on-parameters">Dependence on Parameters</h3>
+<ul>
+<li><strong>Maximum Range:</strong> Achieved at <span class="arithmatex">\(\theta = 45^\circ\)</span>, with <span class="arithmatex">\(R_{\max} = \frac{v_0^2}{g}\)</span>.</li>
+<li><strong>Initial Velocity:</strong> Range scales with <span class="arithmatex">\(v_0^2\)</span>, so doubling <span class="arithmatex">\(v_0\)</span> quadruples <span class="arithmatex">\(R\)</span>.</li>
+<li><strong>Gravity:</strong> Lower <span class="arithmatex">\(g\)</span> results in a longer range.</li>
+</ul>
+<hr/>
+<h2 id="3-practical-applications">3. Practical Applications</h2>
+<p>This model applies to:
+- <strong>Sports:</strong> Basketball shots, soccer kicks, javelin throws.
+- <strong>Engineering:</strong> Artillery trajectories, water fountains.
+- <strong>Astrophysics:</strong> Lunar landings, planetary surface exploration.</p>
+<h3 id="extensions">Extensions:</h3>
+<ul>
+<li><strong>Uneven Terrain:</strong> Adjusts time of flight using <span class="arithmatex">\(y(t) = -h\)</span>.</li>
+<li><strong>Air Resistance:</strong> Introduces drag, requiring numerical solutions.</li>
+</ul>
+<hr/>
+<h2 id="4-implementation">4. Implementation</h2>
+<p>We develop a Python simulation to visualize projectile motion.</p>
+<h3 id="python-code-for-simulation">Python Code for Simulation</h3>
+<pre><code class="language-python">import numpy as np
+import matplotlib.pyplot as plt
+
+def projectile_motion(v0, theta, g=9.81, dt=0.01):
+    theta_rad = np.radians(theta)
+    vx, vy = v0 * np.cos(theta_rad), v0 * np.sin(theta_rad)
+    x, y, t = [0], [0], 0
+    while y[-1] &gt;= 0:
+        t += dt
+        x.append(vx * t)
+        y.append(vy * t - 0.5 * g * t**2)
+    return x, y
+
+v0 = 20  # Initial velocity
+angles = [30, 45, 60]
+plt.figure()
+for angle in angles:
+    x, y = projectile_motion(v0, angle)
+    plt.plot(x, y, label=f"{angle} degrees")
+plt.xlabel("Horizontal Distance (m)")
+plt.ylabel("Vertical Distance (m)")
+plt.legend()
+plt.title("Projectile Motion for Different Angles")
+plt.show()
+</code></pre>
+<h3 id="graphical-representation">Graphical Representation</h3>
+<p>The simulation plots projectile motion for different angles, illustrating how range varies with initial conditions.</p>
+<h3 id="limitations-and-realistic-extensions">Limitations and Realistic Extensions</h3>
+<ul>
+<li><strong>Idealized Assumptions:</strong> No air resistance, flat terrain.</li>
+<li><strong>Realistic Factors:</strong> Wind, drag force, varying gravity.</li>
+<li><strong>Numerical Methods:</strong> Required for solving equations with air resistance.</li>
+</ul>
+<hr/>
+<p>This document provides a theoretical foundation, computational implementation, and practical insights into projectile motion.</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
