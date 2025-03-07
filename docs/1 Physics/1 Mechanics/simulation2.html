@@ -3,198 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Investigating the Dynamics of a Forced Damped Pendulum</title>
+    <title>Forced Damped Pendulum Simulation</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 20px;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
         h1, h2, h3 {
-            color: #2c3e50;
+            color: #333;
         }
         code {
-            background-color: #f4f4f4;
+            background-color: #eee;
             padding: 2px 5px;
-            border-radius: 3px;
+            border-radius: 5px;
         }
         pre {
-            background-color: #f4f4f4;
+            background: #222;
+            color: #fff;
             padding: 10px;
-            border-radius: 5px;
             overflow-x: auto;
+            border-radius: 5px;
         }
-        .equation {
-            font-style: italic;
-            text-align: center;
-            margin: 10px 0;
-        }
-        .plot-placeholder {
-            background-color: #ecf0f1;
-            padding: 10px;
-            text-align: center;
-            margin: 10px 0;
-            border: 1px dashed #7f8c8d;
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body>
+
+<div class="container">
     <h1>Investigating the Dynamics of a Forced Damped Pendulum</h1>
 
-    <h2>1. Theoretical Foundation</h2>
-    <p>
-        The forced damped pendulum is governed by a second-order nonlinear differential equation that accounts for gravitational restoring force, damping, and an external periodic driving force. The equation of motion is:
-    </p>
-    <div class="equation">
-        \(\ddot{\theta} + 2\beta\dot{\theta} + \omega_0^2 \sin(\theta) = F \cos(\omega t)\)
-    </div>
-    <p>Where:</p>
-    <ul>
-        <li>\(\theta\): angular displacement (radians)</li>
-        <li>\(\dot{\theta}\): angular velocity</li>
-        <li>\(\ddot{\theta}\): angular acceleration</li>
-        <li>\(\beta = b/(2m)\): damping coefficient (\(b\) is damping constant, \(m\) is mass)</li>
-        <li>\(\omega_0 = \sqrt{g/L}\): natural frequency (\(g\) is gravity, \(L\) is pendulum length)</li>
-        <li>\(F\): amplitude of the external driving force (normalized by \(mL\))</li>
-        <li>\(\omega\): driving frequency</li>
-        <li>\(t\): time</li>
-    </ul>
-
-    <h3>Small-Angle Approximation</h3>
-    <p>
-        For small angles (\(\theta \ll 1\)), \(\sin(\theta) \approx \theta\), simplifying the equation to:
-    </p>
-    <div class="equation">
-        \(\ddot{\theta} + 2\beta\dot{\theta} + \omega_0^2 \theta = F \cos(\omega t)\)
-    </div>
-    <p>
-        The general solution is a sum of a homogeneous (transient) and particular (steady-state) solution:
-    </p>
-    <ul>
-        <li><strong>Homogeneous:</strong> \(\theta_h(t) = e^{-\beta t} [A \cos(\omega_d t) + B \sin(\omega_d t)]\), where \(\omega_d = \sqrt{\omega_0^2 - \beta^2}\).</li>
-        <li><strong>Particular:</strong> \(\theta_p(t) = C \cos(\omega t) + D \sin(\omega t)\), with:
-            <div class="equation">
-                \(C = \frac{F (\omega_0^2 - \omega^2)}{(\omega_0^2 - \omega^2)^2 + (2\beta\omega)^2}, \quad D = \frac{F (2\beta\omega)}{(\omega_0^2 - \omega^2)^2 + (2\beta\omega)^2}\)
-            </div>
-            Amplitude: \(A = \sqrt{C^2 + D^2} = \frac{F}{\sqrt{(\omega_0^2 - \omega^2)^2 + (2\beta\omega)^2}}\).
-        </li>
-    </ul>
-
-    <h3>Resonance Conditions</h3>
-    <p>
-        Resonance occurs when \(\omega \approx \omega_0\), maximizing amplitude near \(\omega = \sqrt{\omega_0^2 - 2\beta^2}\) (for \(\beta < \omega_0/\sqrt{2}\)). In the nonlinear case, resonance can lead to complex dynamics like chaos.
-    </p>
-
-    <h2>2. Analysis of Dynamics</h2>
-
-    <h3>Influence of Parameters</h3>
-    <ul>
-        <li><strong>Damping (\(\beta\)):</strong> Higher \(\beta\) reduces amplitude; overdamped (\(\beta > \omega_0\)), critically damped (\(\beta = \omega_0\)), or underdamped (\(\beta < \omega_0\)).</li>
-        <li><strong>Driving Amplitude (\(F\)):</strong> Larger \(F\) increases amplitude and may induce chaos.</li>
-        <li><strong>Driving Frequency (\(\omega\)):</strong> Near \(\omega_0\), resonance; otherwise, quasiperiodic or chaotic motion.</li>
-    </ul>
-
-    <h3>Transition to Chaos</h3>
-    <p>
-        In the nonlinear regime, the system exhibits periodic, quasiperiodic, or chaotic motion, observable via bifurcations (e.g., period-doubling).
-    </p>
-
-    <h2>3. Practical Applications</h2>
-    <ul>
-        <li><strong>Energy Harvesting:</strong> Piezoelectric devices convert vibrations to electricity.</li>
-        <li><strong>Suspension Bridges:</strong> Periodic forces (wind) can cause resonance or chaos.</li>
-        <li><strong>Oscillating Circuits:</strong> Driven RLC circuits mirror the pendulum’s dynamics.</li>
-    </ul>
+    <h2>Motivation</h2>
+    <p>The forced damped pendulum is a captivating example of a physical system with intricate behavior resulting from the interplay of damping, restoring forces, and external driving forces. By introducing both damping and external periodic forcing, the system transitions from simple harmonic motion to a range of behaviors, including resonance, chaos, and quasiperiodic motion.</p>
 
     <h2>4. Implementation</h2>
-    <p>
-        Below is a Python script using the Runge-Kutta method to simulate the pendulum and generate visualizations.
-    </p>
+    <ul>
+        <li>Create a computational model to simulate the motion of a forced damped pendulum.</li>
+        <li>Visualize the behavior under various damping, driving force, and initial conditions.</li>
+        <li>Plot phase diagrams and Poincaré sections to illustrate transitions to chaos.</li>
+    </ul>
+
+    <h2>Deliverables</h2>
+    <ul>
+        <li>A Markdown document with Python script or notebook implementing the simulations.</li>
+        <li>A detailed explanation of the general solutions for the forced damped pendulum.</li>
+        <li>Graphical representations of the motion for different damping coefficients, driving amplitudes, and driving frequencies.</li>
+        <li>A discussion on the limitations of the model and potential extensions.</li>
+        <li>Phase portraits, Poincaré sections, and bifurcation diagrams to analyze transitions to complex dynamics.</li>
+    </ul>
+
+    <h2>Hints and Resources</h2>
+    <ul>
+        <li>For small angles, approximate <code>sin(θ) ≈ θ</code> to simplify the differential equation.</li>
+        <li>Use numerical techniques (e.g., Runge-Kutta methods) for simulations beyond the small-angle approximation.</li>
+        <li>Relate the forced damped pendulum to analogous systems in other fields, such as driven RLC circuits or biomechanics.</li>
+        <li>Use Python for simulations and visualizations.</li>
+    </ul>
+
+    <h2>Python Simulation Example</h2>
+    <p>Below is an example of a Python script using the Runge-Kutta method to simulate the forced damped pendulum.</p>
+
     <pre>
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.integrate import odeint
+from scipy.integrate import solve_ivp
 
 # Parameters
-g = 9.81  # gravity (m/s^2)
-L = 1.0   # pendulum length (m)
-omega0 = np.sqrt(g / L)  # natural frequency
-beta = 0.1  # damping coefficient
-F = 1.2     # driving amplitude
-omega = 1.4 * omega0  # driving frequency
+b = 0.2   # Damping coefficient
+A = 1.2   # Driving force amplitude
+omega = 2.0  # Driving frequency
+g = 9.81  # Gravity
+L = 1.0   # Pendulum length
 
-# Differential equation
-def pendulum_deriv(state, t, beta, omega0, F, omega):
-    theta, theta_dot = state
-    dtheta_dt = theta_dot
-    dtheta_dot_dt = -2 * beta * theta_dot - omega0**2 * np.sin(theta) + F * np.cos(omega * t)
-    return [dtheta_dt, dtheta_dot_dt]
+# Differential equations
+def pendulum(t, y):
+    theta, omega_t = y
+    dtheta_dt = omega_t
+    domega_dt = -b * omega_t - np.sin(theta) + A * np.cos(omega * t)
+    return [dtheta_dt, domega_dt]
 
-# Time array
-t = np.linspace(0, 50, 10000)
+# Time span
+t_span = (0, 50)
+t_eval = np.linspace(0, 50, 1000)
 
 # Initial conditions
-theta0 = 0.1  # radians
-theta_dot0 = 0.0
-state0 = [theta0, theta_dot0]
+y0 = [np.pi/4, 0]  # Small initial angle
 
-# Solve ODE
-solution = odeint(pendulum_deriv, state0, t, args=(beta, omega0, F, omega))
-theta, theta_dot = solution.T
+# Solve using Runge-Kutta method
+sol = solve_ivp(pendulum, t_span, y0, t_eval=t_eval)
 
-# Phase portrait
-plt.figure(figsize=(10, 6))
-plt.plot(theta, theta_dot, lw=0.5)
-plt.title("Phase Portrait")
-plt.xlabel(r"$\theta$ (rad)")
-plt.ylabel(r"$\dot{\theta}$ (rad/s)")
-plt.grid(True)
-
-# Poincaré section
-T = 2 * np.pi / omega
-poincare_idx = np.arange(0, len(t), int(T / (t[1] - t[0])))
-plt.figure(figsize=(10, 6))
-plt.plot(theta[poincare_idx], theta_dot[poincare_idx], 'o', ms=2)
-plt.title("Poincaré Section")
-plt.xlabel(r"$\theta$ (rad)")
-plt.ylabel(r"$\dot{\theta}$ (rad/s)")
-plt.grid(True)
-
-# Bifurcation diagram
-F_values = np.linspace(0.5, 1.5, 100)
-theta_max = []
-for F in F_values:
-    sol = odeint(pendulum_deriv, state0, t, args=(beta, omega0, F, omega))
-    theta_max.append(np.max(sol[-1000:, 0]))
-plt.figure(figsize=(10, 6))
-plt.plot(F_values, theta_max, 'k.', ms=1)
-plt.title("Bifurcation Diagram")
-plt.xlabel("Driving Amplitude (F)")
-plt.ylabel(r"Max $\theta$ (rad)")
-plt.grid(True)
-
+# Plot results
+plt.figure(figsize=(8,5))
+plt.plot(sol.t, sol.y[0], label="Theta (Angle)")
+plt.xlabel("Time (s)")
+plt.ylabel("Angle (radians)")
+plt.title("Forced Damped Pendulum Simulation")
+plt.legend()
+plt.grid()
 plt.show()
     </pre>
 
-    <h3>Visualizations</h3>
-    <div class="plot-placeholder">
-        <p><strong>Phase Portrait:</strong> \(\theta\) vs. \(\dot{\theta}\), showing periodic loops or chaotic scattering.</p>
-    </div>
-    <div class="plot-placeholder">
-        <p><strong>Poincaré Section:</strong> Points sampled at driving period, indicating periodic, quasiperiodic, or chaotic behavior.</p>
-    </div>
-    <div class="plot-placeholder">
-        <p><strong>Bifurcation Diagram:</strong> Max \(\theta\) vs. \(F\), revealing transitions to chaos.</p>
-    </div>
+    <p>This script solves the motion equations and plots the angular displacement over time. The behavior can be analyzed further by varying <code>b</code>, <code>A</code>, and <code>omega</code>.</p>
 
-    <h2>Discussion and Limitations</h2>
-    <p>
-        <strong>Limitations:</strong> Assumes constant \(\beta\), \(F\), and \(\omega\). <br>
-        <strong>Extensions:</strong> Nonlinear damping or stochastic forcing could enhance realism.
-    </p>
+</div>
 
 </body>
 </html>
