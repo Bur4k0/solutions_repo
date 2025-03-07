@@ -1,5 +1,7 @@
 # Problem 1
-# Projectile Motion Analysis and Simulation
+# Projectile Motion Analysis and Simulation,
+
+[Simulation](simulation.html)
 
 ## 1. Theoretical Foundation
 
@@ -57,51 +59,6 @@ This model applies to:
 ### Extensions:
 - **Uneven Terrain:** Adjusts time of flight using $y(t) = -h$.
 - **Air Resistance:** Introduces drag, requiring numerical solutions.
-
----
-
-## 4. Implementation
-
-We develop a Python simulation to visualize projectile motion.
-
-### Python Code for Simulation
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-
-def projectile_motion(v0, theta, g=9.81, dt=0.01):
-    theta_rad = np.radians(theta)
-    vx, vy = v0 * np.cos(theta_rad), v0 * np.sin(theta_rad)
-    x, y, t = [0], [0], 0
-    while y[-1] >= 0:
-        t += dt
-        x.append(vx * t)
-        y.append(vy * t - 0.5 * g * t**2)
-    return x, y
-
-v0 = 20  # Initial velocity
-angles = [30, 45, 60]
-plt.figure()
-for angle in angles:
-    x, y = projectile_motion(v0, angle)
-    plt.plot(x, y, label=f"{angle} degrees")
-plt.xlabel("Horizontal Distance (m)")
-plt.ylabel("Vertical Distance (m)")
-plt.legend()
-plt.title("Projectile Motion for Different Angles")
-plt.show()
-```
-
-### Graphical Representation
-
-The simulation plots projectile motion for different angles, illustrating how range varies with initial conditions.
-
-### Limitations and Realistic Extensions
-
-- **Idealized Assumptions:** No air resistance, flat terrain.
-- **Realistic Factors:** Wind, drag force, varying gravity.
-- **Numerical Methods:** Required for solving equations with air resistance.
 
 ---
 
