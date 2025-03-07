@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Thrown Ball Simulator</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            margin: 10px;
+        }
+        .controls {
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+        label {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <label>Initial Velocity (m/s): <input type="number" id="velocity" value="20" min="1" max="100"></label>
+        <label>Angle (degrees): <input type="number" id="angle" value="45" min="0" max="90"></label>
+        <label>Gravity (m/s²): <input type="number" id="gravity" value="9.81" min="1" max="20" step="0.1"></label>
+        <label>Height (m): <input type="number" id="height" value="0" min="0" max="100"></label>
+        <button onclick="startSimulation()">Start Simulation</button>
+    </div>
+    <canvas id="projectileCanvas" width="800" height="400"></canvas>
+
+    <script>
+        const canvas = document.getElementById('projectileCanvas');
+        const ctx = canvas.getContext('2d');
+        let animationId = null;
+
+        class Ball {
+            constructor(v0, theta, g, h) {
+                this.v0 = v0;
+                this.theta = theta * Math.PI / 180; // Convert to radians
+                this.g = g;
+                this.initialHeight = h;
+                this.x = 0;
+                this.y = h;
+                this.vx = v0 * Math.cos(this.theta);
+                this.vy = v0 * Math.sin(this.theta);
+                this.time = 0;
+                this.scale = 10; // Scale factor for visualization
+            }
+
+            update(dt) {
+                this.time += dt;
+                this.x = this.vx * this.time;
+                this.y = this.initialHeight + (this.vy * this.time) - (0.5 * this.g * this.time * this.time);
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(50 + this.x * this.scale, 350 - this.y * this.scale, 5, 0, 2 * Math.PI);
+                ctx.fillStyle = 'red';
+                ctx.fill();
+            }
+
+            isDone() {
+                return this.y <= 0 && this.vy < 0;
+            }
+        }
+
+        function drawGround() {
+            ctx.beginPath();
+            ctx.moveTo(0, 350);
+            ctx.lineTo(800, 350);
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+        }
+
+        function startSimulation() {
+            if (animationId) {
+                cancelAnimationFrame(animationId);
+            }
+
+            const v0 = parseFloat(document.getElementById('velocity').value);
+            const theta = parseFloat(document.getElementById('angle').value);
+            const g = parseFloat(document.getElementById('gravity').value);
+            const h = parseFloat(document.getElementById('height').value);
+
+            const ball = new Ball(v0, theta, g, h);
+            let lastTime = null;
+
+            function animate(currentTime) {
+                if (!lastTime) lastTime = currentTime;
+                const dt = (currentTime - lastTime) / 1000; // Convert to seconds
+                
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                drawGround();
+                
+                ball.update(dt);
+                ball.draw();
+
+                if (!ball.isDone()) {
+                    animationId = requestAnimationFrame(animate);
+                } else {
+                    animationId = null;
+                }
+                
+                lastTime = currentTime;
+            }
+
+            animationId = requestAnimationFrame(animate);
+        }
+
+        // Initial draw
+        drawGround();
+    </script>
+</body>
+</html>
