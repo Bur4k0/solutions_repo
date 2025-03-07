@@ -6,6 +6,8 @@ The forced damped pendulum is a captivating example of a physical system with in
 
 Adding forcing introduces new parameters, such as the amplitude and frequency of the external force, which significantly affect the pendulum's behavior. By systematically varying these parameters, a diverse class of solutions can be observed, including synchronized oscillations, chaotic motion, and resonance phenomena. These behaviors not only highlight fundamental physics principles but also provide insights into engineering applications such as energy harvesting, vibration isolation, and mechanical resonance.
 
+[simulation2](simulation2.html)
+
 ## Task
 
 ### 1. Theoretical Foundation
