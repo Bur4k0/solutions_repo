@@ -14,9 +14,7 @@ Adding forcing introduces new parameters, such as the amplitude and frequency of
 ### 1. Theoretical Foundation
 - Start with the differential equation governing the motion of a forced damped pendulum:
 
-  $
-  \ddot{\theta} + b\dot{\theta} + \sin\theta = A\cos(\omega t)
-  $
+  $\ddot{\theta} + b\dot{\theta} + \sin\theta = A\cos(\omega t)$
 
 - Derive the approximate solutions for small-angle oscillations.
 - Explore resonance conditions and their implications for the system's energy.
