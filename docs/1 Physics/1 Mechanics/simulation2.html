@@ -4,117 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forced Damped Pendulum Simulation</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            padding: 20px;
-            background-color: #f4f4f4;
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.5.0/p5.js"></script>
+    <script>
+        let theta = Math.PI / 4;
+        let omega = 0;
+        let alpha = 0;
+        let damping = 0.05;
+        let drivingForce = 0.1;
+        let drivingFrequency = 2;
+        let gravity = 9.8;
+        let length = 1;
+        let time = 0;
+        let dt = 0.05;
+        
+        function setup() {
+            createCanvas(600, 600);
         }
-        h1, h2, h3 {
-            color: #333;
+        
+        function draw() {
+            background(255);
+            let force = -gravity / length * sin(theta) - damping * omega + drivingForce * sin(drivingFrequency * time);
+            alpha = force;
+            omega += alpha * dt;
+            theta += omega * dt;
+            time += dt;
+            
+            let x = width / 2 + length * 200 * sin(theta);
+            let y = height / 3 + length * 200 * cos(theta);
+            
+            stroke(0);
+            line(width / 2, height / 3, x, y);
+            fill(0);
+            ellipse(x, y, 20, 20);
         }
-        code {
-            background-color: #eee;
-            padding: 2px 5px;
-            border-radius: 5px;
-        }
-        pre {
-            background: #222;
-            color: #fff;
-            padding: 10px;
-            overflow-x: auto;
-            border-radius: 5px;
-        }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-    </style>
+    </script>
 </head>
 <body>
-
-<div class="container">
-    <h1>Investigating the Dynamics of a Forced Damped Pendulum</h1>
-
-    <h2>Motivation</h2>
-    <p>The forced damped pendulum is a captivating example of a physical system with intricate behavior resulting from the interplay of damping, restoring forces, and external driving forces. By introducing both damping and external periodic forcing, the system transitions from simple harmonic motion to a range of behaviors, including resonance, chaos, and quasiperiodic motion.</p>
-
-    <h2>4. Implementation</h2>
-    <ul>
-        <li>Create a computational model to simulate the motion of a forced damped pendulum.</li>
-        <li>Visualize the behavior under various damping, driving force, and initial conditions.</li>
-        <li>Plot phase diagrams and Poincaré sections to illustrate transitions to chaos.</li>
-    </ul>
-
-    <h2>Deliverables</h2>
-    <ul>
-        <li>A Markdown document with Python script or notebook implementing the simulations.</li>
-        <li>A detailed explanation of the general solutions for the forced damped pendulum.</li>
-        <li>Graphical representations of the motion for different damping coefficients, driving amplitudes, and driving frequencies.</li>
-        <li>A discussion on the limitations of the model and potential extensions.</li>
-        <li>Phase portraits, Poincaré sections, and bifurcation diagrams to analyze transitions to complex dynamics.</li>
-    </ul>
-
-    <h2>Hints and Resources</h2>
-    <ul>
-        <li>For small angles, approximate <code>sin(θ) ≈ θ</code> to simplify the differential equation.</li>
-        <li>Use numerical techniques (e.g., Runge-Kutta methods) for simulations beyond the small-angle approximation.</li>
-        <li>Relate the forced damped pendulum to analogous systems in other fields, such as driven RLC circuits or biomechanics.</li>
-        <li>Use Python for simulations and visualizations.</li>
-    </ul>
-
-    <h2>Python Simulation Example</h2>
-    <p>Below is an example of a Python script using the Runge-Kutta method to simulate the forced damped pendulum.</p>
-
-    <pre>
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.integrate import solve_ivp
-
-# Parameters
-b = 0.2   # Damping coefficient
-A = 1.2   # Driving force amplitude
-omega = 2.0  # Driving frequency
-g = 9.81  # Gravity
-L = 1.0   # Pendulum length
-
-# Differential equations
-def pendulum(t, y):
-    theta, omega_t = y
-    dtheta_dt = omega_t
-    domega_dt = -b * omega_t - np.sin(theta) + A * np.cos(omega * t)
-    return [dtheta_dt, domega_dt]
-
-# Time span
-t_span = (0, 50)
-t_eval = np.linspace(0, 50, 1000)
-
-# Initial conditions
-y0 = [np.pi/4, 0]  # Small initial angle
-
-# Solve using Runge-Kutta method
-sol = solve_ivp(pendulum, t_span, y0, t_eval=t_eval)
-
-# Plot results
-plt.figure(figsize=(8,5))
-plt.plot(sol.t, sol.y[0], label="Theta (Angle)")
-plt.xlabel("Time (s)")
-plt.ylabel("Angle (radians)")
-plt.title("Forced Damped Pendulum Simulation")
-plt.legend()
-plt.grid()
-plt.show()
-    </pre>
-
-    <p>This script solves the motion equations and plots the angular displacement over time. The behavior can be analyzed further by varying <code>b</code>, <code>A</code>, and <code>omega</code>.</p>
-
-</div>
-
+    <h2>Forced Damped Pendulum Simulation</h2>
+    <p>Visualizing the motion of a forced damped pendulum with damping, driving force, and gravity.</p>
 </body>
 </html>
