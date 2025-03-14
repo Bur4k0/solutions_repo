@@ -24,6 +24,7 @@ These parametric equations describe a parabolic trajectory.
 ### Family of Solutions
 
 The trajectory depends on initial conditions:
+
 - Higher $v_0$ results in a larger range and peak height.
 - Changing $\theta$ alters the steepness and symmetry.
 - Varying $g$ (e.g., on the Moon, $g \approx 1.6 \text{ m/s}^2$) changes the scale.
