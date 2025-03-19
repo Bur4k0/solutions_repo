@@ -6,13 +6,13 @@
 <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <link href="../../../img/favicon.ico" rel="shortcut icon"/>
-<title>Gravity - Celestial Mechanics and Space Exploration - Physics and Mathematics</title>
+<title>Gravity - Orbital Period and Orbital Radius - Physics and Mathematics</title>
 <link href="../../../css/theme.css" rel="stylesheet"/>
 <link href="../../../css/theme_extra.css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" rel="stylesheet"/>
 <script>
         // Current page data
-        var mkdocs_page_name = "Gravity - Celestial Mechanics and Space Exploration";
+        var mkdocs_page_name = "Gravity - Orbital Period and Orbital Radius";
         var mkdocs_page_input_path = "1 Physics/2 Gravity/Problem_1.md";
         var mkdocs_page_url = null;
       </script>
@@ -54,37 +54,25 @@
 </li>
 <li class="toctree-l1 current"><a class="reference internal current">2 Gravity</a>
 <ul class="current">
-<li class="toctree-l2 current"><a class="reference internal current" href="#">Gravity - Celestial Mechanics and Space Exploration</a>
+<li class="toctree-l2 current"><a class="reference internal current" href="#">Gravity - Orbital Period and Orbital Radius</a>
 <ul class="current">
-<li class="toctree-l3"><a class="reference internal" href="#problem-1-orbital-period-and-orbital-radius">Problem 1: Orbital Period and Orbital Radius</a>
+<li class="toctree-l3"><a class="reference internal" href="#motivation">Motivation</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#theory-and-derivation">Theory and Derivation</a>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#motivation">Motivation</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#theory-and-derivation">Theory and Derivation</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#implementation">Implementation</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#simulation">Simulation</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#discussion">Discussion</a>
+<li class="toctree-l4"><a class="reference internal" href="#keplers-third-law">Kepler's Third Law</a>
 </li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#problem-2-escape-velocities-and-cosmic-velocities">Problem 2: Escape Velocities and Cosmic Velocities</a>
+<li class="toctree-l3"><a class="reference internal" href="#simulation">Simulation</a>
 <ul>
-<li class="toctree-l4"><a class="reference internal" href="#simulation_1">Simulation</a>
-</li>
-<li class="toctree-l4"><a class="reference internal" href="#discussion_1">Discussion</a>
+<li class="toctree-l4"><a class="reference internal" href="#explanation-of-the-simulation">Explanation of the Simulation</a>
 </li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#problem-3-trajectories-of-a-freely-released-payload-near-earth">Problem 3: Trajectories of a Freely Released Payload Near Earth</a>
-<ul>
-<li class="toctree-l4"><a class="reference internal" href="#simulation_2">Simulation</a>
+<li class="toctree-l3"><a class="reference internal" href="#implications-in-astronomy">Implications in Astronomy</a>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="#discussion_2">Discussion</a>
-</li>
-</ul>
+<li class="toctree-l3"><a class="reference internal" href="#extension-to-elliptical-orbits">Extension to Elliptical Orbits</a>
 </li>
 </ul>
 </li>
@@ -193,7 +181,7 @@
 <li><a aria-label="Docs" class="icon icon-home" href="../../.."></a></li>
 <li class="breadcrumb-item">1 Physics</li>
 <li class="breadcrumb-item">2 Gravity</li>
-<li class="breadcrumb-item active">Gravity - Celestial Mechanics and Space Exploration</li>
+<li class="breadcrumb-item active">Gravity - Orbital Period and Orbital Radius</li>
 <li class="wy-breadcrumbs-aside">
 </li>
 </ul>
@@ -201,31 +189,32 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="gravity-celestial-mechanics-and-space-exploration">Gravity - Celestial Mechanics and Space Exploration</h1>
-<h2 id="problem-1-orbital-period-and-orbital-radius">Problem 1: Orbital Period and Orbital Radius</h2>
-<h3 id="motivation">Motivation</h3>
-<p>The relationship between the square of the orbital period and the cube of the orbital radius, known as <strong>Kepler's Third Law</strong>, is fundamental in celestial mechanics. It allows the determination of planetary motions and connects gravity to real-world phenomena such as satellite orbits and planetary systems.</p>
-<h3 id="theory-and-derivation">Theory and Derivation</h3>
-<p>According to Newton's Law of Gravitation, the gravitational force acting on an object of mass <span class="arithmatex">\( m \)</span> orbiting a massive body of mass <span class="arithmatex">\( M \)</span> is given by:</p>
+<h1 id="gravity-orbital-period-and-orbital-radius">Gravity - Orbital Period and Orbital Radius</h1>
+<h2 id="motivation">Motivation</h2>
+<p>The relationship between the square of the orbital period and the cube of the orbital radius, known as <strong>Kepler's Third Law</strong>, is a cornerstone of celestial mechanics. This fundamental principle helps in determining planetary motions and understanding gravitational interactions, which is essential for analyzing satellite orbits, planetary systems, and even entire galaxies.</p>
+<h2 id="theory-and-derivation">Theory and Derivation</h2>
+<h3 id="keplers-third-law">Kepler's Third Law</h3>
+<p>According to <strong>Newton's Law of Gravitation</strong>, the gravitational force acting on a mass <span class="arithmatex">\(m\)</span> orbiting a much larger mass <span class="arithmatex">\(M\)</span> (such as a planet orbiting a star) is:</p>
 <p>$
 F = \frac{GMm}{r^2}
 $</p>
-<p>For circular orbits, this force provides the centripetal force:</p>
+<p>For circular orbits, this force provides the necessary centripetal force to keep the object in orbit:</p>
 <p>$
 F = \frac{mv^2}{r}
 $</p>
-<p>By equating the two forces:</p>
+<p>By equating these two forces:</p>
 <p>$
 \frac{GMm}{r^2} = \frac{mv^2}{r}
 $</p>
-<p>Simplify and solve for the orbital speed <span class="arithmatex">\( v \)</span>:</p>
+<p>Solving for <span class="arithmatex">\(v\)</span>:</p>
 <p>$
 v = \sqrt{\frac{GM}{r}}
 $</p>
-<p>Now, using the relationship between speed, radius, and period:</p>
+<p>Using the relationship between velocity, radius, and period:</p>
 <p>$
 v = \frac{2 \pi r}{T}
 $</p>
+<p>Replacing <span class="arithmatex">\(v\)</span> in the previous equation:</p>
 <p>$
 \frac{2 \pi r}{T} = \sqrt{\frac{GM}{r}}
 $</p>
@@ -233,8 +222,13 @@ $</p>
 <p>$
 T^2 = \frac{4 \pi^2}{GM} r^3
 $</p>
-<p>This is <strong>Kepler's Third Law</strong>, where the square of the orbital period is proportional to the cube of the orbital radius.</p>
-<h3 id="implementation">Implementation</h3>
+<p>This equation shows that:</p>
+<p>$
+T^2 \propto r^3
+$</p>
+<p>This is <strong>Kepler's Third Law</strong>. The square of the orbital period <span class="arithmatex">\( T \)</span> is directly proportional to the cube of the orbital radius <span class="arithmatex">\( r \)</span>.</p>
+<h2 id="simulation">Simulation</h2>
+<p>We will now verify this relationship using a simple Python simulation.</p>
 <pre><code class="language-python">import numpy as np
 import matplotlib.pyplot as plt
 
@@ -246,94 +240,35 @@ M = 5.972e24      # Mass of the Earth (kg)
 def orbital_period(r):
     return 2 * np.pi * np.sqrt(r**3 / (G * M))
 
-# Generate orbital radii from 1e7 to 4e7 meters
+# Generate radii from 1e7 to 4e7 meters
 radii = np.linspace(1e7, 4e7, 100)
 periods = orbital_period(radii)
 
 # Plotting
 plt.figure(figsize=(10, 6))
-plt.plot(radii, periods)
+plt.plot(radii, periods, label='Simulated Data')
 plt.title('Orbital Period vs. Orbital Radius')
 plt.xlabel('Orbital Radius (m)')
 plt.ylabel('Orbital Period (s)')
-plt.grid(True)
-plt.show()
-</code></pre>
-<h3 id="simulation">Simulation</h3>
-<p>This simulation plots the relationship between <strong>Orbital Period</strong> and <strong>Orbital Radius</strong>. It confirms the relationship defined by Kepler's Third Law. To further enhance this simulation, we can compare the theoretical and simulated values for different planetary bodies in the Solar System.</p>
-<h3 id="discussion">Discussion</h3>
-<p>This relationship is instrumental in calculating planetary masses and distances. We'll further explore real-world examples such as the Moon's orbit around Earth and planetary orbits within the Solar System.</p>
-<hr/>
-<h2 id="problem-2-escape-velocities-and-cosmic-velocities">Problem 2: Escape Velocities and Cosmic Velocities</h2>
-<h3 id="simulation_1">Simulation</h3>
-<pre><code class="language-python"># Function to calculate velocities
-
-def velocities(R):
-    v_orb = np.sqrt(G * M / R)
-    v_esc = np.sqrt(2 * G * M / R)
-    return v_orb, v_esc
-
-# Generate radii
-radii = np.linspace(1e6, 2e7, 100)
-v_orb_list, v_esc_list = [], []
-
-for r in radii:
-    v_orb, v_esc = velocities(r)
-    v_orb_list.append(v_orb)
-    v_esc_list.append(v_esc)
-
-# Plotting
-plt.figure(figsize=(10, 6))
-plt.plot(radii, v_orb_list, label='Orbital Velocity')
-plt.plot(radii, v_esc_list, label='Escape Velocity')
-plt.title('Velocities vs. Radius')
-plt.xlabel('Radius (m)')
-plt.ylabel('Velocity (m/s)')
 plt.legend()
 plt.grid(True)
 plt.show()
 </code></pre>
-<h3 id="discussion_1">Discussion</h3>
-<p>This simulation shows the relationship between <strong>Orbital Velocity</strong> and <strong>Escape Velocity</strong> for various radii. The difference between the two curves reflects how much speed is needed to overcome gravitational pull and achieve escape.</p>
-<hr/>
-<h2 id="problem-3-trajectories-of-a-freely-released-payload-near-earth">Problem 3: Trajectories of a Freely Released Payload Near Earth</h2>
-<h3 id="simulation_2">Simulation</h3>
-<pre><code class="language-python">from scipy.integrate import solve_ivp
-
-# Constants
-R_earth = 6.3781e6  # Radius of Earth (m)
-
-# Differential equations for motion
-
-def motion(t, y):
-    x, y, vx, vy = y
-    r = np.sqrt(x**2 + y**2)
-    ax = -G * M * x / r**3
-    ay = -G * M * y / r**3
-    return [vx, vy, ax, ay]
-
-# Initial conditions
-x0, y0 = R_earth + 500000, 0  # Position (m)
-vx0, vy0 = 0, 7500  # Initial velocity (m/s)
-
-# Solving the differential equations
-solution = solve_ivp(motion, [0, 6000], [x0, y0, vx0, vy0], max_step=1)
-x, y = solution.y[0], solution.y[1]
-
-# Plotting
-plt.figure(figsize=(8, 8))
-plt.plot(x, y)
-plt.xlabel('x (m)')
-plt.ylabel('y (m)')
-plt.title('Trajectory of a Freely Released Payload')
-plt.grid(True)
-plt.axis('equal')
-plt.show()
-</code></pre>
-<h3 id="discussion_2">Discussion</h3>
-<p>The simulation above demonstrates the trajectory of a freely released payload, considering Earth's gravitational pull. Different initial conditions can be used to analyze <strong>parabolic, hyperbolic, and elliptical</strong> trajectories.</p>
-<hr/>
-<p>The simulations for all three problems are now added. Would you like me to continue by improving the explanations and making the simulations more interactive and realistic? </p>
+<h3 id="explanation-of-the-simulation">Explanation of the Simulation</h3>
+<ul>
+<li>We define a function <code>orbital_period()</code> to calculate the orbital period <span class="arithmatex">\( T \)</span> for a given radius <span class="arithmatex">\( r \)</span> using the derived formula.</li>
+<li>We generate a range of radii from <span class="arithmatex">\(1 \times 10^7\)</span> m to <span class="arithmatex">\(4 \times 10^7\)</span> m.</li>
+<li>The result is plotted to visualize the relationship between orbital period and radius.</li>
+</ul>
+<h2 id="implications-in-astronomy">Implications in Astronomy</h2>
+<ul>
+<li>This relationship allows calculation of planetary masses and distances by observing the orbital characteristics of moons or satellites.</li>
+<li>For example, the Moon's orbit around Earth and the orbits of planets in the Solar System follow this law closely.</li>
+</ul>
+<h2 id="extension-to-elliptical-orbits">Extension to Elliptical Orbits</h2>
+<ul>
+<li>Kepler's Third Law can also be extended to elliptical orbits by using the <strong>semi-major axis</strong> <span class="arithmatex">\(a\)</span> instead of <span class="arithmatex">\(r\)</span> (valid for perfectly circular orbits).</li>
+</ul>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
