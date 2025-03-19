@@ -7,9 +7,7 @@ The relationship between the square of the orbital period and the cube of the or
 ### Kepler's Third Law
 According to **Newton's Law of Gravitation**, the gravitational force acting on a mass \(m\) orbiting a much larger mass \(M\) (such as a planet orbiting a star) is:
 
-$
-F = \frac{GMm}{r^2}
-$
+$ F = \frac{GMm}{r^2} $
 
 For circular orbits, this force provides the necessary centripetal force to keep the object in orbit:
 
