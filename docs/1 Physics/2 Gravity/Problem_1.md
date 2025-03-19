@@ -1,96 +1,113 @@
-# Gravity - Orbital Period and Orbital Radius
+# Problem 1: Orbital Period and Orbital Radius
 
 ## Motivation
-The relationship between the square of the orbital period and the cube of the orbital radius, known as **Kepler's Third Law**, is a cornerstone of celestial mechanics. This fundamental principle helps in determining planetary motions and understanding gravitational interactions, which is essential for analyzing satellite orbits, planetary systems, and even entire galaxies.
 
-## Theory and Derivation
-### Kepler's Third Law
-According to **Newton's Law of Gravitation**, the gravitational force acting on a mass \(m\) orbiting a much larger mass \(M\) (such as a planet orbiting a star) is:
+The relationship between the square of the orbital period and the cube of the orbital radius, known as Kepler's Third Law, is a cornerstone of celestial mechanics. This simple yet profound relationship allows for the determination of planetary motions and has implications for understanding gravitational interactions on both local and cosmic scales. By analyzing this relationship, one can connect fundamental principles of gravity with real-world phenomena such as satellite orbits and planetary systems.
 
-$ F = \frac{GMm}{r^2} $
+## Task Breakdown
 
-For circular orbits, this force provides the necessary centripetal force to keep the object in orbit:
+1. Derive the relationship between $T^2$ and $r^3$ for circular orbits.
+2. Discuss implications for astronomy (planetary masses, distances).
+3. Analyze real-world examples (e.g., Moon’s orbit, Solar System planets).
+4. Implement a computational model to simulate and verify the relationship (see HTML simulations).
 
-$
-F = \frac{mv^2}{r}
-$
+## Derivation of Kepler’s Third Law for Circular Orbits
 
-By equating these two forces:
+For a body in circular orbit around a central mass $M$:
 
-$
-\frac{GMm}{r^2} = \frac{mv^2}{r}
-$
+Gravitational force:
+$F_g = \frac{G M m}{r^2}$
 
-Solving for \(v\):
+Centripetal force:
+$F_c = \frac{m v^2}{r}$
 
-$
-v = \sqrt{\frac{GM}{r}}
-$
+Equate:
+$\frac{G M m}{r^2} = \frac{m v^2}{r}$
 
-Using the relationship between velocity, radius, and period:
+Simplify:
+$v^2 = \frac{G M}{r}$
 
-$
-v = \frac{2 \pi r}{T}
-$
+Velocity:
+$v = \frac{2\pi r}{T}$
+$v^2 = \frac{4\pi^2 r^2}{T^2}$
 
-Replacing \(v\) in the previous equation:
+Substitute:
+$\frac{4\pi^2 r^2}{T^2} = \frac{G M}{r}$
 
-$
-\frac{2 \pi r}{T} = \sqrt{\frac{GM}{r}}
-$
+Result:
+$T^2 = \frac{4\pi^2}{G M} r^3$
 
-Squaring both sides and rearranging:
+## Implications for Astronomy
 
-$
-T^2 = \frac{4 \pi^2}{GM} r^3
-$
+1. **Calculating Planetary Masses**: Use $T$ and $r$ to find $M$ (e.g., Earth’s mass from the Moon).
+2. **Determining Distances**: Compute $r$ for planets using $T$ and the Sun’s mass.
+3. **Satellite Design**: Set orbital periods for satellites (e.g., geostationary).
 
-This equation shows that:
+## Real-World Examples
 
-$
-T^2 \propto r^3
-$
+- **Moon’s Orbit**:
+  - $r \approx 384,400 \, \text{km}$
+  - $T \approx 27.32 \, \text{days}$
+  - $M = 5.972 \times 10^{24} \, \text{kg}$ (Earth).
+- **Earth’s Orbit**:
+  - $r \approx 1 \, \text{AU} = 1.496 \times 10^8 \, \text{km}$
+  - $T = 1 \, \text{year}$
+  - $M = 1.989 \times 10^{30} \, \text{kg}$ (Sun).
 
-This is **Kepler's Third Law**. The square of the orbital period \( T \) is directly proportional to the cube of the orbital radius \( r \).
+## Simulations
 
-## Simulation
-We will now verify this relationship using a simple Python simulation.
+The simulations are provided in separate HTML files:
+- [Kepler’s Third Law Plot](kepler_third_law.html)
+- [Moon’s Circular Orbit](moon_orbit.html)
+
+Run the Python code below to generate the required plots, then view the HTML files in a browser.
 
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 
 # Constants
-G = 6.67430e-11  # Gravitational constant (m^3 kg^-1 s^-2)
-M = 5.972e24      # Mass of the Earth (kg)
+G = 6.67430e-11
+M_earth = 5.972e24
+M_sun = 1.989e30
 
-# Function to calculate orbital period
-def orbital_period(r):
-    return 2 * np.pi * np.sqrt(r**3 / (G * M))
+def orbital_period(r, M):
+    return np.sqrt((4 * np.pi**2 * r**3) / (G * M))
 
-# Generate radii from 1e7 to 4e7 meters
-radii = np.linspace(1e7, 4e7, 100)
-periods = orbital_period(radii)
+r_moon = 384400e3
+T_moon = 27.32 * 86400
+r_earth = 1.496e11
+T_earth = 365.25 * 86400
 
-# Plotting
+r_values = np.logspace(6, 12, 100)
+T_earth_values = orbital_period(r_values, M_earth)
+T_sun_values = orbital_period(r_values, M_sun)
+
+# Plot 1: T^2 vs r^3
 plt.figure(figsize=(10, 6))
-plt.plot(radii, periods, label='Simulated Data')
-plt.title('Orbital Period vs. Orbital Radius')
-plt.xlabel('Orbital Radius (m)')
-plt.ylabel('Orbital Period (s)')
+plt.loglog(r_values**3, T_earth_values**2, label="Earth-centered orbits")
+plt.loglog(r_values**3, T_sun_values**2, label="Sun-centered orbits")
+plt.scatter([r_moon**3, r_earth**3], [T_moon**2, T_earth**2], color='red', label="Moon, Earth")
+plt.xlabel("r³ (m³)")
+plt.ylabel("T² (s²)")
+plt.title("Kepler’s Third Law: T² vs r³")
+plt.legend()
+plt.grid(True, which="both", ls="--")
+plt.savefig("kepler_plot.png")
+plt.close()
+
+# Plot 2: Moon’s orbit
+theta = np.linspace(0, 2 * np.pi, 100)
+x_moon = r_moon * np.cos(theta)
+y_moon = r_moon * np.sin(theta)
+plt.figure(figsize=(8, 8))
+plt.plot(x_moon, y_moon, label="Moon’s Orbit")
+plt.plot(0, 0, 'bo', label="Earth")
+plt.axis("equal")
+plt.xlabel("x (m)")
+plt.ylabel("y (m)")
+plt.title("Circular Orbit of the Moon")
 plt.legend()
 plt.grid(True)
-plt.show()
-```
-
-### Explanation of the Simulation
-- We define a function `orbital_period()` to calculate the orbital period \( T \) for a given radius \( r \) using the derived formula.
-- We generate a range of radii from \(1 \times 10^7\) m to \(4 \times 10^7\) m.
-- The result is plotted to visualize the relationship between orbital period and radius.
-
-## Implications in Astronomy
-- This relationship allows calculation of planetary masses and distances by observing the orbital characteristics of moons or satellites.
-- For example, the Moon's orbit around Earth and the orbits of planets in the Solar System follow this law closely.
-
-## Extension to Elliptical Orbits
-- Kepler's Third Law can also be extended to elliptical orbits by using the **semi-major axis** \(a\) instead of \(r\) (valid for perfectly circular orbits).
+plt.savefig("moon_orbit.png")
+plt.close()
