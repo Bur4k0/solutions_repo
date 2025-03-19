@@ -1,165 +1,162 @@
-# Problem 1
-# Gravity Analysis in Celestial Mechanics and Space Exploration
-
-This document addresses three key problems: Kepler's Third Law, escape and cosmic velocities, and trajectories of a payload released near Earth. Each section includes theoretical derivations, astronomical implications, and Python simulations.
-
----
+# Gravity - Celestial Mechanics and Space Exploration
 
 ## Problem 1: Orbital Period and Orbital Radius
+### Motivation
+The relationship between the square of the orbital period and the cube of the orbital radius, known as **Kepler's Third Law**, is fundamental in celestial mechanics. It allows the determination of planetary motions and connects gravity to real-world phenomena such as satellite orbits and planetary systems.
 
-### Derivation of Kepler’s Third Law for Circular Orbits
+### Theory and Derivation
+According to Newton's Law of Gravitation, the gravitational force acting on an object of mass \( m \) orbiting a massive body of mass \( M \) is given by:
 
-Kepler’s Third Law relates the square of the orbital period \( T^2 \) to the cube of the orbital radius \( r^3 \). For circular orbits:
+$
+F = \frac{GMm}{r^2}
+$
 
-Gravitational force:
-\[ F_g = \frac{G M m}{r^2} \]
+For circular orbits, this force provides the centripetal force:
 
-Centripetal force:
-\[ F_c = \frac{m v^2}{r} \]
+$
+F = \frac{mv^2}{r}
+$
 
-Equating:
-\[ \frac{G M m}{r^2} = \frac{m v^2}{r} \]
+By equating the two forces:
 
-Simplify:
-\[ v^2 = \frac{G M}{r} \]
+$
+\frac{GMm}{r^2} = \frac{mv^2}{r}
+$
 
-Velocity and period:
-\[ v = \frac{2\pi r}{T} \]
-\[ v^2 = \frac{4\pi^2 r^2}{T^2} \]
+Simplify and solve for the orbital speed \( v \):
 
-Substitute:
-\[ \frac{4\pi^2 r^2}{T^2} = \frac{G M}{r} \]
+$
+v = \sqrt{\frac{GM}{r}}
+$
 
-Result:
-\[ T^2 = \frac{4\pi^2}{G M} r^3 \]
+Now, using the relationship between speed, radius, and period:
 
-### Implications for Astronomy
+$
+v = \frac{2 \pi r}{T}
+$
 
-- **Planetary Masses**: The Moon’s orbit can estimate Earth’s mass.
-- **Distances**: Planetary orbits around the Sun determine distances.
-- **Satellite Orbits**: Used to design orbits with specific periods (e.g., geostationary).
+$
+\frac{2 \pi r}{T} = \sqrt{\frac{GM}{r}}
+$
 
-### Real-World Examples
+Squaring both sides and rearranging:
 
-- **Moon**: \( r \approx 384,400 \, \text{km} \), \( T \approx 27.32 \, \text{days} \)
-- **Earth**: \( r \approx 1 \, \text{AU} \), \( T = 1 \, \text{year} \)
+$
+T^2 = \frac{4 \pi^2}{GM} r^3
+$
 
-### Python Simulation
+This is **Kepler's Third Law**, where the square of the orbital period is proportional to the cube of the orbital radius.
 
+### Implementation
 ```python
 import numpy as np
 import matplotlib.pyplot as plt
 
-G = 6.67430e-11  # m^3 kg^-1 s^-2
-M_earth = 5.972e24  # kg
-M_sun = 1.989e30  # kg
+# Constants
+G = 6.67430e-11  # Gravitational constant (m^3 kg^-1 s^-2)
+M = 5.972e24      # Mass of the Earth (kg)
 
-def orbital_period(r, M):
-    return np.sqrt((4 * np.pi**2 * r**3) / (G * M))
+# Function to calculate orbital period
+def orbital_period(r):
+    return 2 * np.pi * np.sqrt(r**3 / (G * M))
 
-r_moon = 384400e3  # meters
-T_moon = 27.32 * 86400  # seconds
-r_earth = 1.496e11  # 1 AU in meters
-T_earth = 365.25 * 86400  # seconds
+# Generate orbital radii from 1e7 to 4e7 meters
+radii = np.linspace(1e7, 4e7, 100)
+periods = orbital_period(radii)
 
-r_values = np.logspace(6, 12, 100)  # meters
-T_earth_values = orbital_period(r_values, M_earth)
-T_sun_values = orbital_period(r_values, M_sun)
-
+# Plotting
 plt.figure(figsize=(10, 6))
-plt.loglog(r_values**3, T_earth_values**2, label="Earth-centered orbits")
-plt.loglog(r_values**3, T_sun_values**2, label="Sun-centered orbits")
-plt.scatter([r_moon**3, r_earth**3], [T_moon**2, T_earth**2], color='red', label="Moon, Earth")
-plt.xlabel("r³ (m³)")
-plt.ylabel("T² (s²)")
-plt.title("Kepler's Third Law: T² vs r³")
+plt.plot(radii, periods)
+plt.title('Orbital Period vs. Orbital Radius')
+plt.xlabel('Orbital Radius (m)')
+plt.ylabel('Orbital Period (s)')
+plt.grid(True)
+plt.show()
+```
+
+### Simulation
+This simulation plots the relationship between **Orbital Period** and **Orbital Radius**. It confirms the relationship defined by Kepler's Third Law. To further enhance this simulation, we can compare the theoretical and simulated values for different planetary bodies in the Solar System.
+
+### Discussion
+This relationship is instrumental in calculating planetary masses and distances. We'll further explore real-world examples such as the Moon's orbit around Earth and planetary orbits within the Solar System.
+
+---
+
+## Problem 2: Escape Velocities and Cosmic Velocities
+### Simulation
+```python
+# Function to calculate velocities
+
+def velocities(R):
+    v_orb = np.sqrt(G * M / R)
+    v_esc = np.sqrt(2 * G * M / R)
+    return v_orb, v_esc
+
+# Generate radii
+radii = np.linspace(1e6, 2e7, 100)
+v_orb_list, v_esc_list = [], []
+
+for r in radii:
+    v_orb, v_esc = velocities(r)
+    v_orb_list.append(v_orb)
+    v_esc_list.append(v_esc)
+
+# Plotting
+plt.figure(figsize=(10, 6))
+plt.plot(radii, v_orb_list, label='Orbital Velocity')
+plt.plot(radii, v_esc_list, label='Escape Velocity')
+plt.title('Velocities vs. Radius')
+plt.xlabel('Radius (m)')
+plt.ylabel('Velocity (m/s)')
 plt.legend()
-plt.grid(True, which="both", ls="--")
+plt.grid(True)
 plt.show()
-Extension to Elliptical Orbits
-For elliptical orbits, the semi-major axis ( a ) replaces ( r ):
-[ T^2 = \frac{4\pi^2}{G M} a^3 ]
+```
 
-Problem 2: Escape Velocities and Cosmic Velocities
-Definitions
-First Cosmic Velocity (Orbital Velocity): [ v_1 = \sqrt{\frac{G M}{r}} ]
-Second Cosmic Velocity (Escape Velocity): [ v_2 = \sqrt{\frac{2 G M}{r}} ]
-Third Cosmic Velocity: Speed to escape a star system (approximated).
-Derivations
-Escape Velocity: Total energy must be zero: [ \frac{1}{2} m v^2 - \frac{G M m}{r} = 0 ] [ v = \sqrt{\frac{2 G M}{r}} ]
-Calculations
-Earth: ( r = 6.371 \times 10^6 , \text{m} ), ( M = 5.972 \times 10^{24} , \text{kg} )
-( v_1 = 7.9 , \text{km/s} )
-( v_2 = 11.2 , \text{km/s} )
-Mars: ( r = 3.39 \times 10^6 , \text{m} ), ( M = 6.417 \times 10^{23} , \text{kg} )
-( v_1 = 3.5 , \text{km/s} )
-( v_2 = 5.0 , \text{km/s} )
-Jupiter: ( r = 6.991 \times 10^7 , \text{m} ), ( M = 1.898 \times 10^{27} , \text{kg} )
-( v_1 = 42.1 , \text{km/s} )
-( v_2 = 59.5 , \text{km/s} )
-Importance in Space Exploration
-Satellites: ( v_1 ) for low orbits.
-Missions: ( v_2 ) to leave Earth; ( v_3 ) for interstellar travel.
-def orbital_velocity(M, r):
-    return np.sqrt(G * M / r) / 1000  # km/s
+### Discussion
+This simulation shows the relationship between **Orbital Velocity** and **Escape Velocity** for various radii. The difference between the two curves reflects how much speed is needed to overcome gravitational pull and achieve escape.
 
-def escape_velocity(M, r):
-    return np.sqrt(2 * G * M / r) / 1000  # km/s
+---
 
-bodies = {
-    "Earth": (5.972e24, 6.371e6),
-    "Mars": (6.417e23, 3.39e6),
-    "Jupiter": (1.898e27, 6.991e7)
-}
+## Problem 3: Trajectories of a Freely Released Payload Near Earth
+### Simulation
+```python
+from scipy.integrate import solve_ivp
 
-velocities = {name: (orbital_velocity(M, r), escape_velocity(M, r)) for name, (M, r) in bodies.items()}
+# Constants
+R_earth = 6.3781e6  # Radius of Earth (m)
 
-plt.figure(figsize=(10, 6))
-for name, (v1, v2) in velocities.items():
-    plt.bar([f"{name} v1", f"{name} v2"], [v1, v2])
-plt.ylabel("Velocity (km/s)")
-plt.title("Orbital and Escape Velocities")
-plt.show()
-Problem 3: Trajectories of a Freely Released Payload
-Possible Trajectories
-Elliptical: ( v < v_2 )
-Parabolic: ( v = v_2 )
-Hyperbolic: ( v > v_2 )
-Numerical Analysis
-Equations of motion:
-[ \ddot{x} = -\frac{G M x}{r^3} ]
-[ \ddot{y} = -\frac{G M y}{r^3} ]
-where ( r = \sqrt{x^2 + y^2} ).
-from scipy.integrate import odeint
+# Differential equations for motion
 
-def gravity(state, t, M):
-    x, y, vx, vy = state
+def motion(t, y):
+    x, y, vx, vy = y
     r = np.sqrt(x**2 + y**2)
     ax = -G * M * x / r**3
     ay = -G * M * y / r**3
     return [vx, vy, ax, ay]
 
-R_earth = 6.371e6  # m
-h = 400e3  # m
-r0 = R_earth + h
-v_esc = escape_velocity(M_earth, r0) * 1000  # m/s
+# Initial conditions
+x0, y0 = R_earth + 500000, 0  # Position (m)
+vx0, vy0 = 0, 7500  # Initial velocity (m/s)
 
-state0 = [r0, 0, 0, 0.9 * v_esc]  # elliptical
-t = np.linspace(0, 20000, 1000)
+# Solving the differential equations
+solution = solve_ivp(motion, [0, 6000], [x0, y0, vx0, vy0], max_step=1)
+x, y = solution.y[0], solution.y[1]
 
-sol = odeint(gravity, state0, t, args=(M_earth,))
-
+# Plotting
 plt.figure(figsize=(8, 8))
-plt.plot(sol[:, 0], sol[:, 1], label="Trajectory")
-circle = plt.Circle((0, 0), R_earth, color='blue', alpha=0.3)
-plt.gca().add_artist(circle)
-plt.axis("equal")
-plt.xlabel("x (m)")
-plt.ylabel("y (m)")
-plt.title("Payload Trajectory")
-plt.legend()
+plt.plot(x, y)
+plt.xlabel('x (m)')
+plt.ylabel('y (m)')
+plt.title('Trajectory of a Freely Released Payload')
+plt.grid(True)
+plt.axis('equal')
 plt.show()
-Discussion
-Orbital Insertion: Low velocity yields stable orbits.
-Reentry: Trajectories intersecting Earth.
-Escape: High velocity for deep-space missions.
+```
+
+### Discussion
+The simulation above demonstrates the trajectory of a freely released payload, considering Earth's gravitational pull. Different initial conditions can be used to analyze **parabolic, hyperbolic, and elliptical** trajectories.
+
+---
+
+The simulations for all three problems are now added. Would you like me to continue by improving the explanations and making the simulations more interactive and realistic? 
