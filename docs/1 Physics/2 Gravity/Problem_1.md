@@ -62,13 +62,12 @@ $
 
 ### Final Derivation
 Substitute $v^2$ into the equation:
-$
-\frac{G M}{r} = \frac{4\pi^2 r^2}{T^2}
-$
-Solve for $T^2$:
-$
-T^2 = \frac{4\pi^2 r^3}{G M}
-$
+$\frac{G M}{r} = \frac{4\pi^2 r^2}{T^2}$
+
+$Solve for $T^2$:$
+
+$T^2 = \frac{4\pi^2 r^3}{G M}$
+
 This is Kepler's Third Law for circular orbits: $T^2 \propto r^3$, with the constant of proportionality $\frac{4\pi^2}{G M}$ depending on the central mass $M$.
 
 ---
@@ -78,9 +77,9 @@ This is Kepler's Third Law for circular orbits: $T^2 \propto r^3$, with the cons
 Kepler's Third Law is a powerful tool in astronomy:
 
 - **Mass Calculation**: Measure $T$ and $r$ to find $M$:
-  $
-  M = \frac{4\pi^2 r^3}{G T^2}
- $
+  
+  $M = \frac{4\pi^2 r^3}{G T^2}$
+ 
   This is critical for determining the masses of planets and stars using their satellites or orbiting companions.
 
 - **Distance Estimation**: If $M$ is known (e.g., the Sun’s mass), $r$ can be derived from $T$, aiding in mapping celestial distances.
@@ -137,9 +136,9 @@ Another validation of the law’s consistency.
 ## Extension to Elliptical Orbits
 
 For elliptical orbits, Kepler’s Third Law becomes:
-$
-T^2 = \frac{4\pi^2}{G M} a^3
-$
+
+$T^2 = \frac{4\pi^2}{G M} a^3$
+
 where $a$ is the semi-major axis. This generalizes the circular case ($r = a$) and applies to:
 - Planetary orbits (e.g., Earth’s slight eccentricity).
 - Comets with highly elliptical paths.
