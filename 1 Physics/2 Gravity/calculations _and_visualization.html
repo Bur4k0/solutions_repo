@@ -50,49 +50,7 @@
     </pre>
 
     <div class="code-container">
-        <h3>Python Code for Calculations:</h3>
-        <pre>
-            <code>
-import numpy as np
-import matplotlib.pyplot as plt
-
-# Constants
-G = 6.67430e-11  # Gravitational constant in m^3 kg^-1 s^-2
-M_sun = 1.989e30  # Mass of the Sun in kg
-
-# Planetary distances from the Sun in meters
-distances = {
-    "Earth": 1.496e11,  # in meters
-    "Mars": 2.279e11,   # in meters
-    "Jupiter": 7.785e11 # in meters
-}
-
-# Calculate orbital velocities for each planet
-velocities = {}
-for planet, r in distances.items():
-    v = np.sqrt(G * M_sun / r)
-    velocities[planet] = v
-
-# Output velocities
-print("Orbital Velocities (m/s):")
-for planet, v in velocities.items():
-    print(f"{planet}: {v:.2e} m/s")
-
-# Visualization (Bar chart of orbital velocities)
-planets = list(velocities.keys())
-velocity_values = list(velocities.values())
-
-plt.figure(figsize=(10, 6))
-plt.bar(planets, velocity_values, color=['#FF6347', '#4682B4', '#32CD32'])
-plt.title('Orbital Velocities of Earth, Mars, and Jupiter')
-plt.xlabel('Planet')
-plt.ylabel('Velocity (m/s)')
-plt.yscale('log')  # Log scale for better visualization of large differences
-plt.grid(True, which="both", linestyle="--", linewidth=0.5)
-plt.show()
-            </code>
-        </pre>
-    </div>
+      
 
     <h2>Graphical Visualization</h2>
     <p>The following chart displays the orbital velocities of Earth, Mars, and Jupiter. The velocities are plotted on a logarithmic scale for better visualization of the differences.</p>
