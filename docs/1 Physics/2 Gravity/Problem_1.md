@@ -44,44 +44,8 @@ Kepler’s Third Law allows astronomers to:
 - **Moon’s Orbit Around Earth**: Using Kepler’s Third Law, we can determine the Moon’s orbital period (about 27.3 days) given its average orbital radius of ~384,400 km.
 - **Planets in the Solar System**: The relationship $T^2 \propto R^3$ holds for all planets orbiting the Sun, allowing astronomers to predict orbital periods of newly discovered celestial objects.
 
-## Computational Model
-A Python-based computational model can be used to simulate and verify Kepler’s Third Law.
+![Orbital Velocity](orbital_velocity2.jpg)
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-from scipy.constants import G
-
-# Constants
-M_earth = 5.972e24  # kg (mass of Earth)
-R_earth = 6.371e6  # m (radius of Earth)
-
-def orbital_period(radius, central_mass):
-    return 2 * np.pi * np.sqrt(radius**3 / (G * central_mass))
-
-# Generate orbital radii (in meters)
-orbit_radii = np.linspace(R_earth + 300e3, R_earth + 42e6, 100)
-
-# Compute orbital periods (in seconds)
-orbit_periods = orbital_period(orbit_radii, M_earth)
-
-# Convert to hours
-orbit_periods_hours = orbit_periods / 3600
-
-# Verify Kepler's Third Law
-T_squared = orbit_periods**2
-R_cubed = orbit_radii**3
-
-# Plotting the relationship
-plt.figure(figsize=(10, 5))
-plt.plot(R_cubed, T_squared, label="$T^2$ vs. $R^3$")
-plt.xlabel("Orbital Radius Cubed ($m^3$)")
-plt.ylabel("Orbital Period Squared ($s^2$)")
-plt.title("Verification of Kepler's Third Law")
-plt.legend()
-plt.grid()
-plt.show()
-```
 
 [simulation3](simulation3.html)
 
