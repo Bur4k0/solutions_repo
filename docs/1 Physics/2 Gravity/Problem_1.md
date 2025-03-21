@@ -44,8 +44,9 @@ Kepler’s Third Law allows astronomers to:
 - **Moon’s Orbit Around Earth**: Using Kepler’s Third Law, we can determine the Moon’s orbital period (about 27.3 days) given its average orbital radius of ~384,400 km.
 - **Planets in the Solar System**: The relationship $T^2 \propto R^3$ holds for all planets orbiting the Sun, allowing astronomers to predict orbital periods of newly discovered celestial objects.
 
-![Orbital Velocity](orbital_velocity2.jpg)
+![Orbital Velocity](image.png)
 
+[moon orbit](moon_orbit.html)
 
 [simulation3](simulation3.html)
 
