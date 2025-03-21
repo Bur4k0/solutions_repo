@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Kepler's Third Law Simulation</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        #orbitPlot, #lawPlot { width: 45%; height: 80vh; display: inline-block; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Kepler's Third Law Simulation</h1>
+    <div id="orbitPlot"></div>
+    <div id="lawPlot"></div>
+
+    <script>
+        const G = 6.67430e-11;
+        const M_earth = 5.972e24;
+        const mu = G * M_earth;
+
+        const r_values = [1e7, 2e7, 3e7, 4e7, 5e7];
+        const T_values = r_values.map(r => Math.sqrt((4 * Math.PI ** 2 / mu) * r ** 3));
+        const T2_values = T_values.map(T => T ** 2);
+        const r3_values = r_values.map(r => r ** 3);
+        const k = T2_values[0] / r3_values[0];
+
+        const orbits = r_values.map((r, index) => {
+            const theta = Array.from({length: 100}, (_, i) => 2 * Math.PI * i / 99);
+            const x = theta.map(t => r * Math.cos(t));
+            const y = theta.map(t => r * Math.sin(t));
+            return { x, y, type: 'scatter', mode: 'lines', name: `r = ${(r / 1e6).toFixed(0)} Mm` };
+        });
+
+        const earth = {
+            x: [0], y: [0], mode: 'markers', name: 'Earth', marker: { color: 'blue', size: 8 }
+        };
+
+        Plotly.newPlot('orbitPlot', [...orbits, earth], {
+            title: 'Circular Orbits Around Earth',
+            xaxis: { title: 'X (m)' },
+            yaxis: { title: 'Y (m)' },
+            showlegend: true,
+            height: 600,
+            width: 600,
+            margin: { t: 50, b: 50, l: 50, r: 50 },
+            autosize: true,
+            aspectratio: { x: 1, y: 1 }
+        });
+
+        const lawPlot = {
+            x: r3_values,
+            y: T2_values,
+            type: 'scatter',
+            mode: 'lines+markers',
+            name: `k = ${k.toExponential(2)} s²/m³`
+        };
+
+        Plotly.newPlot('lawPlot', [lawPlot], {
+            title: "Verification of T² ∝ r³",
+            xaxis: { title: 'r³ (m³)', type: 'log' },
+            yaxis: { title: 'T² (s²)', type: 'log' },
+            showlegend: true,
+            margin: { t: 50, b: 50, l: 50, r: 50 }
+        });
+
+    </script>
+</body>
+</html>
