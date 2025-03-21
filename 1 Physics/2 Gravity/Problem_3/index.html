@@ -60,6 +60,42 @@
 </li>
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 3</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#introduction">Introduction</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#theoretical-background">Theoretical Background</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#possible-trajectories">Possible Trajectories</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#equations-of-motion">Equations of Motion</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#numerical-analysis-and-simulation">Numerical Analysis and Simulation</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#python-implementation">Python Implementation</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#explanation-of-the-code">Explanation of the Code</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#results">Results</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#discussion-relevance-to-space-exploration">Discussion: Relevance to Space Exploration</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#orbital-insertion">Orbital Insertion</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#reentry">Reentry</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#escape-scenarios">Escape Scenarios</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#conclusion">Conclusion</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#notes">Notes</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -171,7 +207,136 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-3">Problem 3</h1>
+<p>Below is a detailed Markdown document addressing "Problem 3: Trajectories of a Freely Released Payload Near Earth." It includes an explanation of the physics, a numerical simulation using Python, and visualizations of the payload's trajectories. The document avoids directly generating images but provides code to produce them, as per your instructions.</p>
+<hr/>
+<h1 id="trajectories-of-a-freely-released-payload-near-earth">Trajectories of a Freely Released Payload Near Earth</h1>
+<h2 id="introduction">Introduction</h2>
+<p>When a payload is released from a rocket near Earth, its subsequent motion is governed by Earth’s gravitational field and the initial conditions at release—position, velocity, and direction. This scenario is a classic application of orbital mechanics, revealing trajectories such as elliptical orbits, parabolic escapes, or hyperbolic paths. Understanding these trajectories is essential for space mission planning, including satellite deployment, orbital insertion, reentry, and escape scenarios. This document analyzes these trajectories, performs a numerical simulation, and discusses their relevance to space exploration.</p>
+<hr/>
+<h2 id="theoretical-background">Theoretical Background</h2>
+<h3 id="possible-trajectories">Possible Trajectories</h3>
+<p>The trajectory of a freely released payload depends on its specific energy, determined by its initial velocity (<span class="arithmatex">\(v_0\)</span>) and position (<span class="arithmatex">\(r_0\)</span>) relative to Earth. Using Newton’s Law of Gravitation (<span class="arithmatex">\(F = \frac{G M m}{r^2}\)</span>) and conservation laws, we classify trajectories based on the orbit’s eccentricity (<span class="arithmatex">\(e\)</span>):</p>
+<ol>
+<li><strong>Elliptical Trajectory (<span class="arithmatex">\(e &lt; 1\)</span>)</strong>:</li>
+<li>Occurs when the payload’s energy is negative (bound orbit).</li>
+<li>The payload orbits Earth in a closed, elliptical path.</li>
+<li>
+<p>Example: Satellite deployment into Low Earth Orbit (LEO).</p>
+</li>
+<li>
+<p><strong>Parabolic Trajectory (<span class="arithmatex">\(e = 1\)</span>)</strong>:</p>
+</li>
+<li>Occurs when the specific energy is zero.</li>
+<li>The payload escapes Earth’s gravity with zero velocity at infinity (escape velocity condition).</li>
+<li>
+<p>Example: Minimum energy escape scenario.</p>
+</li>
+<li>
+<p><strong>Hyperbolic Trajectory (<span class="arithmatex">\(e &gt; 1\)</span>)</strong>:</p>
+</li>
+<li>Occurs when the specific energy is positive (unbound orbit).</li>
+<li>The payload escapes Earth with excess velocity at infinity.</li>
+<li>Example: Interplanetary mission trajectories.</li>
+</ol>
+<p>The specific energy (<span class="arithmatex">\(\epsilon\)</span>) is given by:</p>
+<p><span class="arithmatex">\(\epsilon = \frac{v_0^2}{2} - \frac{\mu}{r_0}\)</span></p>
+<p>Where:
+- <span class="arithmatex">\(v_0\)</span>: Initial velocity</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(r_0\)</span>: Initial distance from Earth’s center</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\mu = G M\)</span>: Earth’s gravitational parameter (<span class="arithmatex">\(G = 6.67430 \times 10^
+{-11} \, \text{m}^3 \text{kg}^{-1} \text{s}^{-2}\)</span>, <span class="arithmatex">\(M = 5.972 \times 10^{24} \, \text{kg}\)</span>, <span class="arithmatex">\(\mu \approx 3.986 \times 10^{14} \, \text{m}^3 \text{s}^{-2}\)</span>)</p>
+</li>
+<li>
+<p>If <span class="arithmatex">\(\epsilon &lt; 0\)</span>: Elliptical orbit</p>
+</li>
+<li>
+<p>If <span class="arithmatex">\(\epsilon = 0\)</span>: Parabolic trajectory</p>
+</li>
+<li>
+<p>If <span class="arithmatex">\(\epsilon &gt; 0\)</span>: Hyperbolic trajectory</p>
+</li>
+</ul>
+<h3 id="equations-of-motion">Equations of Motion</h3>
+<p>The payload’s motion is governed by the two-body problem under Earth’s gravity:</p>
+<p><span class="arithmatex">\(\ddot{\mathbf{r}} = -\frac{\mu}{r^3} \mathbf{r}\)</span>
+Where <span class="arithmatex">\(\mathbf{r}\)</span> is the position vector, and <span class="arithmatex">\(r = |\mathbf{r}|\)</span>. This second-order differential equation requires numerical integration (e.g., using the Runge-Kutta method) to compute the trajectory given initial conditions <span class="arithmatex">\(\mathbf{r}_0\)</span> and <span class="arithmatex">\(\dot{\mathbf{r}}_0\)</span>.</p>
+<hr/>
+<h2 id="numerical-analysis-and-simulation">Numerical Analysis and Simulation</h2>
+<p><a href="../Numerical_Analysis_and_Simulation.html">Numerical Analysis and Simulation</a></p>
+<h3 id="python-implementation">Python Implementation</h3>
+<p>Below is a Python script that simulates the payload’s trajectory for different initial velocities, starting from a fixed altitude. It uses the 4th-order Runge-Kutta (RK4) method to solve the equations of motion and visualizes the results.</p>
+<h3 id="explanation-of-the-code">Explanation of the Code</h3>
+<ul>
+<li><strong>Initial Conditions</strong>: The payload is released at 200 km altitude (<span class="arithmatex">\(r_0 = R_{\text{Earth}} + 200 \, \text{km}\)</span>) with velocity along the y-axis (tangential release).</li>
+<li>
+<p><strong>Cases</strong>:</p>
+</li>
+<li>
+<p>Suborbital: <span class="arithmatex">\(v_0 = 0.7 \times v_{\text{esc}}\)</span> (elliptical, falls back).</p>
+</li>
+<li>
+<p>Orbital: <span class="arithmatex">\(v_0 = \sqrt{\frac{\mu}{r_0}}\)</span> (circular orbit).</p>
+</li>
+<li>
+<p>Escape: <span class="arithmatex">\(v_0 = v_{\text{esc}} = \sqrt{\frac{2\mu}{r_0}}\)</span> (parabolic).</p>
+</li>
+<li>
+<p>Hyperbolic: <span class="arithmatex">\(v_0 = 1.2 \times v_{\text{esc}}\)</span> (excess energy).</p>
+</li>
+<li>
+<p><strong>Numerical Method</strong>: RK4 integrates the equations of motion over 1 hour.</p>
+</li>
+<li><strong>Visualization</strong>: Plots trajectories in 2D (x-y plane) with Earth as a reference circle.</li>
+</ul>
+<h3 id="results">Results</h3>
+<p>Running the script generates a plot showing:
+- <strong>Suborbital</strong>: A partial ellipse, intersecting Earth (reentry).</p>
+<ul>
+<li>
+<p><strong>Orbital</strong>: A circular path around Earth.</p>
+</li>
+<li>
+<p><strong>Escape</strong>: A parabolic curve departing Earth.</p>
+</li>
+<li>
+<p><strong>Hyperbolic</strong>: A sharper, open curve escaping Earth faster.</p>
+</li>
+</ul>
+<p>Exact velocities depend on <span class="arithmatex">\(\mu\)</span> and <span class="arithmatex">\(r_0\)</span>, but approximate values are:
+- <span class="arithmatex">\(v_{\text{orb}} \approx 7.8 \, \text{km/s}\)</span>
+- <span class="arithmatex">\(v_{\text{esc}} \approx 11.0 \, \text{km/s}\)</span></p>
+<hr/>
+<h2 id="discussion-relevance-to-space-exploration">Discussion: Relevance to Space Exploration</h2>
+<h3 id="orbital-insertion">Orbital Insertion</h3>
+<ul>
+<li><strong>Elliptical/Circular Trajectories</strong>: Releasing a payload at <span class="arithmatex">\(v_{\text{orb}}\)</span> or slightly below places it in orbit (e.g., LEO satellites). The simulation’s circular orbit case demonstrates this, critical for communication or weather satellites.</li>
+</ul>
+<h3 id="reentry">Reentry</h3>
+<ul>
+<li><strong>Suborbital Trajectory</strong>: If <span class="arithmatex">\(v_0 &lt; v_{\text{orb}}\)</span>, the payload follows an elliptical path that intersects Earth, leading to reentry. This is relevant for returning capsules (e.g., Crew Dragon) or debris analysis.</li>
+</ul>
+<h3 id="escape-scenarios">Escape Scenarios</h3>
+<ul>
+<li><strong>Parabolic/Hyperbolic Trajectories</strong>: Achieving <span class="arithmatex">\(v_{\text{esc}}\)</span> or higher allows escape from Earth’s gravity, as seen in the escape and hyperbolic cases. This applies to interplanetary missions (e.g., Mars probes) or interstellar probes (e.g., Voyager), often aided by gravitational assists to reduce required <span class="arithmatex">\(v_0\)</span>.</li>
+</ul>
+<hr/>
+<h2 id="conclusion">Conclusion</h2>
+<p>The trajectories of a freely released payload near Earth—elliptical, parabolic, or hyperbolic—depend on its initial velocity relative to key thresholds (orbital and escape velocities). Numerical simulation using Python and RK4 provides a practical tool to predict these paths, offering insights into orbital mechanics. These principles underpin space mission design, from deploying satellites to escaping Earth’s gravitational influence, highlighting gravity’s central role in celestial navigation.</p>
+<hr/>
+<h3 id="notes">Notes</h3>
+<ul>
+<li>
+<p>The script assumes a 2D plane and neglects atmospheric drag or Earth’s oblateness for simplicity. For real missions, these factors would adjust trajectories.</p>
+</li>
+<li>
+<p>To generate the plot, run the code in a Python environment with NumPy and Matplotlib installed. If you’d like confirmation before generating the image, I can modify the script to prompt you—let me know!</p>
+</li>
+</ul>
+<p>Let me know if you need further refinements or additional analysis!</p>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
