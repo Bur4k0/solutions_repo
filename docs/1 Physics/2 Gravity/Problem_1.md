@@ -86,6 +86,8 @@ This is Kepler’s Third Law for circular orbits, where the constant depends onl
 
 [Kepler's Third Law Simulation 2](Keplers_third_law_simulation_2.html)
 
+[deneme](deneme.html)
+
 ---
 
 ## Implications for Astronomy
