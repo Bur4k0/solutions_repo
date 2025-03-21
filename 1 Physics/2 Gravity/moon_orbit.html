@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Orbit Simulation</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: black;
+            margin: 0;
+            color: white;
+        }
+
+        #space {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            border: 1px dashed white;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        #earth {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, #1e90ff, #000080);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px rgba(30, 144, 255, 0.5);
+        }
+
+        #moon {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: radial-gradient(circle, #d3d3d3, #696969);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(211, 211, 211, 0.5);
+        }
+
+        #shadow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(0, 0, 0, 0.6), transparent);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+        }
+
+        #controls {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="space">
+        <div id="earth"></div>
+        <div id="moon"></div>
+        <div id="shadow"></div>
+    </div>
+    
+    <div id="controls">
+        <label for="speedRange">Yörünge Hızı:</label>
+        <input type="range" id="speedRange" min="0.001" max="0.05" value="0.01" step="0.001">
+    </div>
+
+    <script>
+        const moon = document.getElementById('moon');
+        const earth = document.getElementById('earth');
+        const shadow = document.getElementById('shadow');
+        const speedRange = document.getElementById('speedRange');
+
+        let angle = 0;
+        const orbitRadius = 200;
+        let speed = parseFloat(speedRange.value);
+
+        speedRange.addEventListener('input', () => {
+            speed = parseFloat(speedRange.value);
+        });
+
+        function animate() {
+            angle += speed;
+
+            // Ay'ın yeni konumunu hesapla
+            const x = orbitRadius * Math.cos(angle);
+            const y = orbitRadius * Math.sin(angle);
+            moon.style.transform = `translate(${x + 220}px, ${y + 220}px)`;
+
+            // Gölgeyi ayarla (Ay'ın karşısında kalan kısmı karartma)
+            shadow.style.background = `radial-gradient(circle at ${50 - (x / 4)}% ${50 - (y / 4)}%, rgba(0, 0, 0, 0.6), transparent)`;
+
+            // Dünya'nın kendi ekseni etrafında dönüşü
+            earth.style.transform = `translate(-50%, -50%) rotate(${angle * 50}deg)`;
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
