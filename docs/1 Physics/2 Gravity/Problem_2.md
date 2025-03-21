@@ -68,8 +68,11 @@ Note: $v_2 = \sqrt{2} \cdot v_1$, meaning escape velocity is $\sqrt{2}$ times th
 
 ### Third Cosmic Velocity ($v_3$)
 The third cosmic velocity is more complex, as it involves escaping both the planet and the star. For a planet orbiting a star (e.g., Earth around the Sun), $v_3$ is the speed needed to reach the star’s escape velocity from the planet’s surface. It depends on:
+
 - The planet’s escape velocity ($v_2$).
+
 - The planet’s orbital velocity around the star ($v_{\text{orbit}}$).
+
 - The star’s escape velocity at the planet’s orbital distance ($v_{\text{esc,Sun}}$).
 
 Approximated formula (from Earth’s surface to escape the Solar System):
