@@ -25,6 +25,7 @@ For a body in a circular orbit, the gravitational force provides the necessary c
 
    - $r$: Orbital radius (distance from the center of $M$)
 
+
 2. **Centripetal Force**:
 
    For circular motion, the centripetal force is:
@@ -33,7 +34,7 @@ For a body in a circular orbit, the gravitational force provides the necessary c
 
    Where $v$ is the orbital velocity.
 
-3. **Equating Forces**:
+3. **3Equating Forces**:
    Since $F_g = F_c$:
    
    $\frac{G M m}{r^2} = \frac{m v^2}{r}$
