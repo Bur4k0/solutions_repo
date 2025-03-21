@@ -47,6 +47,7 @@ Where:
 
 - If $\epsilon > 0$: Hyperbolic trajectory
 
+![Seasonal Variations in Lunar-Assisted GEO Transfer Capability for Southward Launch](aerospace-11-00321-g001.png)
 
 ### Equations of Motion
 The payload’s motion is governed by the two-body problem under Earth’s gravity:

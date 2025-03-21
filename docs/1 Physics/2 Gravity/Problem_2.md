@@ -10,6 +10,8 @@ Escape velocity and cosmic velocities are fundamental concepts in astrophysics a
 
 In this document, we define the first, second, and third cosmic velocities, derive their mathematical foundations, calculate them for Earth, Mars, and Jupiter, and visualize the results. Finally, we discuss their significance in space exploration.
 
+![Escape Velocities and Cosmic Velocities](escapevelocity-7909050.jpg)
+
 ---
 
 ## Definitions and Physical Meaning
