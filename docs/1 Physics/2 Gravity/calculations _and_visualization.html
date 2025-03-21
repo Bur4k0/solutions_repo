@@ -87,4 +87,68 @@ plt.bar(planets, velocity_values, color=['#FF6347', '#4682B4', '#32CD32'])
 plt.title('Orbital Velocities of Earth, Mars, and Jupiter')
 plt.xlabel('Planet')
 plt.ylabel('Velocity (m/s)')
-plt.yscale('log')
+plt.yscale('log')  # Log scale for better visualization of large differences
+plt.grid(True, which="both", linestyle="--", linewidth=0.5)
+plt.show()
+            </code>
+        </pre>
+    </div>
+
+    <h2>Graphical Visualization</h2>
+    <p>The following chart displays the orbital velocities of Earth, Mars, and Jupiter. The velocities are plotted on a logarithmic scale for better visualization of the differences.</p>
+
+    <div id="chart-container">
+        <canvas id="velocity-chart" width="800" height="500"></canvas>
+    </div>
+
+    <script>
+        const velocities = {
+            "Earth": 29780,  // Orbital velocity of Earth in m/s
+            "Mars": 24077,   // Orbital velocity of Mars in m/s
+            "Jupiter": 13070 // Orbital velocity of Jupiter in m/s
+        };
+
+        const ctx = document.getElementById('velocity-chart').getContext('2d');
+        const velocityChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: Object.keys(velocities),
+                datasets: [{
+                    label: 'Orbital Velocity (m/s)',
+                    data: Object.values(velocities),
+                    backgroundColor: ['#FF6347', '#4682B4', '#32CD32'],
+                    borderColor: ['#FF4500', '#1E90FF', '#228B22'],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        type: 'logarithmic',  // Logarithmic scale for better comparison
+                        ticks: {
+                            callback: function(value, index, values) {
+                                return value.toExponential(1);
+                            }
+                        }
+                    }
+                },
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.raw.toExponential(1) + " m/s";
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
