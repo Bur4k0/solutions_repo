@@ -83,11 +83,6 @@ $T^2 = \left( \frac{4 \pi^2}{G M} \right) r^3$
 This is Kepler’s Third Law for circular orbits, where the constant depends only on the central mass $M$.
 
 [Kepler's Third Law Simulation](Kepler's_Third_Law_Simulation.html)
-
-[Kepler's Third Law Simulation 2](Keplers_third_law_simulation_2.html)
-
-[deneme](deneme.html)
-
 ---
 
 ## Implications for Astronomy
