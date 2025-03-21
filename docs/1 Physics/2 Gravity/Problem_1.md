@@ -34,6 +34,8 @@ $T^2 = \frac{4\pi^2}{GM} R^3$
 
 This confirms Kepler’s Third Law.
 
+![Orbital Velocity](image.png)
+
 ## Implications for Astronomy
 Kepler’s Third Law allows astronomers to:
 - Determine the mass of celestial bodies by measuring the orbits of their satellites.
@@ -44,7 +46,6 @@ Kepler’s Third Law allows astronomers to:
 - **Moon’s Orbit Around Earth**: Using Kepler’s Third Law, we can determine the Moon’s orbital period (about 27.3 days) given its average orbital radius of ~384,400 km.
 - **Planets in the Solar System**: The relationship $T^2 \propto R^3$ holds for all planets orbiting the Sun, allowing astronomers to predict orbital periods of newly discovered celestial objects.
 
-![Orbital Velocity](image.png)
 
 [moon orbit](moon_orbit.html)
 
