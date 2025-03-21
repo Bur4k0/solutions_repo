@@ -5,97 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orbital Velocity Calculation and Visualization</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        h2 {
+            color: #555;
+        }
+
+        #chart-container {
+            width: 80%;
+            margin: auto;
+        }
+
+        .code-container {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
+
     <h1>Orbital Velocity Calculation and Visualization for Earth, Mars, and Jupiter</h1>
-    <p>This script calculates and visualizes the orbital velocities (v1, v2, and v3) of Earth, Mars, and Jupiter based on their distance from the Sun.</p>
+    <p>This page calculates and visualizes the orbital velocities (v1, v2, v3) of Earth, Mars, and Jupiter based on their distance from the Sun.</p>
 
     <h2>Velocity Calculation</h2>
-    <p>The orbital velocity \(v\) is calculated using the formula:
-        <br> \(v = \sqrt{\frac{GM}{r}}\)
-        <br> Where:
-        <br> G = Gravitational constant = 6.67430 × 10^-11 m^3 kg^-1 s^-2
-        <br> M = Mass of the Sun (kg)
-        <br> r = Distance from the Sun (m)
-    </p>
-
+    <p>The orbital velocity \(v\) is calculated using the formula:</p>
     <pre>
         <code>
-            # Import necessary libraries
-            import numpy as np
-            import matplotlib.pyplot as plt
-
-            # Constants
-            G = 6.67430e-11  # Gravitational constant in m^3 kg^-1 s^-2
-            M_sun = 1.989e30  # Mass of the Sun in kg
-
-            # Planetary distances from the Sun in meters
-            distances = {
-                "Earth": 1.496e11,  # in meters
-                "Mars": 2.279e11,   # in meters
-                "Jupiter": 7.785e11 # in meters
-            }
-
-            # Calculate orbital velocities for each planet
-            velocities = {}
-            for planet, r in distances.items():
-                v = np.sqrt(G * M_sun / r)
-                velocities[planet] = v
-
-            # Output velocities
-            print("Orbital Velocities (m/s):")
-            for planet, v in velocities.items():
-                print(f"{planet}: {v:.2e} m/s")
-
-            # Visualization (Bar chart of orbital velocities)
-            planets = list(velocities.keys())
-            velocity_values = list(velocities.values())
-
-            plt.figure(figsize=(10, 6))
-            plt.bar(planets, velocity_values, color='skyblue')
-            plt.title('Orbital Velocities of Earth, Mars, and Jupiter')
-            plt.xlabel('Planet')
-            plt.ylabel('Velocity (m/s)')
-            plt.yscale('log')  # Log scale for better visualization of large differences
-            plt.show()
+        v = sqrt(G * M_sun / r)
+        Where:
+        G = Gravitational constant = 6.67430 × 10^-11 m^3 kg^-1 s^-2
+        M_sun = Mass of the Sun = 1.989 × 10^30 kg
+        r = Distance from the Sun (in meters)
         </code>
     </pre>
 
-    <h2>Graphical Visualization</h2>
-    <p>The graph below shows the orbital velocities of Earth, Mars, and Jupiter.</p>
+    <div class="code-container">
+        <h3>Python Code for Calculations:</h3>
+        <pre>
+            <code>
+import numpy as np
+import matplotlib.pyplot as plt
 
-    <div id="chart-container">
-        <canvas id="velocity-chart" width="400" height="300"></canvas>
-    </div>
+# Constants
+G = 6.67430e-11  # Gravitational constant in m^3 kg^-1 s^-2
+M_sun = 1.989e30  # Mass of the Sun in kg
 
-    <script>
-        const velocities = {
-            "Earth": 29780,  // Orbital velocity of Earth in m/s
-            "Mars": 24077,   // Orbital velocity of Mars in m/s
-            "Jupiter": 13070 // Orbital velocity of Jupiter in m/s
-        };
+# Planetary distances from the Sun in meters
+distances = {
+    "Earth": 1.496e11,  # in meters
+    "Mars": 2.279e11,   # in meters
+    "Jupiter": 7.785e11 # in meters
+}
 
-        const ctx = document.getElementById('velocity-chart').getContext('2d');
-        const velocityChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: Object.keys(velocities),
-                datasets: [{
-                    label: 'Orbital Velocity (m/s)',
-                    data: Object.values(velocities),
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                    borderColor: 'rgba(54, 162, 235, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-    </script>
-</body>
-</html>
+# Calculate orbital velocities for each planet
+velocities = {}
+for planet, r in distances.items():
+    v = np.sqrt(G * M_sun / r)
+    velocities[planet] = v
+
+# Output velocities
+print("Orbital Velocities (m/s):")
+for planet, v in velocities.items():
+    print(f"{planet}: {v:.2e} m/s")
+
+# Visualization (Bar chart of orbital velocities)
+planets = list(velocities.keys())
+velocity_values = list(velocities.values())
+
+plt.figure(figsize=(10, 6))
+plt.bar(planets, velocity_values, color=['#FF6347', '#4682B4', '#32CD32'])
+plt.title('Orbital Velocities of Earth, Mars, and Jupiter')
+plt.xlabel('Planet')
+plt.ylabel('Velocity (m/s)')
+plt.yscale('log')
