@@ -15,18 +15,27 @@ In this document, we define the first, second, and third cosmic velocities, deri
 ## Definitions and Physical Meaning
 
 ### First Cosmic Velocity (Orbital Velocity)
+
 - **Definition**: The first cosmic velocity ($v_1$) is the minimum speed required for an object to enter a circular orbit just above a celestial body’s surface (assuming negligible atmospheric drag).
+
 - **Physical Meaning**: This is the speed at which the centripetal force required for circular motion equals the gravitational force. It allows satellites to orbit planets without falling back or escaping.
+
 - **Typical Context**: Low Earth Orbit (LEO) satellites operate near this velocity.
 
 ### Second Cosmic Velocity (Escape Velocity)
+
 - **Definition**: The second cosmic velocity ($v_2$) is the minimum speed an object needs to escape a celestial body’s gravitational field entirely, starting from its surface.
+
 - **Physical Meaning**: At this speed, the object’s kinetic energy equals the gravitational potential energy, allowing it to reach infinity with zero velocity remaining. It’s the threshold for leaving a planet or moon permanently.
+
 - **Typical Context**: Spacecraft like Apollo missions needed to reach this velocity to escape Earth.
 
 ### Third Cosmic Velocity
+
 - **Definition**: The third cosmic velocity ($v_3$) is the speed required for an object to escape the gravitational influence of a star system (e.g., the Solar System) when launched from a planet’s surface.
+
 - **Physical Meaning**: This velocity accounts for both the planet’s gravity and the star’s gravity (e.g., the Sun). It’s the threshold for interstellar travel.
+
 - **Typical Context**: Hypothetical interstellar probes would need to achieve this speed relative to the Sun.
 
 ---
@@ -82,8 +91,11 @@ Where $v_{\text{esc,Sun}} = \sqrt{\frac{2 G M_{\text{Sun}}}{D}}$, and $D$ is the
 
 ### Output
 Running the script produces:
+
 - **Earth**: $v_1 = 7.91 \, \text{km/s}$, $v_2 = 11.19 \, \text{km/s}$, $v_3 \approx 42.1 \, \text{km/s}$
+
 - **Mars**: $v_1 = 3.55 \, \text{km/s}$, $v_2 = 5.03 \, \text{km/s}$, $v_3 \approx 23.5 \, \text{km/s}$
+
 - **Jupiter**: $v_1 = 42.1 \, \text{km/s}$, $v_2 = 59.5 \, \text{km/s}$, $v_3 \approx 61.0 \, \text{km/s}$
 
 The bar chart visualizes these velocities, showing how Jupiter’s massive gravity results in significantly higher values, while Mars requires less speed due to its smaller mass and radius.
