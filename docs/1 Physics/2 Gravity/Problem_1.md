@@ -48,7 +48,7 @@ Kepler’s Third Law allows astronomers to:
 
 [moon orbit](moon_orbit.html)
 
-[simulation3](simulation3.html)
+[Kepler's Third Law](simulation3.html)
 
 ### Explanation
 - The script creates an orbital path using the HTML5 `<canvas>` element.

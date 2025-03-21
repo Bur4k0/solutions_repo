@@ -6,95 +6,115 @@
     <title>Kepler's Third Law Simulation</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-            background-color: #f0f8ff;
-        }
-        .container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-        }
-        label, p {
-            font-size: 16px;
-            margin-bottom: 10px;
-        }
-        input[type="number"] {
-            padding: 8px;
-            width: 100%;
-            font-size: 16px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #3498db;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: black;
             color: white;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
+            margin: 0;
         }
-        button:hover {
-            background-color: #2980b9;
+
+        #space {
+            position: relative;
+            width: 600px;
+            height: 600px;
+            border: 1px dashed white;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            overflow: hidden;
         }
-        .result {
-            background-color: #ecf0f1;
-            padding: 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-size: 18px;
-            text-align: center;
+
+        #star {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 50px;
+            height: 50px;
+            background: radial-gradient(circle, yellow, orange);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 20px yellow;
+        }
+
+        .planet {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #00bfff, #00008b);
+            border-radius: 50%;
+            box-shadow: 0 0 10px #00bfff;
+        }
+
+        #orbit {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            border: 1px solid white;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
 <body>
-
-<div class="container">
-    <h1>Kepler's Third Law Simulation</h1>
-    <label for="radius">Enter Orbital Radius (r) in meters:</label>
-    <input type="number" id="radius" placeholder="Enter orbital radius" />
-    
-    <label for="mass">Enter Central Mass (M) in kg (default: 1.989e30 for the Sun):</label>
-    <input type="number" id="mass" value="1.989e30" />
-
-    <button onclick="calculateOrbitalPeriod()">Calculate Orbital Period</button>
-
-    <div id="result" class="result" style="display: none;">
-        <p>Orbital Period: <span id="orbital-period"></span> seconds</p>
+    <div id="space">
+        <div id="star"></div>
+        <div id="orbit"></div>
+        <div class="planet" id="planet"></div>
     </div>
-</div>
 
-<script>
-    const G = 6.67430e-11;  // Universal gravitational constant in m^3 kg^-1 s^-2
+    <div>
+        <label for="radius">Yörünge Yarıçapı:</label>
+        <input type="range" id="radius" min="100" max="250" value="150">
 
-    function calculateOrbitalPeriod() {
-        // Get the input values
-        const radius = parseFloat(document.getElementById("radius").value);
-        const mass = parseFloat(document.getElementById("mass").value);
+        <label for="mass">Yıldız Kütlesi:</label>
+        <input type="range" id="mass" min="1" max="10" value="1">
+    </div>
 
-        if (isNaN(radius) || isNaN(mass) || radius <= 0 || mass <= 0) {
-            alert("Please enter valid positive values for radius and mass.");
-            return;
+    <div id="info"></div>
+
+    <script>
+        const planet = document.getElementById('planet');
+        const orbit = document.getElementById('orbit');
+        const radiusInput = document.getElementById('radius');
+        const massInput = document.getElementById('mass');
+        const info = document.getElementById('info');
+
+        let angle = 0;
+        let planetRotation = 0;
+        let radius = parseInt(radiusInput.value);
+        let starMass = parseInt(massInput.value);
+
+        radiusInput.addEventListener('input', () => {
+            radius = parseInt(radiusInput.value);
+            orbit.style.width = `${radius * 2}px`;
+            orbit.style.height = `${radius * 2}px`;
+        });
+
+        massInput.addEventListener('input', () => {
+            starMass = parseInt(massInput.value);
+        });
+
+        function animate() {
+            const G = 1; // Gravitational constant (arbitrary units)
+            const orbitalPeriod = Math.sqrt(Math.pow(radius, 3) / (G * starMass));
+            angle += 0.05 / orbitalPeriod;
+            planetRotation += 1; // Kendi ekseni etrafında dönüş hızını ayarla
+
+            const x = radius * Math.cos(angle);
+            const y = radius * Math.sin(angle);
+
+            planet.style.transform = `translate(${x + 280}px, ${y + 280}px) rotate(${planetRotation}deg)`;
+            info.innerText = `Yıldız Kütlesi: ${starMass}, Yörünge Yarıçapı: ${radius}, Yörünge Periyodu: ${orbitalPeriod.toFixed(2)}`;
+
+            requestAnimationFrame(animate);
         }
 
-        // Calculate the orbital period (T^2 = (4 * pi^2 * r^3) / (G * M))
-        const T_square = (4 * Math.PI ** 2 * radius ** 3) / (G * mass);
-        const T = Math.sqrt(T_square);  // Orbital period in seconds
-
-        // Display the result
-        document.getElementById("orbital-period").textContent = T.toFixed(2);
-        document.getElementById("result").style.display = "block";
-    }
-</script>
-
+        animate();
+    </script>
 </body>
 </html>
