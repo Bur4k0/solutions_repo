@@ -114,11 +114,3 @@ Exact velocities depend on $\mu$ and $r_0$, but approximate values are:
 The trajectories of a freely released payload near Earth—elliptical, parabolic, or hyperbolic—depend on its initial velocity relative to key thresholds (orbital and escape velocities). Numerical simulation using Python and RK4 provides a practical tool to predict these paths, offering insights into orbital mechanics. These principles underpin space mission design, from deploying satellites to escaping Earth’s gravitational influence, highlighting gravity’s central role in celestial navigation.
 
 ---
-
-### Notes
-
-- The script assumes a 2D plane and neglects atmospheric drag or Earth’s oblateness for simplicity. For real missions, these factors would adjust trajectories.
-
-- To generate the plot, run the code in a Python environment with NumPy and Matplotlib installed. If you’d like confirmation before generating the image, I can modify the script to prompt you—let me know!
-
-Let me know if you need further refinements or additional analysis!
