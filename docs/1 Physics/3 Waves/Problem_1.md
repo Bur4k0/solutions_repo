@@ -104,6 +104,8 @@ $\eta_{\text{sum}}(x, y, 0) = \sum_{i=1}^{4} \frac{1}{\sqrt{r_i}} \cos(2\pi r_i)
 
 ![Principle of Superposition of Waves](img003-300x225.jpg)
 
+![Principle of Superposition of Waves 2](principle_of_superposition.jpg)
+
 ---
 
 ### Step 5: Analyze Interference Patterns
