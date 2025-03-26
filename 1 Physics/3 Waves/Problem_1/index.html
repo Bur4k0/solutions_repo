@@ -198,29 +198,65 @@
 <li><span class="arithmatex">\((-a, a)\)</span></li>
 </ul>
 <p>For simplicity, let's set <span class="arithmatex">\(a = 1\)</span>, so the vertices are at:
-- <span class="arithmatex">\((1, 1)\)</span>
-- <span class="arithmatex">\((1, -1)\)</span>
-- <span class="arithmatex">\((-1, -1)\)</span>
-- <span class="arithmatex">\((-1, 1)\)</span></p>
+- <span class="arithmatex">\((1, 1)\)</span></p>
+<ul>
+<li>
+<p><span class="arithmatex">\((1, -1)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\((-1, -1)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\((-1, 1)\)</span></p>
+</li>
+</ul>
 <hr/>
 <h3 id="step-2-position-the-sources">Step 2: Position the Sources</h3>
 <p>We place point wave sources at the vertices of the square, so we have 4 sources located at the coordinates above. Each source emits a circular wave described by the single disturbance equation:</p>
 <p><span class="arithmatex">\(\eta(x, y, t) = \frac{A}{\sqrt{r}} \cos(kr - \omega t + \phi)\)</span></p>
 <p>Where:
-- <span class="arithmatex">\(\eta(x, y, t)\)</span>: Displacement of the water surface at point <span class="arithmatex">\((x, y)\)</span> and time <span class="arithmatex">\(t\)</span>.
-- <span class="arithmatex">\(A\)</span>: Amplitude of the wave.
-- <span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span>: Wave number (<span class="arithmatex">\(\lambda\)</span> is the wavelength).
-- <span class="arithmatex">\(\omega = 2\pi f\)</span>: Angular frequency (<span class="arithmatex">\(f\)</span> is the frequency).
-- <span class="arithmatex">\(r = \sqrt{(x - x_0)^2 + (y - y_0)^2}\)</span>: Distance from the source at <span class="arithmatex">\((x_0, y_0)\)</span> to the point <span class="arithmatex">\((x, y)\)</span>.
-- <span class="arithmatex">\(\phi\)</span>: Initial phase.</p>
-<p><strong>Assumptions (from considerations):</strong>
-- All sources emit waves with the same amplitude <span class="arithmatex">\(A\)</span>, wavelength <span class="arithmatex">\(\lambda\)</span>, and frequency <span class="arithmatex">\(f\)</span>.
-- The waves are coherent, maintaining a constant phase difference. Let's assume <span class="arithmatex">\(\phi = 0\)</span> for simplicity (all sources are in phase).</p>
-<p>Let's set some values for the parameters:
-- <span class="arithmatex">\(A = 1\)</span> (arbitrary amplitude for simplicity).
-- <span class="arithmatex">\(\lambda = 1\)</span> (so <span class="arithmatex">\(k = \frac{2\pi}{\lambda} = 2\pi\)</span>).
-- <span class="arithmatex">\(f = 1\)</span> (so <span class="arithmatex">\(\omega = 2\pi f = 2\pi\)</span>).
-- <span class="arithmatex">\(\phi = 0\)</span>.</p>
+- <span class="arithmatex">\(\eta(x, y, t)\)</span>: Displacement of the water surface at point <span class="arithmatex">\((x, y)\)</span> and time <span class="arithmatex">\(t\)</span>.</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(A\)</span>: Amplitude of the wave.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span>: Wave number (<span class="arithmatex">\(\lambda\)</span> is the wavelength).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\omega = 2\pi f\)</span>: Angular frequency (<span class="arithmatex">\(f\)</span> is the frequency).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(r = \sqrt{(x - x_0)^2 + (y - y_0)^2}\)</span>: Distance from the source at <span class="arithmatex">\((x_0, y_0)\)</span> to the point <span class="arithmatex">\((x, y)\)</span>.</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\phi\)</span>: Initial phase.</p>
+</li>
+</ul>
+<p><strong>Assumptions (from considerations):</strong></p>
+<ul>
+<li>
+<p>All sources emit waves with the same amplitude <span class="arithmatex">\(A\)</span>, wavelength <span class="arithmatex">\(\lambda\)</span>, and frequency <span class="arithmatex">\(f\)</span>.</p>
+</li>
+<li>
+<p>The waves are coherent, maintaining a constant phase difference. Let's assume <span class="arithmatex">\(\phi = 0\)</span> for simplicity (all sources are in phase).</p>
+</li>
+</ul>
+<p>Let's set some values for the parameters:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(A = 1\)</span> (arbitrary amplitude for simplicity).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\lambda = 1\)</span> (so <span class="arithmatex">\(k = \frac{2\pi}{\lambda} = 2\pi\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(f = 1\)</span> (so <span class="arithmatex">\(\omega = 2\pi f = 2\pi\)</span>).</p>
+</li>
+<li>
+<p><span class="arithmatex">\(\phi = 0\)</span>.</p>
+</li>
+</ul>
 <hr/>
 <h3 id="step-3-wave-equations">Step 3: Wave Equations</h3>
 <p>For each source, we write the wave equation based on its position. The distance <span class="arithmatex">\(r_i\)</span> from each source to a point <span class="arithmatex">\((x, y)\)</span> is:</p>
@@ -234,11 +270,21 @@
 <p><span class="arithmatex">\(\eta_i(x, y, t) = \frac{A}{\sqrt{r_i}} \cos(kr_i - \omega t + \phi)\)</span></p>
 <p>Substituting the values (<span class="arithmatex">\(A = 1\)</span>, <span class="arithmatex">\(k = 2\pi\)</span>, <span class="arithmatex">\(\omega = 2\pi\)</span>, <span class="arithmatex">\(\phi = 0\)</span>):</p>
 <p><span class="arithmatex">\(\eta_i(x, y, t) = \frac{1}{\sqrt{r_i}} \cos(2\pi r_i - 2\pi t)\)</span></p>
-<p>So, for each source:
-- <span class="arithmatex">\(\eta_1(x, y, t) = \frac{1}{\sqrt{r_1}} \cos(2\pi r_1 - 2\pi t)\)</span>
-- <span class="arithmatex">\(\eta_2(x, y, t) = \frac{1}{\sqrt{r_2}} \cos(2\pi r_2 - 2\pi t)\)</span>
-- <span class="arithmatex">\(\eta_3(x, y, t) = \frac{1}{\sqrt{r_3}} \cos(2\pi r_3 - 2\pi t)\)</span>
-- <span class="arithmatex">\(\eta_4(x, y, t) = \frac{1}{\sqrt{r_4}} \cos(2\pi r_4 - 2\pi t)\)</span></p>
+<p>So, for each source:</p>
+<ul>
+<li>
+<p><span class="arithmatex">\(\eta_1(x, y, t) = \frac{1}{\sqrt{r_1}} \cos(2\pi r_1 - 2\pi t)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\eta_2(x, y, t) = \frac{1}{\sqrt{r_2}} \cos(2\pi r_2 - 2\pi t)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\eta_3(x, y, t) = \frac{1}{\sqrt{r_3}} \cos(2\pi r_3 - 2\pi t)\)</span></p>
+</li>
+<li>
+<p><span class="arithmatex">\(\eta_4(x, y, t) = \frac{1}{\sqrt{r_4}} \cos(2\pi r_4 - 2\pi t)\)</span></p>
+</li>
+</ul>
 <hr/>
 <h3 id="step-4-superposition-of-waves">Step 4: Superposition of Waves</h3>
 <p>The total displacement at point <span class="arithmatex">\((x, y)\)</span> at time <span class="arithmatex">\(t\)</span> is the sum of the displacements from all sources (since <span class="arithmatex">\(N = 4\)</span>):</p>
@@ -278,11 +324,19 @@
 <p>This expression shows symmetry along the x-axis, and we can compute it for various <span class="arithmatex">\(x\)</span> to find regions of constructive and destructive interference.</p>
 <hr/>
 <h3 id="step-6-visualization">Step 6: Visualization</h3>
-<p>To visualize the interference pattern, we would typically plot <span class="arithmatex">\(\eta_{\text{sum}}(x, y, 0)\)</span> over a grid of <span class="arithmatex">\((x, y)\)</span> values. Since the problem suggests using tools like Python with Matplotlib, the pattern would show:
-- <strong>Symmetry</strong>: Due to the square's symmetry, the interference pattern will be symmetric about the x and y axes.
-- <strong>Constructive regions</strong>: Where the amplitude is large (bright spots in a plot).
-- <strong>Destructive regions</strong>: Where the amplitude is near zero (dark spots).</p>
-<p>The pattern will resemble a grid-like structure with peaks and troughs, reflecting the interference of four coherent sources.</p>
+<p>To visualize the interference pattern, we would typically plot <span class="arithmatex">\(\eta_{\text{sum}}(x, y, 0)\)</span> over a grid of <span class="arithmatex">\((x, y)\)</span> values. Since the problem suggests using tools like Python with Matplotlib, the pattern would show:</p>
+<ul>
+<li>
+<p><strong>Symmetry</strong>: Due to the square's symmetry, the interference pattern will be symmetric about the x and y axes.</p>
+</li>
+<li>
+<p><strong>Constructive regions</strong>: Where the amplitude is large (bright spots in a plot).</p>
+</li>
+<li>
+<p><strong>Destructive regions</strong>: Where the amplitude is near zero (dark spots).
+The pattern will resemble a grid-like structure with peaks and troughs, reflecting the interference of four coherent sources.</p>
+</li>
+</ul>
 <hr/>
 <p><a href="../Interference_Pattern_simulation.html">Interference Pattern Simulation</a></p>
 <ol>
