@@ -16,8 +16,11 @@ Let's choose a simple regular polygon to work with. A **square** is a good start
 
 For simplicity, let's set $a = 1$, so the vertices are at:
 - $(1, 1)$
+
 - $(1, -1)$
+
 - $(-1, -1)$
+
 - $(-1, 1)$
 
 ---
@@ -29,20 +32,32 @@ $\eta(x, y, t) = \frac{A}{\sqrt{r}} \cos(kr - \omega t + \phi)$
 
 Where:
 - $\eta(x, y, t)$: Displacement of the water surface at point $(x, y)$ and time $t$.
+
 - $A$: Amplitude of the wave.
+
 - $k = \frac{2\pi}{\lambda}$: Wave number ($\lambda$ is the wavelength).
+
 - $\omega = 2\pi f$: Angular frequency ($f$ is the frequency).
+
 - $r = \sqrt{(x - x_0)^2 + (y - y_0)^2}$: Distance from the source at $(x_0, y_0)$ to the point $(x, y)$.
+
 - $\phi$: Initial phase.
 
 **Assumptions (from considerations):**
+
 - All sources emit waves with the same amplitude $A$, wavelength $\lambda$, and frequency $f$.
+
 - The waves are coherent, maintaining a constant phase difference. Let's assume $\phi = 0$ for simplicity (all sources are in phase).
 
+
 Let's set some values for the parameters:
+
 - $A = 1$ (arbitrary amplitude for simplicity).
+
 - $\lambda = 1$ (so $k = \frac{2\pi}{\lambda} = 2\pi$).
+
 - $f = 1$ (so $\omega = 2\pi f = 2\pi$).
+
 - $\phi = 0$.
 
 ---
@@ -64,9 +79,13 @@ Substituting the values ($A = 1$, $k = 2\pi$, $\omega = 2\pi$, $\phi = 0$):
 $\eta_i(x, y, t) = \frac{1}{\sqrt{r_i}} \cos(2\pi r_i - 2\pi t)$
 
 So, for each source:
+
 - $\eta_1(x, y, t) = \frac{1}{\sqrt{r_1}} \cos(2\pi r_1 - 2\pi t)$
+
 - $\eta_2(x, y, t) = \frac{1}{\sqrt{r_2}} \cos(2\pi r_2 - 2\pi t)$
+
 - $\eta_3(x, y, t) = \frac{1}{\sqrt{r_3}} \cos(2\pi r_3 - 2\pi t)$
+
 - $\eta_4(x, y, t) = \frac{1}{\sqrt{r_4}} \cos(2\pi r_4 - 2\pi t)$
 
 ---
@@ -124,10 +143,12 @@ Let's evaluate the pattern at a few key points:
 
 ### Step 6: Visualization
 To visualize the interference pattern, we would typically plot $\eta_{\text{sum}}(x, y, 0)$ over a grid of $(x, y)$ values. Since the problem suggests using tools like Python with Matplotlib, the pattern would show:
-- **Symmetry**: Due to the square's symmetry, the interference pattern will be symmetric about the x and y axes.
-- **Constructive regions**: Where the amplitude is large (bright spots in a plot).
-- **Destructive regions**: Where the amplitude is near zero (dark spots).
 
+- **Symmetry**: Due to the square's symmetry, the interference pattern will be symmetric about the x and y axes.
+
+- **Constructive regions**: Where the amplitude is large (bright spots in a plot).
+
+- **Destructive regions**: Where the amplitude is near zero (dark spots).
 The pattern will resemble a grid-like structure with peaks and troughs, reflecting the interference of four coherent sources.
 
 ---
