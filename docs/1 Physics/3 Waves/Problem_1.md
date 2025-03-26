@@ -156,6 +156,8 @@ The pattern will resemble a grid-like structure with peaks and troughs, reflecti
 
 [Interference Pattern Simulation](Interference_Pattern_simulation.html)
 
+[Wawe Interference](wawe_interference.html)
+
 2. **Explanation**: The interference pattern for a square shows a grid-like structure with constructive interference at the center and along symmetric lines, and destructive interference where the path differences lead to phase cancellation.
 
 3. **Graphical Representation**: The plot would show a 2D heatmap with red and blue regions indicating constructive and destructive interference, respectively.
