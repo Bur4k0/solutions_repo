@@ -15,6 +15,7 @@ Let's choose a simple regular polygon to work with. A **square** is a good start
   - $(-a, a)$
 
 For simplicity, let's set $a = 1$, so the vertices are at:
+
 - $(1, 1)$
 
 - $(1, -1)$

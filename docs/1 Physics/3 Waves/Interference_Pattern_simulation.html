@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Interference Pattern on Water Surface (Square Sources)</title>
+    <!-- Plotly JavaScript kütüphanesi -->
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <!-- Grafik div'i -->
+    <div id="plotly-div" style="width:800px;height:800px;"></div>
+
+    <script>
+        // Örnek veri oluşturma
+        var x_values = [...Array(100).keys()].map(i => -5 + i * 0.1);
+        var y_values = [...Array(100).keys()].map(i => -5 + i * 0.1);
+        var z_values = [];
+
+        for (var i = 0; i < x_values.length; i++) {
+            var row = [];
+            for (var j = 0; j < y_values.length; j++) {
+                var x = x_values[i];
+                var y = y_values[j];
+                var r1 = Math.sqrt((x - 1) ** 2 + (y - 1) ** 2);
+                var r2 = Math.sqrt((x - 1) ** 2 + (y + 1) ** 2);
+                var r3 = Math.sqrt((x + 1) ** 2 + (y - 1) ** 2);
+                var r4 = Math.sqrt((x + 1) ** 2 + (y + 1) ** 2);
+                var eta = (Math.cos(2 * Math.PI * r1) + Math.cos(2 * Math.PI * r2) +
+                           Math.cos(2 * Math.PI * r3) + Math.cos(2 * Math.PI * r4));
+                row.push(eta);
+            }
+            z_values.push(row);
+        }
+
+        var data = [{
+            type: 'heatmap',
+            z: z_values,
+            x: x_values,
+            y: y_values,
+            colorscale: 'RdBu',
+            colorbar: {title: "Displacement"}
+        }];
+
+        var layout = {
+            title: "Interference Pattern on Water Surface (Square Sources)",
+            xaxis: {title: "X"},
+            yaxis: {title: "Y"},
+            autosize: false,
+            width: 800,
+            height: 800
+        };
+
+        Plotly.newPlot('plotly-div', data, layout);
+    </script>
+</body>
+</html>
