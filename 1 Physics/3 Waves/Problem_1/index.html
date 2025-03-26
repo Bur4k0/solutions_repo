@@ -189,120 +189,96 @@
 <p>Let's choose a simple regular polygon to work with. A <strong>square</strong> is a good starting point because it has 4 vertices, which makes the calculations manageable while still allowing us to observe interesting interference patterns.</p>
 <ul>
 <li>A square has 4 vertices.</li>
-<li>Place the square in the coordinate plane with its center at the origin <span class="arithmatex">\(<span class="arithmatex">\((0, 0)\)</span>\)</span>.</li>
-<li>Let the side length of the square be <span class="arithmatex">\(<span class="arithmatex">\(2a\)</span>\)</span> (so the distance from the center to a vertex is <span class="arithmatex">\(<span class="arithmatex">\(a\sqrt{2}\)</span>\)</span>).</li>
+<li>Place the square in the coordinate plane with its center at the origin <span class="arithmatex">\((0, 0)\)</span>.</li>
+<li>Let the side length of the square be <span class="arithmatex">\(2a\)</span> (so the distance from the center to a vertex is <span class="arithmatex">\(a\sqrt{2}\)</span>).</li>
 <li>The vertices of the square are at:</li>
-<li>
-<div class="arithmatex">\[(a, a)\]</div>
-</li>
-<li>
-<div class="arithmatex">\[(a, -a)\]</div>
-</li>
-<li>
-<div class="arithmatex">\[(-a, -a)\]</div>
-</li>
-<li>
-<div class="arithmatex">\[(-a, a)\]</div>
-</li>
+<li><span class="arithmatex">\((a, a)\)</span></li>
+<li><span class="arithmatex">\((a, -a)\)</span></li>
+<li><span class="arithmatex">\((-a, -a)\)</span></li>
+<li><span class="arithmatex">\((-a, a)\)</span></li>
 </ul>
-<p>For simplicity, let's set <span class="arithmatex">\(<span class="arithmatex">\(a = 1\)</span>\)</span>, so the vertices are at:
-- <span class="arithmatex">\(<span class="arithmatex">\((1, 1)\)</span>\)</span>
-- <span class="arithmatex">\(<span class="arithmatex">\((1, -1)\)</span>\)</span>
-- <span class="arithmatex">\(<span class="arithmatex">\((-1, -1)\)</span>\)</span>
-- <span class="arithmatex">\(<span class="arithmatex">\((-1, 1)\)</span>\)</span></p>
+<p>For simplicity, let's set <span class="arithmatex">\(a = 1\)</span>, so the vertices are at:
+- <span class="arithmatex">\((1, 1)\)</span>
+- <span class="arithmatex">\((1, -1)\)</span>
+- <span class="arithmatex">\((-1, -1)\)</span>
+- <span class="arithmatex">\((-1, 1)\)</span></p>
 <hr/>
 <h3 id="step-2-position-the-sources">Step 2: Position the Sources</h3>
 <p>We place point wave sources at the vertices of the square, so we have 4 sources located at the coordinates above. Each source emits a circular wave described by the single disturbance equation:</p>
-<div class="arithmatex">\[\eta(x, y, t) = \frac{A}{\sqrt{r}} \cos(kr - \omega t + \phi)\]</div>
+<p><span class="arithmatex">\(\eta(x, y, t) = \frac{A}{\sqrt{r}} \cos(kr - \omega t + \phi)\)</span></p>
 <p>Where:
-- <span class="arithmatex">\(<span class="arithmatex">\(\eta(x, y, t)\)</span>\)</span>: Displacement of the water surface at point <span class="arithmatex">\(<span class="arithmatex">\((x, y)\)</span>\)</span> and time <span class="arithmatex">\(<span class="arithmatex">\(t\)</span>\)</span>.
-- <span class="arithmatex">\(<span class="arithmatex">\(A\)</span>\)</span>: Amplitude of the wave.
-- <span class="arithmatex">\(<span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span>\)</span>: Wave number (<span class="arithmatex">\(<span class="arithmatex">\(\lambda\)</span>\)</span> is the wavelength).
-- <span class="arithmatex">\(<span class="arithmatex">\(\omega = 2\pi f\)</span>\)</span>: Angular frequency (<span class="arithmatex">\(<span class="arithmatex">\(f\)</span>\)</span> is the frequency).
-- <span class="arithmatex">\(<span class="arithmatex">\(r = \sqrt{(x - x_0)^2 + (y - y_0)^2}\)</span>\)</span>: Distance from the source at <span class="arithmatex">\(<span class="arithmatex">\((x_0, y_0)\)</span>\)</span> to the point <span class="arithmatex">\(<span class="arithmatex">\((x, y)\)</span>\)</span>.
-- <span class="arithmatex">\(<span class="arithmatex">\(\phi\)</span>\)</span>: Initial phase.</p>
+- <span class="arithmatex">\(\eta(x, y, t)\)</span>: Displacement of the water surface at point <span class="arithmatex">\((x, y)\)</span> and time <span class="arithmatex">\(t\)</span>.
+- <span class="arithmatex">\(A\)</span>: Amplitude of the wave.
+- <span class="arithmatex">\(k = \frac{2\pi}{\lambda}\)</span>: Wave number (<span class="arithmatex">\(\lambda\)</span> is the wavelength).
+- <span class="arithmatex">\(\omega = 2\pi f\)</span>: Angular frequency (<span class="arithmatex">\(f\)</span> is the frequency).
+- <span class="arithmatex">\(r = \sqrt{(x - x_0)^2 + (y - y_0)^2}\)</span>: Distance from the source at <span class="arithmatex">\((x_0, y_0)\)</span> to the point <span class="arithmatex">\((x, y)\)</span>.
+- <span class="arithmatex">\(\phi\)</span>: Initial phase.</p>
 <p><strong>Assumptions (from considerations):</strong>
-- All sources emit waves with the same amplitude <span class="arithmatex">\(<span class="arithmatex">\(A\)</span>\)</span>, wavelength <span class="arithmatex">\(<span class="arithmatex">\(\lambda\)</span>\)</span>, and frequency <span class="arithmatex">\(<span class="arithmatex">\(f\)</span>\)</span>.
-- The waves are coherent, maintaining a constant phase difference. Let's assume <span class="arithmatex">\(<span class="arithmatex">\(\phi = 0\)</span>\)</span> for simplicity (all sources are in phase).</p>
+- All sources emit waves with the same amplitude <span class="arithmatex">\(A\)</span>, wavelength <span class="arithmatex">\(\lambda\)</span>, and frequency <span class="arithmatex">\(f\)</span>.
+- The waves are coherent, maintaining a constant phase difference. Let's assume <span class="arithmatex">\(\phi = 0\)</span> for simplicity (all sources are in phase).</p>
 <p>Let's set some values for the parameters:
-- <span class="arithmatex">\(<span class="arithmatex">\(A = 1\)</span>\)</span> (arbitrary amplitude for simplicity).
-- <span class="arithmatex">\(<span class="arithmatex">\(\lambda = 1\)</span>\)</span> (so <span class="arithmatex">\(<span class="arithmatex">\(k = \frac{2\pi}{\lambda} = 2\pi\)</span>\)</span>).
-- <span class="arithmatex">\(<span class="arithmatex">\(f = 1\)</span>\)</span> (so <span class="arithmatex">\(<span class="arithmatex">\(\omega = 2\pi f = 2\pi\)</span>\)</span>).
-- <span class="arithmatex">\(<span class="arithmatex">\(\phi = 0\)</span>\)</span>.</p>
+- <span class="arithmatex">\(A = 1\)</span> (arbitrary amplitude for simplicity).
+- <span class="arithmatex">\(\lambda = 1\)</span> (so <span class="arithmatex">\(k = \frac{2\pi}{\lambda} = 2\pi\)</span>).
+- <span class="arithmatex">\(f = 1\)</span> (so <span class="arithmatex">\(\omega = 2\pi f = 2\pi\)</span>).
+- <span class="arithmatex">\(\phi = 0\)</span>.</p>
 <hr/>
 <h3 id="step-3-wave-equations">Step 3: Wave Equations</h3>
-<p>For each source, we write the wave equation based on its position. The distance <span class="arithmatex">\(<span class="arithmatex">\(r_i\)</span>\)</span> from each source to a point <span class="arithmatex">\(<span class="arithmatex">\((x, y)\)</span>\)</span> is:</p>
+<p>For each source, we write the wave equation based on its position. The distance <span class="arithmatex">\(r_i\)</span> from each source to a point <span class="arithmatex">\((x, y)\)</span> is:</p>
 <ul>
-<li>Source 1 at <span class="arithmatex">\(<span class="arithmatex">\((1, 1)\)</span>\)</span>: <span class="arithmatex">\(<span class="arithmatex">\(r_1 = \sqrt{(x - 1)^2 + (y - 1)^2}\)</span>\)</span></li>
-<li>Source 2 at <span class="arithmatex">\(<span class="arithmatex">\((1, -1)\)</span>\)</span>: <span class="arithmatex">\(<span class="arithmatex">\(r_2 = \sqrt{(x - 1)^2 + (y + 1)^2}\)</span>\)</span></li>
-<li>Source 3 at <span class="arithmatex">\(<span class="arithmatex">\((-1, -1)\)</span>\)</span>: <span class="arithmatex">\(<span class="arithmatex">\(r_3 = \sqrt{(x + 1)^2 + (y + 1)^2}\)</span>\)</span></li>
-<li>Source 4 at <span class="arithmatex">\(<span class="arithmatex">\((-1, 1)\)</span>\)</span>: <span class="arithmatex">\(<span class="arithmatex">\(r_4 = \sqrt{(x + 1)^2 + (y - 1)^2}\)</span>\)</span></li>
+<li>Source 1 at <span class="arithmatex">\((1, 1)\)</span>: <span class="arithmatex">\(r_1 = \sqrt{(x - 1)^2 + (y - 1)^2}\)</span></li>
+<li>Source 2 at <span class="arithmatex">\((1, -1)\)</span>: <span class="arithmatex">\(r_2 = \sqrt{(x - 1)^2 + (y + 1)^2}\)</span></li>
+<li>Source 3 at <span class="arithmatex">\((-1, -1)\)</span>: <span class="arithmatex">\(r_3 = \sqrt{(x + 1)^2 + (y + 1)^2}\)</span></li>
+<li>Source 4 at <span class="arithmatex">\((-1, 1)\)</span>: <span class="arithmatex">\(r_4 = \sqrt{(x + 1)^2 + (y - 1)^2}\)</span></li>
 </ul>
 <p>The wave equation for each source is:</p>
-<div class="arithmatex">\[\eta_i(x, y, t) = \frac{A}{\sqrt{r_i}} \cos(kr_i - \omega t + \phi)\]</div>
-<p>Substituting the values (<span class="arithmatex">\(<span class="arithmatex">\(A = 1\)</span>\)</span>, <span class="arithmatex">\(<span class="arithmatex">\(k = 2\pi\)</span>\)</span>, <span class="arithmatex">\(<span class="arithmatex">\(\omega = 2\pi\)</span>\)</span>, <span class="arithmatex">\(<span class="arithmatex">\(\phi = 0\)</span>\)</span>):</p>
-<div class="arithmatex">\[\eta_i(x, y, t) = \frac{1}{\sqrt{r_i}} \cos(2\pi r_i - 2\pi t)\]</div>
+<p><span class="arithmatex">\(\eta_i(x, y, t) = \frac{A}{\sqrt{r_i}} \cos(kr_i - \omega t + \phi)\)</span></p>
+<p>Substituting the values (<span class="arithmatex">\(A = 1\)</span>, <span class="arithmatex">\(k = 2\pi\)</span>, <span class="arithmatex">\(\omega = 2\pi\)</span>, <span class="arithmatex">\(\phi = 0\)</span>):</p>
+<p><span class="arithmatex">\(\eta_i(x, y, t) = \frac{1}{\sqrt{r_i}} \cos(2\pi r_i - 2\pi t)\)</span></p>
 <p>So, for each source:
-- <span class="arithmatex">\(<span class="arithmatex">\(\eta_1(x, y, t) = \frac{1}{\sqrt{r_1}} \cos(2\pi r_1 - 2\pi t)\)</span>\)</span>
-- <span class="arithmatex">\(<span class="arithmatex">\(\eta_2(x, y, t) = \frac{1}{\sqrt{r_2}} \cos(2\pi r_2 - 2\pi t)\)</span>\)</span>
-- <span class="arithmatex">\(<span class="arithmatex">\(\eta_3(x, y, t) = \frac{1}{\sqrt{r_3}} \cos(2\pi r_3 - 2\pi t)\)</span>\)</span>
-- <span class="arithmatex">\(<span class="arithmatex">\(\eta_4(x, y, t) = \frac{1}{\sqrt{r_4}} \cos(2\pi r_4 - 2\pi t)\)</span>\)</span></p>
+- <span class="arithmatex">\(\eta_1(x, y, t) = \frac{1}{\sqrt{r_1}} \cos(2\pi r_1 - 2\pi t)\)</span>
+- <span class="arithmatex">\(\eta_2(x, y, t) = \frac{1}{\sqrt{r_2}} \cos(2\pi r_2 - 2\pi t)\)</span>
+- <span class="arithmatex">\(\eta_3(x, y, t) = \frac{1}{\sqrt{r_3}} \cos(2\pi r_3 - 2\pi t)\)</span>
+- <span class="arithmatex">\(\eta_4(x, y, t) = \frac{1}{\sqrt{r_4}} \cos(2\pi r_4 - 2\pi t)\)</span></p>
 <hr/>
 <h3 id="step-4-superposition-of-waves">Step 4: Superposition of Waves</h3>
-<p>The total displacement at point <span class="arithmatex">\(<span class="arithmatex">\((x, y)\)</span>\)</span> at time <span class="arithmatex">\(<span class="arithmatex">\(t\)</span>\)</span> is the sum of the displacements from all sources (since <span class="arithmatex">\(<span class="arithmatex">\(N = 4\)</span>\)</span>):</p>
-<div class="arithmatex">\[\eta_{\text{sum}}(x, y, t) = \sum_{i=1}^{4} \eta_i(x, y, t)\]</div>
-<div class="arithmatex">\[\eta_{\text{sum}}(x, y, t) = \sum_{i=1}^{4} \frac{1}{\sqrt{r_i}} \cos(2\pi r_i - 2\pi t)\]</div>
-<p>To analyze the interference pattern, we can simplify by looking at a specific time, say <span class="arithmatex">\(<span class="arithmatex">\(t = 0\)</span>\)</span>:</p>
-<div class="arithmatex">\[\eta_{\text{sum}}(x, y, 0) = \sum_{i=1}^{4} \frac{1}{\sqrt{r_i}} \cos(2\pi r_i)\]</div>
+<p>The total displacement at point <span class="arithmatex">\((x, y)\)</span> at time <span class="arithmatex">\(t\)</span> is the sum of the displacements from all sources (since <span class="arithmatex">\(N = 4\)</span>):</p>
+<p><span class="arithmatex">\(\eta_{\text{sum}}(x, y, t) = \sum_{i=1}^{4} \eta_i(x, y, t)\)</span></p>
+<p><span class="arithmatex">\(\eta_{\text{sum}}(x, y, t) = \sum_{i=1}^{4} \frac{1}{\sqrt{r_i}} \cos(2\pi r_i - 2\pi t)\)</span></p>
+<p>To analyze the interference pattern, we can simplify by looking at a specific time, say <span class="arithmatex">\(t = 0\)</span>:</p>
+<p><span class="arithmatex">\(\eta_{\text{sum}}(x, y, 0) = \sum_{i=1}^{4} \frac{1}{\sqrt{r_i}} \cos(2\pi r_i)\)</span></p>
 <hr/>
 <h3 id="step-5-analyze-interference-patterns">Step 5: Analyze Interference Patterns</h3>
-<p>Now we need to examine <span class="arithmatex">\(<span class="arithmatex">\(\eta_{\text{sum}}(x, y, 0)\)</span>\)</span> as a function of position <span class="arithmatex">\(<span class="arithmatex">\((x, y)\)</span>\)</span>.</p>
+<p>Now we need to examine <span class="arithmatex">\(\eta_{\text{sum}}(x, y, 0)\)</span> as a function of position <span class="arithmatex">\((x, y)\)</span>.</p>
 <ul>
-<li><strong>Constructive Interference</strong>: Occurs when the waves are in phase, i.e., the phase difference <span class="arithmatex">\(<span class="arithmatex">\(2\pi (r_i - r_j)\)</span>\)</span> is a multiple of <span class="arithmatex">\(<span class="arithmatex">\(2\pi\)</span>\)</span>. This happens when the path difference <span class="arithmatex">\(<span class="arithmatex">\(r_i - r_j\)</span>\)</span> is an integer multiple of the wavelength <span class="arithmatex">\(<span class="arithmatex">\(\lambda = 1\)</span>\)</span>.</li>
-<li><strong>Destructive Interference</strong>: Occurs when the waves are out of phase, i.e., the phase difference is an odd multiple of <span class="arithmatex">\(<span class="arithmatex">\(\pi\)</span>\)</span>, so the path difference <span class="arithmatex">\(<span class="arithmatex">\(r_i - r_j\)</span>\)</span> is an odd multiple of <span class="arithmatex">\(<span class="arithmatex">\(\frac{\lambda}{2} = 0.5\)</span>\)</span>.</li>
+<li><strong>Constructive Interference</strong>: Occurs when the waves are in phase, i.e., the phase difference <span class="arithmatex">\(2\pi (r_i - r_j)\)</span> is a multiple of <span class="arithmatex">\(2\pi\)</span>. This happens when the path difference <span class="arithmatex">\(r_i - r_j\)</span> is an integer multiple of the wavelength <span class="arithmatex">\(\lambda = 1\)</span>.</li>
+<li><strong>Destructive Interference</strong>: Occurs when the waves are out of phase, i.e., the phase difference is an odd multiple of <span class="arithmatex">\(\pi\)</span>, so the path difference <span class="arithmatex">\(r_i - r_j\)</span> is an odd multiple of <span class="arithmatex">\(\frac{\lambda}{2} = 0.5\)</span>.</li>
 </ul>
 <p>Let's evaluate the pattern at a few key points:</p>
 <ol>
-<li><strong>At the origin <span class="arithmatex">(<span class="arithmatex">\((0, 0)\)</span>\)</span></strong>:</li>
-<li>
-<div class="arithmatex">\[r_1 = \sqrt{(0-1)^2 + (0-1)^2} = \sqrt{2}\]</div>
-</li>
-<li>
-<div class="arithmatex">\[r_2 = \sqrt{(0-1)^2 + (0+1)^2} = \sqrt{2}\]</div>
-</li>
-<li>
-<div class="arithmatex">\[r_3 = \sqrt{(0+1)^2 + (0+1)^2} = \sqrt{2}\]</div>
-</li>
-<li>
-<div class="arithmatex">\[r_4 = \sqrt{(0+1)^2 + (0-1)^2} = \sqrt{2}\]</div>
-</li>
+<li><strong>At the origin <span class="arithmatex">\((0, 0)\)</span></strong>:</li>
+<li><span class="arithmatex">\(r_1 = \sqrt{(0-1)^2 + (0-1)^2} = \sqrt{2}\)</span></li>
+<li><span class="arithmatex">\(r_2 = \sqrt{(0-1)^2 + (0+1)^2} = \sqrt{2}\)</span></li>
+<li><span class="arithmatex">\(r_3 = \sqrt{(0+1)^2 + (0+1)^2} = \sqrt{2}\)</span></li>
+<li><span class="arithmatex">\(r_4 = \sqrt{(0+1)^2 + (0-1)^2} = \sqrt{2}\)</span></li>
 </ol>
-<p>All distances are equal (<span class="arithmatex">\(<span class="arithmatex">\(r_1 = r_2 = r_3 = r_4 = \sqrt{2}\)</span>\)</span>), so the waves are in phase:</p>
-<p><span class="arithmatex">\(<span class="arithmatex">\(\eta_{\text{sum}}(0, 0, 0) = 4 \cdot \frac{1}{\sqrt{\sqrt{2}}} \cos(2\pi \sqrt{2}) \approx 4 \cdot \frac{1}{1.414} \cdot \cos(2\pi \cdot 1.414)\)</span>\)</span></p>
-<p><span class="arithmatex">\(<span class="arithmatex">\(\cos(2\pi \cdot 1.414) \approx \cos(2.828\pi) = \cos(0.828\pi) \approx -0.5\)</span>\)</span></p>
-<p><span class="arithmatex">\(<span class="arithmatex">\(\eta_{\text{sum}}(0, 0, 0) \approx 4 \cdot 0.707 \cdot (-0.5) \approx -1.414\)</span>\)</span></p>
+<p>All distances are equal (<span class="arithmatex">\(r_1 = r_2 = r_3 = r_4 = \sqrt{2}\)</span>), so the waves are in phase:</p>
+<p><span class="arithmatex">\(\eta_{\text{sum}}(0, 0, 0) = 4 \cdot \frac{1}{\sqrt{\sqrt{2}}} \cos(2\pi \sqrt{2}) \approx 4 \cdot \frac{1}{1.414} \cdot \cos(2\pi \cdot 1.414)\)</span></p>
+<p><span class="arithmatex">\(\cos(2\pi \cdot 1.414) \approx \cos(2.828\pi) = \cos(0.828\pi) \approx -0.5\)</span></p>
+<p><span class="arithmatex">\(\eta_{\text{sum}}(0, 0, 0) \approx 4 \cdot 0.707 \cdot (-0.5) \approx -1.414\)</span></p>
 <p>The amplitude is non-zero, indicating constructive interference, though the negative value is due to the phase.</p>
 <ol>
-<li><strong>Along the x-axis, e.g., <span class="arithmatex">(<span class="arithmatex">\((x, 0)\)</span>\)</span></strong>:</li>
-<li>
-<div class="arithmatex">\[r_1 = \sqrt{(x-1)^2 + (0-1)^2} = \sqrt{(x-1)^2 + 1}\]</div>
-</li>
-<li>
-<div class="arithmatex">\[r_2 = \sqrt{(x-1)^2 + (0+1)^2} = \sqrt{(x-1)^2 + 1}\]</div>
-</li>
-<li>
-<div class="arithmatex">\[r_3 = \sqrt{(x+1)^2 + (0+1)^2} = \sqrt{(x+1)^2 + 1}\]</div>
-</li>
-<li>
-<div class="arithmatex">\[r_4 = \sqrt{(x+1)^2 + (0-1)^2} = \sqrt{(x+1)^2 + 1}\]</div>
-</li>
+<li><strong>Along the x-axis, e.g., <span class="arithmatex">\((x, 0)\)</span></strong>:</li>
+<li><span class="arithmatex">\(r_1 = \sqrt{(x-1)^2 + (0-1)^2} = \sqrt{(x-1)^2 + 1}\)</span></li>
+<li><span class="arithmatex">\(r_2 = \sqrt{(x-1)^2 + (0+1)^2} = \sqrt{(x-1)^2 + 1}\)</span></li>
+<li><span class="arithmatex">\(r_3 = \sqrt{(x+1)^2 + (0+1)^2} = \sqrt{(x+1)^2 + 1}\)</span></li>
+<li><span class="arithmatex">\(r_4 = \sqrt{(x+1)^2 + (0-1)^2} = \sqrt{(x+1)^2 + 1}\)</span></li>
 </ol>
-<p>Notice that <span class="arithmatex">\(<span class="arithmatex">\(r_1 = r_2\)</span>\)</span> and <span class="arithmatex">\(<span class="arithmatex">\(r_3 = r_4\)</span>\)</span>, so we can pair the contributions:</p>
-<p><span class="arithmatex">\(<span class="arithmatex">\(\eta_{\text{sum}}(x, 0, 0) = 2 \cdot \frac{1}{\sqrt{\sqrt{(x-1)^2 + 1}}} \cos(2\pi \sqrt{(x-1)^2 + 1}) + 2 \cdot \frac{1}{\sqrt{\sqrt{(x+1)^2 + 1}}} \cos(2\pi \sqrt{(x+1)^2 + 1})\)</span>\)</span></p>
-<p>This expression shows symmetry along the x-axis, and we can compute it for various <span class="arithmatex">\(<span class="arithmatex">\(x\)</span>\)</span> to find regions of constructive and destructive interference.</p>
+<p>Notice that <span class="arithmatex">\(r_1 = r_2\)</span> and <span class="arithmatex">\(r_3 = r_4\)</span>, so we can pair the contributions:</p>
+<p><span class="arithmatex">\(\eta_{\text{sum}}(x, 0, 0) = 2 \cdot \frac{1}{\sqrt{\sqrt{(x-1)^2 + 1}}} \cos(2\pi \sqrt{(x-1)^2 + 1}) + 2 \cdot \frac{1}{\sqrt{\sqrt{(x+1)^2 + 1}}} \cos(2\pi \sqrt{(x+1)^2 + 1})\)</span></p>
+<p>This expression shows symmetry along the x-axis, and we can compute it for various <span class="arithmatex">\(x\)</span> to find regions of constructive and destructive interference.</p>
 <hr/>
 <h3 id="step-6-visualization">Step 6: Visualization</h3>
-<p>To visualize the interference pattern, we would typically plot <span class="arithmatex">\(<span class="arithmatex">\(\eta_{\text{sum}}(x, y, 0)\)</span>\)</span> over a grid of <span class="arithmatex">\(<span class="arithmatex">\((x, y)\)</span>\)</span> values. Since the problem suggests using tools like Python with Matplotlib, the pattern would show:
+<p>To visualize the interference pattern, we would typically plot <span class="arithmatex">\(\eta_{\text{sum}}(x, y, 0)\)</span> over a grid of <span class="arithmatex">\((x, y)\)</span> values. Since the problem suggests using tools like Python with Matplotlib, the pattern would show:
 - <strong>Symmetry</strong>: Due to the square's symmetry, the interference pattern will be symmetric about the x and y axes.
 - <strong>Constructive regions</strong>: Where the amplitude is large (bright spots in a plot).
 - <strong>Destructive regions</strong>: Where the amplitude is near zero (dark spots).</p>
