@@ -1,7 +1,6 @@
 # Problem 1
 # Projectile Motion Analysis and Simulation,
 
-[Simulation](simulation.html)
 
 ## 1. Theoretical Foundation
 
@@ -60,6 +59,8 @@ This model applies to:
 ### Extensions:
 - **Uneven Terrain:** Adjusts time of flight using $y(t) = -h$.
 - **Air Resistance:** Introduces drag, requiring numerical solutions.
+
+[Simulation](simulation.html)
 
 ---
 
