@@ -1,7 +1,6 @@
 # Problem 2
 # Investigating the Dynamics of a Forced Damped Pendulum
 
-[Simulation2](simulation2.html)
 
 ## Motivation
 The forced damped pendulum is a captivating example of a physical system with intricate behavior resulting from the interplay of damping, restoring forces, and external driving forces. By introducing both damping and external periodic forcing, the system demonstrates a transition from simple harmonic motion to a rich spectrum of dynamics, including resonance, chaos, and quasiperiodic behavior. These phenomena serve as a foundation for understanding complex real-world systems, such as driven oscillators, climate systems, and mechanical structures under periodic stress.
@@ -37,6 +36,8 @@ Adding forcing introduces new parameters, such as the amplitude and frequency of
 - Graphical representations of the motion for different damping coefficients, driving amplitudes, and driving frequencies, including resonance and chaotic behavior.
 - A discussion on the limitations of the model and potential extensions, such as introducing nonlinear damping or non-periodic driving forces.
 - Phase portraits, Poincaré sections, and bifurcation diagrams to analyze transitions to complex dynamics.
+
+[Simulation2](simulation2.html)
 
 ## Hints and Resources
 - For small angles, approximate $\sin\theta \approx \theta$ to simplify the differential equation.
