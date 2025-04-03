@@ -163,6 +163,8 @@ plt.show()
 ```
 [Lorentz Trajectory Simulation](Lorentz_Trajectory_Simulation.html)
 
+[Simulation](simulation.html)
+
 ---
 
 ### **3. Parameter Exploration**
