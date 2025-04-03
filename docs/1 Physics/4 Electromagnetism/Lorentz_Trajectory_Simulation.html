@@ -1,0 +1,79 @@
+import { useEffect, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { Line } from "@react-three/drei";
+import * as THREE from "three";
+
+const q = 1.6e-19;
+const m = 1.67e-27;
+const dt = 1e-9;
+
+function lorentzForce(v, E, B) {
+  return new THREE.Vector3().addVectors(
+    E.clone(),
+    new THREE.Vector3().crossVectors(v.clone(), B)
+  ).multiplyScalar(q / m);
+}
+
+function rk4Step(r, v, E, B, dt) {
+  let k1_v = lorentzForce(v, E, B);
+  let k1_r = v.clone();
+
+  let k2_v = lorentzForce(v.clone().addScaledVector(k1_v, 0.5 * dt), E, B);
+  let k2_r = v.clone().addScaledVector(k1_r, 0.5 * dt);
+
+  let k3_v = lorentzForce(v.clone().addScaledVector(k2_v, 0.5 * dt), E, B);
+  let k3_r = v.clone().addScaledVector(k2_r, 0.5 * dt);
+
+  let k4_v = lorentzForce(v.clone().addScaledVector(k3_v, dt), E, B);
+  let k4_r = v.clone().addScaledVector(k3_r, dt);
+
+  let v_new = v.clone().addScaledVector(k1_v, dt / 6)
+    .addScaledVector(k2_v, dt / 3)
+    .addScaledVector(k3_v, dt / 3)
+    .addScaledVector(k4_v, dt / 6);
+
+  let r_new = r.clone().addScaledVector(k1_r, dt / 6)
+    .addScaledVector(k2_r, dt / 3)
+    .addScaledVector(k3_r, dt / 3)
+    .addScaledVector(k4_r, dt / 6);
+
+  return [r_new, v_new];
+}
+
+function simulateTrajectory(E, B, v0, r0, tMax) {
+  let t = 0;
+  let r = [r0.clone()];
+  let v = v0.clone();
+
+  while (t < tMax) {
+    let [r_new, v_new] = rk4Step(r[r.length - 1], v, E, B, dt);
+    r.push(r_new);
+    v = v_new;
+    t += dt;
+  }
+  return r;
+}
+
+export default function ParticleMotion() {
+  const [trajectory, setTrajectory] = useState([]);
+
+  useEffect(() => {
+    const B = new THREE.Vector3(0, 0, 1);
+    const E = new THREE.Vector3(0, 0, 0);
+    const v0 = new THREE.Vector3(1e6, 0, 0);
+    const r0 = new THREE.Vector3(0, 0, 0);
+    const tMax = 1e-7;
+
+    setTrajectory(simulateTrajectory(E, B, v0, r0, tMax));
+  }, []);
+
+  return (
+    <Canvas camera={{ position: [5, 5, 5] }}>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} />
+      {trajectory.length > 0 && (
+        <Line points={trajectory.map((p) => [p.x, p.y, p.z])} color="red" lineWidth={2} />
+      )}
+    </Canvas>
+  );
+}
