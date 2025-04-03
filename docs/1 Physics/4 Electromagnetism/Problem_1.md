@@ -163,7 +163,7 @@ plt.show()
 ```
 [Lorentz Trajectory Simulation](Lorentz_Trajectory_Simulation.html)
 
-[Simulation](simulation.html)
+[Simulation2](simulation.html)
 
 ---
 
