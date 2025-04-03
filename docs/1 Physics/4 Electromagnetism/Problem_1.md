@@ -43,7 +43,7 @@ This gives us a system of first-order differential equations for position ($\mat
 ![image](hSQTZ.png)
 
 ![image2](Cover.png)
-s
+
 #### **Python Implementation**
 We’ll use NumPy for numerical computations and Matplotlib for visualizations. Below is the Python script that simulates the particle’s motion and visualizes the trajectories.
 
