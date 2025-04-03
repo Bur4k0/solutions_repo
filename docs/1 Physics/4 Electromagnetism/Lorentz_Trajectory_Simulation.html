@@ -1,79 +1,249 @@
-import { useEffect, useState } from "react";
-import { Canvas } from "@react-three/fiber";
-import { Line } from "@react-three/drei";
-import * as THREE from "three";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lorentz Force Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        canvas {
+            border: 1px solid #000;
+            background-color: #fff;
+        }
+        .controls {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+        }
+        .controls label {
+            margin-right: 10px;
+        }
+        .controls input {
+            margin-right: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Electromagnetism: Simulating the Effects of the Lorentz Force</h1>
 
-const q = 1.6e-19;
-const m = 1.67e-27;
-const dt = 1e-9;
+    <h2>1. Exploration of Applications</h2>
+    <p>The Lorentz force, given by <strong>F = q(E + v × B)</strong>, governs the motion of charged particles in electric (<strong>E</strong>) and magnetic (<strong>B</strong>) fields. It plays a key role in:</p>
+    <ul>
+        <li><strong>Particle Accelerators (e.g., Cyclotrons):</strong> Magnetic fields cause circular motion, while electric fields accelerate particles.</li>
+        <li><strong>Mass Spectrometers:</strong> The Lorentz force separates ions based on their mass-to-charge ratio.</li>
+        <li><strong>Plasma Confinement (e.g., Tokamaks):</strong> Magnetic fields confine charged particles in a plasma.</li>
+        <li><strong>Astrophysical Phenomena:</strong> Charged particles in cosmic rays follow helical paths in planetary magnetic fields.</li>
+    </ul>
+    <p><strong>Electric Field (E):</strong> Accelerates particles in the field direction.</p>
+    <p><strong>Magnetic Field (B):</strong> Causes circular or helical motion perpendicular to the field.</p>
+    <p><strong>Crossed Fields:</strong> Leads to drift motion, useful in devices like magnetrons.</p>
 
-function lorentzForce(v, E, B) {
-  return new THREE.Vector3().addVectors(
-    E.clone(),
-    new THREE.Vector3().crossVectors(v.clone(), B)
-  ).multiplyScalar(q / m);
-}
+    <h2>2. Simulation of Particle Motion</h2>
+    <p>This simulation computes the trajectory of a charged particle under:</p>
+    <ul>
+        <li>A uniform magnetic field (circular/helical motion).</li>
+        <li>Crossed electric and magnetic fields (drift motion).</li>
+    </ul>
+    <p>We use the Euler method for simplicity to solve the equations of motion:</p>
+    <ul>
+        <li><strong>dv/dt = (q/m)(E + v × B)</strong></li>
+        <li><strong>dr/dt = v</strong></li>
+    </ul>
 
-function rk4Step(r, v, E, B, dt) {
-  let k1_v = lorentzForce(v, E, B);
-  let k1_r = v.clone();
+    <h3>Simulation Controls</h3>
+    <div class="controls">
+        <label for="Bz">Magnetic Field Bz (T):</label>
+        <input type="number" id="Bz" value="1.0" step="0.1" min="0">
 
-  let k2_v = lorentzForce(v.clone().addScaledVector(k1_v, 0.5 * dt), E, B);
-  let k2_r = v.clone().addScaledVector(k1_r, 0.5 * dt);
+        <label for="Ey">Electric Field Ey (V/m):</label>
+        <input type="number" id="Ey" value="0" step="1000" min="0">
 
-  let k3_v = lorentzForce(v.clone().addScaledVector(k2_v, 0.5 * dt), E, B);
-  let k3_r = v.clone().addScaledVector(k2_r, 0.5 * dt);
+        <label for="vx">Initial Velocity vx (m/s):</label>
+        <input type="number" id="vx" value="100000" step="10000">
 
-  let k4_v = lorentzForce(v.clone().addScaledVector(k3_v, dt), E, B);
-  let k4_r = v.clone().addScaledVector(k3_r, dt);
+        <label for="vz">Initial Velocity vz (m/s):</label>
+        <input type="number" id="vz" value="10000" step="1000">
 
-  let v_new = v.clone().addScaledVector(k1_v, dt / 6)
-    .addScaledVector(k2_v, dt / 3)
-    .addScaledVector(k3_v, dt / 3)
-    .addScaledVector(k4_v, dt / 6);
+        <label for="q">Charge q (C):</label>
+        <input type="number" id="q" value="1.6e-19" step="1e-20">
 
-  let r_new = r.clone().addScaledVector(k1_r, dt / 6)
-    .addScaledVector(k2_r, dt / 3)
-    .addScaledVector(k3_r, dt / 3)
-    .addScaledVector(k4_r, dt / 6);
+        <label for="m">Mass m (kg):</label>
+        <input type="number" id="m" value="1.67e-27" step="1e-28">
 
-  return [r_new, v_new];
-}
+        <button onclick="startSimulation()">Start Simulation</button>
+    </div>
 
-function simulateTrajectory(E, B, v0, r0, tMax) {
-  let t = 0;
-  let r = [r0.clone()];
-  let v = v0.clone();
+    <h3>Trajectory Visualization (XY Plane)</h3>
+    <canvas id="trajectoryCanvas" width="600" height="600"></canvas>
 
-  while (t < tMax) {
-    let [r_new, v_new] = rk4Step(r[r.length - 1], v, E, B, dt);
-    r.push(r_new);
-    v = v_new;
-    t += dt;
-  }
-  return r;
-}
+    <h2>3. Parameter Exploration</h2>
+    <p>Use the controls above to vary:</p>
+    <ul>
+        <li><strong>Field Strengths (Bz, Ey):</strong> Increasing Bz tightens the circular motion. Increasing Ey increases the drift velocity in crossed fields.</li>
+        <li><strong>Initial Velocity (vx, vz):</strong> vx affects the radius of circular motion, vz affects the pitch of helical motion.</li>
+        <li><strong>Charge and Mass (q, m):</strong> Higher q or lower m results in tighter orbits.</li>
+    </ul>
 
-export default function ParticleMotion() {
-  const [trajectory, setTrajectory] = useState([]);
+    <h2>4. Discussion</h2>
+    <p><strong>Cyclotrons:</strong> The circular motion in a uniform magnetic field (Bz) is the principle behind cyclotrons. The radius increases with velocity, as seen in the simulation.</p>
+    <p><strong>Magnetic Traps:</strong> Helical motion occurs when vz is non-zero, similar to particle confinement in magnetic mirrors.</p>
+    <p><strong>Magnetrons:</strong> The drift motion in crossed fields (Ey and Bz) demonstrates the principle of magnetrons, where electrons drift to generate microwaves.</p>
+    <p><strong>Larmor Radius:</strong> The radius of circular motion is \( r_L = \frac{m v_\perp}{|q| B} \). For the default parameters, this is approximately 1 mm, visible in the XY plot.</p>
+    <p><strong>Drift Velocity:</strong> In crossed fields, the drift velocity is \( v_d = \frac{E}{B} \). With Ey = 10000 V/m and Bz = 1 T, the drift is 10000 m/s in the X-direction.</p>
 
-  useEffect(() => {
-    const B = new THREE.Vector3(0, 0, 1);
-    const E = new THREE.Vector3(0, 0, 0);
-    const v0 = new THREE.Vector3(1e6, 0, 0);
-    const r0 = new THREE.Vector3(0, 0, 0);
-    const tMax = 1e-7;
+    <h2>5. Suggestions for Extension</h2>
+    <ul>
+        <li><strong>Non-Uniform Fields:</strong> Simulate magnetic mirrors with a varying B-field.</li>
+        <li><strong>Relativistic Effects:</strong> Include relativistic corrections for high velocities.</li>
+        <li><strong>3D Visualization:</strong> Use Three.js to visualize the helical motion in 3D.</li>
+        <li><strong>Multiple Particles:</strong> Simulate a plasma with interacting particles.</li>
+    </ul>
 
-    setTrajectory(simulateTrajectory(E, B, v0, r0, tMax));
-  }, []);
+    <script>
+        const canvas = document.getElementById('trajectoryCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
 
-  return (
-    <Canvas camera={{ position: [5, 5, 5] }}>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} />
-      {trajectory.length > 0 && (
-        <Line points={trajectory.map((p) => [p.x, p.y, p.z])} color="red" lineWidth={2} />
-      )}
-    </Canvas>
-  );
-}
+        // Simulation parameters
+        let dt = 1e-9; // Time step (seconds)
+        let steps = 10000; // Number of steps
+        let scale = 1e5; // Scale factor for visualization (pixels per meter)
+
+        // Particle properties (default values)
+        let q = 1.6e-19; // Charge (Coulombs)
+        let m = 1.67e-27; // Mass (kg)
+        let r = [0, 0, 0]; // Position (m)
+        let v = [100000, 0, 10000]; // Velocity (m/s)
+
+        // Field properties (default values)
+        let B = [0, 0, 1.0]; // Magnetic field (Tesla)
+        let E = [0, 0, 0]; // Electric field (V/m)
+
+        // Cross product function
+        function crossProduct(v, B) {
+            return [
+                v[1] * B[2] - v[2] * B[1],
+                v[2] * B[0] - v[0] * B[2],
+                v[0] * B[1] - v[1] * B[0]
+            ];
+        }
+
+        // Lorentz force acceleration
+        function lorentzAcceleration(v, E, B, q, m) {
+            const vCrossB = crossProduct(v, B);
+            const ax = (q / m) * (E[0] + vCrossB[0]);
+            const ay = (q / m) * (E[1] + vCrossB[1]);
+            const az = (q / m) * (E[2] + vCrossB[2]);
+            return [ax, ay, az];
+        }
+
+        // Simulation function using Euler method
+        function simulate() {
+            const trajectory = [];
+            let rCurrent = [0, 0, 0];
+            let vCurrent = [v[0], v[1], v[2]];
+
+            for (let i = 0; i < steps; i++) {
+                // Store position for plotting
+                trajectory.push([rCurrent[0], rCurrent[1]]);
+
+                // Compute acceleration
+                const a = lorentzAcceleration(vCurrent, E, B, q, m);
+
+                // Update velocity (v = v + a * dt)
+                vCurrent[0] += a[0] * dt;
+                vCurrent[1] += a[1] * dt;
+                vCurrent[2] += a[2] * dt;
+
+                // Update position (r = r + v * dt)
+                rCurrent[0] += vCurrent[0] * dt;
+                rCurrent[1] += vCurrent[1] * dt;
+                rCurrent[2] += vCurrent[2] * dt;
+            }
+
+            return trajectory;
+        }
+
+        // Draw the trajectory on the canvas
+        function drawTrajectory(trajectory) {
+            ctx.clearRect(0, 0, width, height);
+            ctx.beginPath();
+            ctx.strokeStyle = 'blue';
+            ctx.lineWidth = 2;
+
+            // Center the canvas (0, 0) at the middle
+            const centerX = width / 2;
+            const centerY = height / 2;
+
+            // Plot the trajectory
+            for (let i = 0; i < trajectory.length; i++) {
+                const x = centerX + trajectory[i][0] * scale;
+                const y = centerY - trajectory[i][1] * scale; // Invert Y for canvas coordinates
+                if (i === 0) {
+                    ctx.moveTo(x, y);
+                } else {
+                    ctx.lineTo(x, y);
+                }
+            }
+
+            ctx.stroke();
+
+            // Draw axes
+            ctx.beginPath();
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 1;
+            ctx.moveTo(centerX, 0);
+            ctx.lineTo(centerX, height);
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(width, centerY);
+            ctx.stroke();
+
+            // Label axes
+            ctx.fillStyle = 'black';
+            ctx.font = '12px Arial';
+            ctx.fillText('X', width - 20, centerY - 10);
+            ctx.fillText('Y', centerX + 10, 20);
+        }
+
+        // Start the simulation with user inputs
+        function startSimulation() {
+            // Get user inputs
+            B[2] = parseFloat(document.getElementById('Bz').value);
+            E[1] = parseFloat(document.getElementById('Ey').value);
+            v[0] = parseFloat(document.getElementById('vx').value);
+            v[2] = parseFloat(document.getElementById('vz').value);
+            q = parseFloat(document.getElementById('q').value);
+            m = parseFloat(document.getElementById('m').value);
+
+            // Run simulation
+            const trajectory = simulate();
+
+            // Draw the trajectory
+            drawTrajectory(trajectory);
+        }
+
+        // Initial simulation
+        startSimulation();
+    </script>
+</body>
+</html>
