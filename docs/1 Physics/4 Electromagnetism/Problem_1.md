@@ -40,6 +40,8 @@ $\frac{d\mathbf{r}}{dt} = \mathbf{v}$
 
 This gives us a system of first-order differential equations for position ($\mathbf{r}$) and velocity ($\mathbf{v}$).
 
+![image](Electromagnetism/hSQTZ.png)
+
 #### **Python Implementation**
 We’ll use NumPy for numerical computations and Matplotlib for visualizations. Below is the Python script that simulates the particle’s motion and visualizes the trajectories.
 
