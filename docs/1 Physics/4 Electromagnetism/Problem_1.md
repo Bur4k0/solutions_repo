@@ -161,6 +161,8 @@ plt.legend()
 plt.axis('equal')
 plt.show()
 ```
+[Electromagnetic Field Simulation](Electromagnetic_Field_Simulation.html)
+
 [Lorentz Trajectory Simulation](Lorentz_Trajectory_Simulation.html)
 
 [Particle Motion Simulation](simulation22.html)
