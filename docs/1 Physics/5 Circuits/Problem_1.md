@@ -27,11 +27,12 @@ To handle **nested combinations**, the algorithm processes the graph iteratively
 
 ---
 
-[Equivalent Resistance Using Graph Theory](Equivalent_Resistance_Using_Graph_Theory.html)
+[Equivalent Resistance Using Graph Theory](Equivalent.html)
 
-[circuits_sim](circuitssim.html)
+[circuits sim](circuitssim22.html)
 
 **Explanation**:
+
 - **Series Detection**: A node with degree 2 indicates a chain. We sum the resistances and bypass the intermediate node.
 
 - **Parallel Detection**: Multiple edges between two nodes are combined using the parallel formula.
