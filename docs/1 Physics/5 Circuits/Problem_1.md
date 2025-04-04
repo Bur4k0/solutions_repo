@@ -27,6 +27,7 @@ To handle **nested combinations**, the algorithm processes the graph iteratively
 
 ---
 
+[Equivalent Resistance Using Graph Theory](Equivalent_Resistance_Using_Graph_Theory.html)
 
 [circuits_sim](circuitssim.html)
 
