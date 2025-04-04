@@ -66,7 +66,7 @@ Function CalculateEquivalentResistance(Graph G, Node source, Node sink):
         Return "Graph not fully reducible with series/parallel rules"
 ```
 
-[circuits sim](circuitssim.html)
+[circuits_sim](circuitssim.html)
 
 **Explanation**:
 - **Series Detection**: A node with degree 2 indicates a chain. We sum the resistances and bypass the intermediate node.
