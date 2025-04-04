@@ -33,7 +33,9 @@ To handle **nested combinations**, the algorithm processes the graph iteratively
 
 **Explanation**:
 - **Series Detection**: A node with degree 2 indicates a chain. We sum the resistances and bypass the intermediate node.
+
 - **Parallel Detection**: Multiple edges between two nodes are combined using the parallel formula.
+
 - **Nested Handling**: The while loop ensures iterative reduction. Inner structures (e.g., a series pair within a parallel set) are simplified in subsequent iterations as the graph updates.
 
 ---
