@@ -80,8 +80,6 @@
 <ul class="current">
 <li class="toctree-l3"><a class="reference internal" href="#algorithm-description">Algorithm Description</a>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="#pseudocode">Pseudocode</a>
-</li>
 <li class="toctree-l3"><a class="reference internal" href="#example-applications">Example Applications</a>
 <ul>
 <li class="toctree-l4"><a class="reference internal" href="#example-1-simple-series-combination">Example 1: Simple Series Combination</a>
@@ -201,54 +199,25 @@
 </ul>
 <p>The algorithm iteratively simplifies the graph by identifying and reducing <strong>series</strong> and <strong>parallel</strong> resistor configurations until only two nodes remain, connected by a single equivalent resistance. Here’s how it works:</p>
 <ol>
-<li><strong>Identify Series Connections</strong>: </li>
+<li>
+<p><strong>Identify Series Connections</strong>: 
+-Two resistors are in series if they share a node with a degree of 2 (i.e., the node connects only to the two resistors). Replace them with a single resistor whose resistance is the sum of the two.</p>
+</li>
+<li>
+<p><strong>Identify Parallel Connections</strong>: 
+-Two resistors are in parallel if they connect the same pair of nodes. Replace them with a single resistor whose resistance is computed using the parallel formula: <span class="arithmatex">\(R_{eq} = \frac{R_1 \cdot R_2}{R_1 + R_2}\)</span> (or equivalently, <span class="arithmatex">\(\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2}\)</span>).</p>
+</li>
+<li>
+<p><strong>Iterate</strong>: 
+-Repeat the process, updating the graph after each reduction, until no further series or parallel simplifications are possible. For complex graphs, this may leave a reduced structure that requires additional techniques (e.g., delta-wye transformations), but we’ll focus on circuits reducible by series and parallel rules.</p>
+</li>
+<li>
+<p><strong>Termination</strong>: 
+-Stop when the graph consists of just two nodes connected by one edge, where the edge weight is the equivalent resistance.</p>
+</li>
 </ol>
-<p>-Two resistors are in series if they share a node with a degree of 2 (i.e., the node connects only to the two resistors). Replace them with a single resistor whose resistance is the sum of the two.</p>
-<ol>
-<li><strong>Identify Parallel Connections</strong>: </li>
-</ol>
-<p>-Two resistors are in parallel if they connect the same pair of nodes. Replace them with a single resistor whose resistance is computed using the parallel formula: <span class="arithmatex">\(R_{eq} = \frac{R_1 \cdot R_2}{R_1 + R_2}\)</span> (or equivalently, <span class="arithmatex">\(\frac{1}{R_{eq}} = \frac{1}{R_1} + \frac{1}{R_2}\)</span>).</p>
-<ol>
-<li><strong>Iterate</strong>: </li>
-</ol>
-<p>-Repeat the process, updating the graph after each reduction, until no further series or parallel simplifications are possible. For complex graphs, this may leave a reduced structure that requires additional techniques (e.g., delta-wye transformations), but we’ll focus on circuits reducible by series and parallel rules.</p>
-<ol>
-<li><strong>Termination</strong>: </li>
-</ol>
-<p>-Stop when the graph consists of just two nodes connected by one edge, where the edge weight is the equivalent resistance.</p>
 <p>To handle <strong>nested combinations</strong>, the algorithm processes the graph iteratively, reducing innermost series or parallel structures first. A traversal method (like DFS) can help detect these patterns systematically.</p>
 <hr/>
-<h3 id="pseudocode">Pseudocode</h3>
-<pre><code class="language-plaintext">Function CalculateEquivalentResistance(Graph G, Node source, Node sink):
-    Input: Graph G (nodes, edges with resistance weights), source node, sink node
-    Output: Equivalent resistance between source and sink
-
-    While G has more than 2 nodes OR more than 1 edge between source and sink:
-        // Step 1: Check for series reductions
-        For each node N in G:
-            If degree(N) == 2:
-                Let N1 and N2 be the neighbors of N
-                Let R1 = resistance of edge (N1, N)
-                Let R2 = resistance of edge (N, N2)
-                If N1 != N2:  // Avoid self-loops
-                    R_series = R1 + R2
-                    Remove node N and edges (N1, N), (N, N2)
-                    Add edge (N1, N2) with weight R_series
-
-        // Step 2: Check for parallel reductions
-        For each pair of nodes (A, B) in G:
-            If multiple edges exist between A and B:
-                Let R_values = list of resistances between A and B
-                R_parallel = 1 / (sum(1/R for R in R_values))
-                Remove all edges between A and B
-                Add edge (A, B) with weight R_parallel
-
-    // Step 3: Return result
-    If G has exactly 2 nodes (source, sink) and 1 edge:
-        Return resistance of edge (source, sink)
-    Else:
-        Return "Graph not fully reducible with series/parallel rules"
-</code></pre>
 <p><a href="../circuitssim.html">circuits_sim</a></p>
 <p><strong>Explanation</strong>:
 - <strong>Series Detection</strong>: A node with degree 2 indicates a chain. We sum the resistances and bypass the intermediate node.
