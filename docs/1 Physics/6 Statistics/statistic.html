@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Limit Theorem Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .dist-container {
+            margin: 20px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin: 5px;
+        }
+        h2 {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Exploring the Central Limit Theorem</h1>
+    <div class="container" id="plotContainer"></div>
+    <script>
+        // Simple seeded random number generator
+        let seed = 42;
+        function random() {
+            seed = (seed * 9301 + 49297) % 233280;
+            return seed / 233280;
+        }
+
+        // Parameters
+        const populationSize = 10000;
+        const sampleSizes = [5, 10, 30, 50];
+        const numSamples = 1000;
+        const canvasWidth = 300;
+        const canvasHeight = 200;
+
+        // Random distribution generators
+        function uniform(low, high) {
+            return low + (high - low) * random();
+        }
+        function exponential(scale) {
+            return -scale * Math.log(1 - random());
+        }
+        function binomial(n, p) {
+            let sum = 0;
+            for (let i = 0; i < n; i++) {
+                if (random() < p) sum++;
+            }
+            return sum;
+        }
+
+        // Generate populations
+        const populations = {
+            "Uniform": Array.from({ length: populationSize }, () => uniform(0, 1)),
+            "Exponential": Array.from({ length: populationSize }, () => exponential(1)),
+            "Binomial": Array.from({ length: populationSize }, () => binomial(10, 0.5))
+        };
+
+        // Function to calculate variance
+        function variance(arr) {
+            const mean = arr.reduce((a, b) => a + b) / arr.length;
+            return arr.reduce((a, b) => a + (b - mean) ** 2, 0) / arr.length;
+        }
+
+        // Function to draw histogram
+        function drawHistogram(canvasId, data, title) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+            // Calculate histogram bins
+            const min = Math.min(...data);
+            const max = Math.max(...data);
+            const bins = 30;
+            const binWidth = (max - min) / bins;
+            const hist = Array(bins).fill(0);
+            data.forEach(val => {
+                const bin = Math.min(bins - 1, Math.floor((val - min) / binWidth));
+                hist[bin]++;
+            });
+            const maxHeight = Math.max(...hist);
+
+            // Scale to canvas
+            const xScale = canvasWidth / bins;
+            const yScale = (canvasHeight - 40) / maxHeight;
+
+            // Draw bars
+            ctx.fillStyle = 'steelblue';
+            for (let i = 0; i < bins; i++) {
+                const x = i * xScale;
+                const y = canvasHeight - hist[i] * yScale;
+                ctx.fillRect(x, y, xScale - 1, hist[i] * yScale);
+            }
+
+            // Axes
+            ctx.beginPath();
+            ctx.moveTo(0, canvasHeight - 20);
+            ctx.lineTo(canvasWidth, canvasHeight - 20);
+            ctx.moveTo(0, canvasHeight - 20);
+            ctx.lineTo(0, 0);
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+
+            // Labels
+            ctx.fillStyle = 'black';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(title, canvasWidth / 2, 15);
+            ctx.fillText('Sample Mean', canvasWidth / 2, canvasHeight - 5);
+            ctx.save();
+            ctx.translate(10, canvasHeight / 2);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText('Density', 0, 0);
+            ctx.restore();
+        }
+
+        // Simulate and plot for each distribution
+        for (const [distName, population] of Object.entries(populations)) {
+            const distDiv = document.createElement('div');
+            distDiv.className = 'dist-container';
+            distDiv.innerHTML = `<h2>Sampling Distribution of Means - ${distName}</h2>`;
+            document.getElementById('plotContainer').appendChild(distDiv);
+
+            const gridDiv = document.createElement('div');
+            gridDiv.style.display = 'grid';
+            gridDiv.style.gridTemplateColumns = 'repeat(2, 1fr)';
+            gridDiv.style.gap = '10px';
+            distDiv.appendChild(gridDiv);
+
+            sampleSizes.forEach((n, i) => {
+                // Generate sampling distribution of means
+                const sampleMeans = [];
+                for (let j = 0; j < numSamples; j++) {
+                    let sum = 0;
+                    for (let k = 0; k < n; k++) {
+                        const index = Math.floor(random() * populationSize);
+                        sum += population[index];
+                    }
+                    sampleMeans.push(sum / n);
+                }
+
+                // Create canvas and plot
+                const canvasId = `${distName}_${n}`;
+                const canvas = document.createElement('canvas');
+                canvas.id = canvasId;
+                canvas.width = canvasWidth;
+                canvas.height = canvasHeight;
+                gridDiv.appendChild(canvas);
+                drawHistogram(canvasId, sampleMeans, `Sample Size = ${n}`);
+            });
+
+            // Calculate and log variance
+            const popVariance = variance(population);
+            console.log(`${distName} Population Variance: ${popVariance.toFixed(4)}`);
+        }
+    </script>
+</body>
+</html>

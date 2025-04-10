@@ -85,7 +85,7 @@ for dist_name, population in populations.items():
     print(f"{dist_name} Population Variance: {pop_variance:.4f}")
 ```
 
-[Statistic Simulation](statistic.html)
+[Exploring the Central Limit Theorem](statistic.html)
 
 [Statistic_2](statistic21.html)
 ---
