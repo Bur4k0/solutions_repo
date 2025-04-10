@@ -86,6 +86,8 @@ for dist_name, population in populations.items():
 ```
 
 [Statistic Simulation](statistic.html)
+
+[Statistic_2](statistic21.html)
 ---
 
 ### Results and Observations
