@@ -31,6 +31,8 @@ To handle **nested combinations**, the algorithm processes the graph iteratively
 
 [circuits sim](circuitssim22.html)
 
+[Resistance Simulation](Equivalent_Resistance_Simulation.html)
+
 **Explanation**:
 
 - **Series Detection**: A node with degree 2 indicates a chain. We sum the resistances and bypass the intermediate node.
