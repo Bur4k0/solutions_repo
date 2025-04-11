@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Equivalent Resistance Using Graph Theory</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+            background-color: #f0f0f0;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        #controls {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button.reset {
+            background-color: #e74c3c;
+        }
+        button.reset:hover {
+            background-color: #c0392b;
+        }
+        #simulation {
+            max-width: 800px;
+            margin-top: 20px;
+        }
+        .step {
+            padding: 15px;
+            margin: 10px 0;
+            background-color: white;
+            border-left: 5px solid #e74c3c;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: opacity 0.5s ease;
+        }
+        .graph {
+            font-family: monospace;
+            color: #27ae60;
+        }
+        #graph-container {
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            background-color: white;
+        }
+        .node {
+            fill: #3498db;
+            stroke: #2c3e50;
+            stroke-width: 2;
+            transition: opacity 0.5s ease, cx 0.5s ease, cy 0.5s ease;
+        }
+        .node-label {
+            font-size: 14px;
+            fill: #2c3e50;
+            transition: opacity 0.5s ease;
+        }
+        .edge {
+            stroke: #7f8c8d;
+            stroke-width: 3;
+            transition: opacity 0.5s ease;
+        }
+        .edge-label {
+            font-size: 12px;
+            fill: #e74c3c;
+            transition: opacity 0.5s ease;
+        }
+        .highlight {
+            stroke: #e74c3c;
+            stroke-width: 5;
+        }
+    </style>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>Equivalent Resistance Using Graph Theory</h1>
+    <p>
+        This simulation calculates the equivalent resistance of a circuit using graph theory. Select an example below to see the step-by-step reduction process with a dynamic graph visualization.
+    </p>
+
+    <div id="controls">
+        <button onclick="simulateCircuit(1)">Example 1: Series (2Ω + 3Ω)</button>
+        <button onclick="simulateCircuit(2)">Example 2: Parallel (4Ω || 6Ω)</button>
+        <button onclick="simulateCircuit(3)">Example 3: Nested (2Ω + 3Ω) || 5Ω</button>
+        <button class="reset" onclick="resetSimulation()">Reset</button>
+    </div>
+
+    <div id="graph-container"></div>
+    <div id="simulation"></div>
+
+    <script>
+        const circuits = [
+            { nodes: ['A', 'C', 'B'], edges: [{from: 'A', to: 'C', r: 2, id: 'e1'}, {from: 'C', to: 'B', r: 3, id: 'e2'}], source: 'A', sink: 'B' },
+            { nodes: ['A', 'B'], edges: [{from: 'A', to: 'B', r: 4, id: 'e1'}, {from: 'A', to: 'B', r: 6, id: 'e2'}], source: 'A', sink: 'B' },
+            { nodes: ['A', 'C', 'B'], edges: [{from: 'A', to: 'C', r: 2, id: 'e1'}, {from: 'C', to: 'B', r: 3, id: 'e2'}, {from: 'A', to: 'B', r: 5, id: 'e3'}], source: 'A', sink: 'B' }
+        ];
+
+        let svg = null;
+        let currentGraph = null;
+
+        // Initialize D3 graph
+        function initGraph() {
+            d3.select('#graph-container').html('');
+            svg = d3.select('#graph-container')
+                .append('svg')
+                .attr('width', '100%')
+                .attr('height', '100%');
+        }
+
+        // Render graph with D3 force layout
+        function renderGraph(graph) {
+            svg.selectAll('*').remove();
+            const width = 800;
+            const height = 300;
+
+            const simulation = d3.forceSimulation(graph.nodes.map(n => ({id: n})))
+                .force('link', d3.forceLink(graph.edges.map(e => ({
+                    source: e.from,
+                    target: e.to,
+                    id: e.id,
+                    r: e.r
+                }))).id(d => d.id).distance(100))
+                .force('charge', d3.forceManyBody().strength(-200))
+                .force('center', d3.forceCenter(width / 2, height / 2))
+                .force('x', d3.forceX(width / 2).strength(0.1))
+                .force('y', d3.forceY(height / 2).strength(0.1));
+
+            // Fix source and sink
+            simulation.nodes().forEach(node => {
+                if (node.id === graph.source) {
+                    node.fx = 100;
+                    node.fy = height / 2;
+                } else if (node.id === graph.sink) {
+                    node.fx = width - 100;
+                    node.fy = height / 2;
+                }
+            });
+
+            const edges = svg.append('g')
+                .selectAll('path')
+                .data(graph.edges)
+                .enter()
+                .append('path')
+                .attr('class', 'edge')
+                .attr('id', d => `edge-${d.id}`);
+
+            const edgeLabels = svg.append('g')
+                .selectAll('text')
+                .data(graph.edges)
+                .enter()
+                .append('text')
+                .attr('class', 'edge-label')
+                .attr('dy', -5)
+                .text(d => `${d.r.toFixed(2)}Ω`);
+
+            const nodes = svg.append('g')
+                .selectAll('circle')
+                .data(graph.nodes.map(n => ({id: n})))
+                .enter()
+                .append('circle')
+                .attr('class', 'node')
+                .attr('r', 10);
+
+            const nodeLabels = svg.append('g')
+                .selectAll('text')
+                .data(graph.nodes.map(n => ({id: n})))
+                .enter()
+                .append('text')
+                .attr('class', 'node-label')
+                .attr('dy', -15)
+                .text(d => d.id);
+
+            simulation.on('tick', () => {
+                edges.attr('d', d => {
+                    const source = simulation.nodes().find(n => n.id === d.from);
+                    const target = simulation.nodes().find(n => n.id === d.to);
+                    return `M${source.x},${source.y} L${target.x},${target.y}`;
+                });
+
+                edgeLabels
+                    .attr('x', d => {
+                        const source = simulation.nodes().find(n => n.id === d.from);
+                        const target = simulation.nodes().find(n => n.id === d.to);
+                        return (source.x + target.x) / 2;
+                    })
+                    .attr('y', d => {
+                        const source = simulation.nodes().find(n => n.id === d.from);
+                        const target = simulation.nodes().find(n => n.id === d.to);
+                        return (source.y + target.y) / 2;
+                    });
+
+                nodes
+                    .attr('cx', d => d.x)
+                    .attr('cy', d => d.y);
+
+                nodeLabels
+                    .attr('x', d => d.x)
+                    .attr('y', d => d.y);
+            });
+        }
+
+        // Display graph as text
+        function displayGraph(graph) {
+            return graph.edges.map(e => `${e.from} --(${e.r.toFixed(2)}Ω)--> ${e.to}`).join('<br>');
+        }
+
+        // Simulate circuit reduction
+        async function simulateCircuit(exampleIndex) {
+            const simDiv = document.getElementById('simulation');
+            simDiv.innerHTML = `<h2>Simulation: Example ${exampleIndex}</h2>`;
+            currentGraph = JSON.parse(JSON.stringify(circuits[exampleIndex - 1]));
+            let step = 1;
+
+            initGraph();
+            renderGraph(currentGraph);
+
+            simDiv.innerHTML += `
+                <div class="step">
+                    <strong>Initial Graph</strong><br>
+                    Nodes: ${currentGraph.nodes.join(', ')}<br>
+                    Edges:<br><span class="graph">${displayGraph(currentGraph)}</span>
+                </div>
+            `;
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            while (currentGraph.nodes.length > 2 || currentGraph.edges.length > 1) {
+                let reduced = false;
+
+                // Series reduction
+                for (let i = 0; i < currentGraph.nodes.length; i++) {
+                    const node = currentGraph.nodes[i];
+                    if (node === currentGraph.source || node === currentGraph.sink) continue;
+                    const neighbors = currentGraph.edges.filter(e => e.from === node || e.to === node);
+                    if (neighbors.length === 2) {
+                        const n1 = neighbors[0].from === node ? neighbors[0].to : neighbors[0].from;
+                        const n2 = neighbors[1].from === node ? neighbors[1].to : neighbors[1].from;
+                        if (n1 !== n2) {
+                            const r1 = neighbors[0].r;
+                            const r2 = neighbors[1].r;
+                            const rSeries = r1 + r2;
+
+                            svg.select(`#edge-${neighbors[0].id}`).classed('highlight', true);
+                            svg.select(`#edge-${neighbors[1].id}`).classed('highlight', true);
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+                            svg.selectAll(`circle`).filter(d => d.id === node).style('opacity', 0);
+                            svg.select(`#edge-${neighbors[0].id}`).style('opacity', 0);
+                            svg.select(`#edge-${neighbors[1].id}`).style('opacity', 0);
+                            await new Promise(resolve => setTimeout(resolve, 500));
+
+                            simDiv.innerHTML += `
+                                <div class="step">
+                                    <strong>Step ${step}: Series Reduction</strong><br>
+                                    Node ${node} connects ${n1} (${r1}Ω) and ${n2} (${r2}Ω).<br>
+                                    Formula: R_eq = ${r1} + ${r2} = ${rSeries}Ω<br>
+                                    New resistance: ${rSeries}Ω between ${n1} and ${n2}.
+                                </div>
+                            `;
+
+                            currentGraph.edges = currentGraph.edges.filter(e => !neighbors.includes(e));
+                            currentGraph.edges.push({from: n1, to: n2, r: rSeries, id: `e${Date.now()}`});
+                            currentGraph.nodes.splice(currentGraph.nodes.indexOf(node), 1);
+                            renderGraph(currentGraph);
+                            reduced = true;
+                            step++;
+                            break;
+                        }
+                    }
+                }
+
+                if (reduced) {
+                    simDiv.innerHTML += `
+                        <div class="step">
+                            <strong>Current Graph</strong><br>
+                            Nodes: ${currentGraph.nodes.join(', ')}<br>
+                            Edges:<br><span class="graph">${displayGraph(currentGraph)}</span>
+                        </div>
+                    `;
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    continue;
+                }
+
+                // Parallel reduction
+                const edgeGroups = {};
+                currentGraph.edges.forEach(e => {
+                    const key = [e.from, e.to].sort().join('-');
+                    edgeGroups[key] = edgeGroups[key] || [];
+                    edgeGroups[key].push(e);
+                });
+
+                for (const key in edgeGroups) {
+                    const edges = edgeGroups[key];
+                    if (edges.length > 1) {
+                        const rValues = edges.map(e => e.r);
+                        const rParallel = 1 / rValues.reduce((sum, r) => sum + 1/r, 0);
+                        const [from, to] = key.split('-');
+
+                        edges.forEach(e => svg.select(`#edge-${e.id}`).classed('highlight', true));
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                        edges.forEach(e => svg.select(`#edge-${e.id}`).style('opacity', 0));
+                        await new Promise(resolve => setTimeout(resolve, 500));
+
+                        simDiv.innerHTML += `
+                            <div class="step">
+                                <strong>Step ${step}: Parallel Reduction</strong><br>
+                                Between ${from} and ${to}: ${rValues.join('Ω, ')}Ω in parallel.<br>
+                                Formula: 1/R_eq = ${rValues.map(r => `1/${r}`).join(' + ')} = ${(1/rParallel).toFixed(3)}<br>
+                                R_eq = ${rParallel.toFixed(2)}Ω
+                            </div>
+                        `;
+
+                        currentGraph.edges = currentGraph.edges.filter(e => !edges.includes(e));
+                        currentGraph.edges.push({from, to, r: rParallel, id: `e${Date.now()}`});
+                        renderGraph(currentGraph);
+                        reduced = true;
+                        step++;
+                        break;
+                    }
+                }
+
+                if (reduced) {
+                    simDiv.innerHTML += `
+                        <div class="step">
+                            <strong>Current Graph</strong><br>
+                            Nodes: ${currentGraph.nodes.join(', ')}<br>
+                            Edges:<br><span class="graph">${displayGraph(currentGraph)}</span>
+                        </div>
+                    `;
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    continue;
+                }
+
+                break; // No further reductions
+            }
+
+            const finalR = currentGraph.edges[0].r;
+            simDiv.innerHTML += `
+                <div class="step">
+                    <strong>Final Result</strong><br>
+                    Equivalent resistance between ${currentGraph.source} and ${currentGraph.sink}: ${finalR.toFixed(2)}Ω
+                </div>
+            `;
+        }
+
+        // Reset simulation
+        function resetSimulation() {
+            const simDiv = document.getElementById('simulation');
+            simDiv.innerHTML = '';
+            d3.select('#graph-container').html('');
+            currentGraph = null;
+        }
+
+        // Initial empty state
+        window.onload = () => {
+            initGraph();
+        };
+    </script>
+</body>
+</html>
