@@ -98,6 +98,8 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#_1"></a>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#part-2-estimating-using-buffons-needle">Part 2: Estimating π Using Buffon’s Needle</a>
 <ul>
 <li class="toctree-l4"><a class="reference internal" href="#theoretical-foundation_1">Theoretical Foundation</a>
@@ -259,7 +261,7 @@ for n, pi in zip(n_points_list, estimates):
 <p><strong>Computational Cost</strong>: Simple distance calculations scale linearly with N, making this efficient for small-to-medium N.</p>
 </li>
 </ul>
-<hr/>
+<h2 id="_1"><img alt="Monte Carlo Estimation of π " src="../monte_carlo_pi.png"/></h2>
 <h2 id="part-2-estimating-using-buffons-needle">Part 2: Estimating π Using Buffon’s Needle</h2>
 <h3 id="theoretical-foundation_1">Theoretical Foundation</h3>
 <p>In Buffon’s Needle problem, we drop a needle of length <span class="arithmatex">\(L\)</span> onto a plane with parallel lines spaced <span class="arithmatex">\(D\)</span> apart. If <span class="arithmatex">\(L \leq D\)</span>, the probability the needle crosses a line depends on its random position and angle. The probability is:</p>
@@ -311,6 +313,7 @@ plt.show()
 for n, pi in zip(n_drops_list, estimates):
     print(f"N = {n}: Estimated π = {pi:.4f}")
 </code></pre>
+<p><img alt="Estimating pi Using Buffon's Method" src="../estPI_01.png"/></p>
 <p><a href="../Estimating_%CF%80_with_Monte_Carlo_Simulation.html">Estimating π with Monte Carlo Simulation</a></p>
 <p><a href="../Estimating_%CF%80_with_Buffon%27s_Needle.html">Estimating π with Buffon's Needle</a></p>
 <h3 id="analysis_1">Analysis</h3>
