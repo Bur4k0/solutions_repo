@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buffon's Needle π Estimation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .controls {
+            margin: 20px;
+        }
+        .controls label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .controls input {
+            padding: 5px;
+            width: 80px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .controls button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .controls button:hover {
+            background-color: #2980b9;
+        }
+        .plot-container {
+            text-align: center;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 10px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .result span {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estimating π with Buffon's Needle</h1>
+    <div class="controls">
+        <label for="nDrops">Number of Drops:</label>
+        <input type="number" id="nDrops" value="1000" min="10" max="100000">
+        <button onclick="simulateBuffonsNeedle()">Generate</button>
+        <button onclick="resetSimulation()">Reset</button>
+    </div>
+    <div class="container">
+        <div class="plot-container" id="plotContainer">
+            <canvas id="buffonCanvas" width="400" height="400"></canvas>
+            <div class="result" id="piResult">π Estimate: <span>0.0000</span> (Error: <span>0.0000</span>)</div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('buffonCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const L = 1;  // Needle length
+        const D = 1;  // Distance between lines
+        const scaleY = height / (2 * D); // Fit 2*D vertically
+        const scaleX = width / (2 * L);  // Fit 2*L horizontally for clarity
+        const maxNeedlesToPlot = 50;
+        const truePi = Math.PI;
+
+        // Draw base lines
+        function drawBase() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 2;
+            ctx.setLineDash([5, 5]);
+
+            // Draw parallel lines at y = 0, 1, 2
+            for (let line = 0; line <= 2; line++) {
+                const y = line * D * scaleY;
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(width, y);
+                ctx.stroke();
+            }
+            ctx.setLineDash([]);
+        }
+
+        // Simulate Buffon's Needle
+        function simulateBuffonsNeedle() {
+            const nDrops = parseInt(document.getElementById('nDrops').value);
+            if (nDrops < 10 || nDrops > 100000) {
+                alert('Please enter a number of drops between 10 and 100,000.');
+                return;
+            }
+
+            drawBase();
+            let nCrosses = 0;
+
+            // Simulate needle drops
+            for (let i = 0; i < nDrops; i++) {
+                const xCenter = Math.random() * 2 * L; // Random x-center (0 to 2*L)
+                const yCenter = Math.random() * D;    // Random y-center (0 to D)
+                const angle = Math.random() * Math.PI; // Random angle (0 to π)
+
+                // Needle endpoints
+                const x1 = xCenter - (L / 2) * Math.sin(angle);
+                const y1 = yCenter - (L / 2) * Math.cos(angle);
+                const x2 = xCenter + (L / 2) * Math.sin(angle);
+                const y2 = yCenter + (L / 2) * Math.cos(angle);
+
+                // Check if needle crosses a line
+                const floorY1 = Math.floor(y1 / D);
+                const floorY2 = Math.floor(y2 / D);
+                if (floorY1 !== floorY2) nCrosses++;
+
+                // Plot only first maxNeedlesToPlot needles
+                if (i < maxNeedlesToPlot) {
+                    ctx.beginPath();
+                    ctx.moveTo(x1 * scaleX, y1 * scaleY);
+                    ctx.lineTo(x2 * scaleX, y2 * scaleY);
+                    ctx.strokeStyle = 'blue';
+                    ctx.globalAlpha = 0.5;
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+
+            // Estimate π
+            const piEstimate = nCrosses > 0 ? (2 * L * nDrops) / (D * nCrosses) : 0;
+            const error = Math.abs(truePi - piEstimate);
+
+            // Update result
+            const resultDiv = document.getElementById('piResult');
+            resultDiv.innerHTML = `π Estimate: <span>${piEstimate.toFixed(4)}</span> (Error: <span>${error.toFixed(4)}</span>)`;
+
+            console.log(`N = ${nDrops}: Estimated π = ${piEstimate.toFixed(4)}, Error = ${error.toFixed(4)}`);
+        }
+
+        // Reset simulation
+        function resetSimulation() {
+            document.getElementById('nDrops').value = 1000;
+            drawBase();
+            const resultDiv = document.getElementById('piResult');
+            resultDiv.innerHTML = `π Estimate: <span>0.0000</span> (Error: <span>0.0000</span>)`;
+        }
+
+        // Initial setup
+        window.onload = () => {
+            drawBase();
+        };
+    </script>
+</body>
+</html>
