@@ -66,6 +66,7 @@ for n, pi in zip(n_points_list, estimates):
 
 - **Computational Cost**: Simple distance calculations scale linearly with N, making this efficient for small-to-medium N.
 
+![Monte Carlo Estimation of π ](monte_carlo_pi.png)
 ---
 
 ## Part 2: Estimating π Using Buffon’s Needle
@@ -127,6 +128,8 @@ plt.show()
 for n, pi in zip(n_drops_list, estimates):
     print(f"N = {n}: Estimated π = {pi:.4f}")
 ```
+![Estimating pi Using Buffon's Method](estPI_01.png)
+
 [Estimating π with Monte Carlo Simulation](Estimating_π_with_Monte_Carlo_Simulation.html)
 
 [Estimating π with Buffon's Needle](Estimating_π_with_Buffon's_Needle.html)
