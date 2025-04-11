@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pendulum Gravity Measurement Simulation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    h1 {
+      color: #333;
+    }
+    input, button {
+      padding: 8px;
+      font-size: 1rem;
+      margin-top: 5px;
+    }
+    .results {
+      margin-top: 20px;
+      padding: 10px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Pendulum Gravity Measurement Simulation</h1>
+
+  <label for="length">Pendulum Length (meters):</label><br>
+  <input type="number" id="length" step="0.01" value="1.00"><br><br>
+
+  <button onclick="simulate()">Simulate Measurement</button>
+
+  <div class="results" id="results" style="display:none;">
+    <h3>Simulation Results:</h3>
+    <p><strong>Measured Times for 10 Oscillations (s):</strong></p>
+    <ul id="times"></ul>
+    <p><strong>Mean Time for 10 Oscillations:</strong> <span id="meanT10"></span> s</p>
+    <p><strong>Mean Period (T):</strong> <span id="period"></span> s</p>
+    <p><strong>Calculated g:</strong> <span id="g"></span> m/s²</p>
+    <p><strong>Standard g:</strong> 9.81 m/s²</p>
+  </div>
+
+  <script>
+    function simulate() {
+      const L = parseFloat(document.getElementById('length').value);
+      const gTrue = 9.81;
+      const T = 2 * Math.PI * Math.sqrt(L / gTrue);
+      let times = [];
+
+      for (let i = 0; i < 10; i++) {
+        // Simulate 10 oscillation time with random timing error ±0.3s
+        const error = (Math.random() - 0.5) * 0.6;
+        times.push((T * 10 + error).toFixed(2));
+      }
+
+      // Display times
+      const timeList = document.getElementById('times');
+      timeList.innerHTML = "";
+      times.forEach((t, i) => {
+        const li = document.createElement('li');
+        li.textContent = `Trial ${i + 1}: ${t} s`;
+        timeList.appendChild(li);
+      });
+
+      // Calculate mean
+      const meanT10 = times.reduce((sum, val) => sum + parseFloat(val), 0) / times.length;
+      const period = meanT10 / 10;
+      const g = (4 * Math.PI * Math.PI * L) / (period * period);
+
+      // Display results
+      document.getElementById('meanT10').textContent = meanT10.toFixed(3);
+      document.getElementById('period').textContent = period.toFixed(3);
+      document.getElementById('g').textContent = g.toFixed(3);
+      document.getElementById('results').style.display = "block";
+    }
+  </script>
+
+</body>
+</html>
