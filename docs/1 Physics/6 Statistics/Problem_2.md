@@ -129,7 +129,7 @@ for n, pi in zip(n_drops_list, estimates):
 ```
 [Estimating π with Monte Carlo Simulation](Estimating_π_with_Monte_Carlo_Simulation.html)
 
-[Estimating π with Buffon's Needle](problem2simulation.html)
+[Estimating π with Buffon's Needle](Estimating_π_with_Buffon's_Needle.html)
 
 ### Analysis
 - **Convergence**: Estimates fluctuate more than the circle method (e.g., N = 100 might give ~2.8–3.5), but approach π with larger N.
