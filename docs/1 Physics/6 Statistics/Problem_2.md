@@ -127,7 +127,7 @@ plt.show()
 for n, pi in zip(n_drops_list, estimates):
     print(f"N = {n}: Estimated π = {pi:.4f}")
 ```
-[Statistic_Problem2](problem2.html)
+[Estimating π with Monte Carlo Simulation](Estimating_π_with_Monte_Carlo_Simulation.html)
 
 [Estimating π with Buffon's Needle](problem2simulation.html)
 
