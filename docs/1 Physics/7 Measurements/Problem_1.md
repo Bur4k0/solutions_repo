@@ -84,15 +84,15 @@ $\Delta g = g \cdot \sqrt{ \left(\frac{\Delta L}{L}\right)^2 + \left(2 \cdot \fr
 ## **5. Final Results:**
 
 ```markdown
-- Measured Pendulum Length $L$: ___ m ± ___ m
+- Measured Pendulum Length $L$: $ ___ m ± ___ m $
 
-- Mean Period $\bar{T}$: ___ s ± ___ s
+- Mean Period $\bar{T}$:$ ___ s ± ___ s $
 
-- Gravitational Acceleration $g$: ___ m/s² ± ___ m/s²
+- Gravitational Acceleration $g$:$ ___ m/s² ± ___ m/s² $
 
-- Standard Value of $g$: 9.80665 m/s²
+- Standard Value of $g$:$ 9.80665 m/s² $
 
-- Percent Error: ___%
+- Percent Error:$ ___% $
 ```
 
 ---
