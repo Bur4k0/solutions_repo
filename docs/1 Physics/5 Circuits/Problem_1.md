@@ -29,7 +29,7 @@ To handle **nested combinations**, the algorithm processes the graph iteratively
 
 [Resistance Simulation](Equivalent_Resistance_Simulation.html)
 
-[Resistance Simulation 2](Equivalent_Resistance_Simulation2.html)
+[Resistance Simulation-2](Equivalent_Resistance_Simulation_2.html)
 
 [Equivalent Resistance Using Graph Theory](Equivalent_Resistance_Using_Graph_Theory.html)
 
