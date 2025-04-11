@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Limit Theorem Simulation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+            margin: 0;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .controls {
+            margin: 20px;
+            text-align: center;
+        }
+        .controls label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .controls input {
+            padding: 5px;
+            width: 60px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .controls button {
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .controls button:hover {
+            background-color: #2980b9;
+        }
+        .plot-container {
+            margin: 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 600px;
+        }
+        .plot-container h2 {
+            text-align: center;
+            color: #34495e;
+            margin-top: 0;
+        }
+        canvas {
+            width: 100% !important;
+            height: 300px !important;
+        }
+        .description {
+            text-align: center;
+            margin: 20px;
+            max-width: 800px;
+            color: #555;
+        }
+    </style>
+    <!-- Include Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h1>Central Limit Theorem Simulation</h1>
+
+    <div class="container">
+        <div class="description">
+            <p>This simulation demonstrates the Central Limit Theorem (CLT) by showing the sampling distributions of sample means from different population distributions. Adjust the sample size and number of samples below, then click "Generate" to see how the distribution of sample means approaches a normal distribution as sample size increases.</p>
+        </div>
+
+        <div class="controls">
+            <label for="sampleSize">Sample Size (n):</label>
+            <input type="number" id="sampleSize" value="30" min="1" max="1000">
+            <label for="numSamples">Number of Samples:</label>
+            <input type="number" id="numSamples" value="1000" min="1" max="10000">
+            <button onclick="generatePlots()">Generate</button>
+        </div>
+
+        <div class="plot-container">
+            <h2>Uniform Distribution</h2>
+            <canvas id="uniformChart"></canvas>
+        </div>
+
+        <div class="plot-container">
+            <h2>Exponential Distribution</h2>
+            <canvas id="exponentialChart"></canvas>
+        </div>
+
+        <div class="plot-container">
+            <h2>Binomial Distribution</h2>
+            <canvas id="binomialChart"></canvas>
+        </div>
+
+        <div class="plot-container">
+            <h2>Normal Distribution</h2>
+            <canvas id="normalChart"></canvas>
+        </div>
+    </div>
+
+    <script>
+        // Chart instances
+        let uniformChart, exponentialChart, binomialChart, normalChart;
+
+        // Initialize charts
+        function initCharts() {
+            const chartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: { title: { display: true, text: 'Sample Mean' } },
+                    y: { title: { display: true, text: 'Frequency' } }
+                },
+                plugins: {
+                    legend: { display: false },
+                    title: { display: false }
+                }
+            };
+
+            uniformChart = new Chart(document.getElementById('uniformChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [{ data: [], backgroundColor: '#3498db' }] },
+                options: chartOptions
+            });
+
+            exponentialChart = new Chart(document.getElementById('exponentialChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [{ data: [], backgroundColor: '#e74c3c' }] },
+                options: chartOptions
+            });
+
+            binomialChart = new Chart(document.getElementById('binomialChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [{ data: [], backgroundColor: '#2ecc71' }] },
+                options: chartOptions
+            });
+
+            normalChart = new Chart(document.getElementById('normalChart'), {
+                type: 'bar',
+                data: { labels: [], datasets: [{ data: [], backgroundColor: '#f1c40f' }] },
+                options: chartOptions
+            });
+        }
+
+        // Random number generators
+        function uniformRandom() {
+            return Math.random(); // U(0,1)
+        }
+
+        function exponentialRandom(lambda = 1) {
+            return -Math.log(1 - Math.random()) / lambda; // Exponential with mean 1
+        }
+
+        function binomialRandom(n = 10, p = 0.5) {
+            let sum = 0;
+            for (let i = 0; i < n; i++) {
+                sum += Math.random() < p ? 1 : 0;
+            }
+            return sum; // Binomial(n=10, p=0.5)
+        }
+
+        function normalRandom() {
+            // Box-Muller transform for standard normal
+            const u1 = Math.random();
+            const u2 = Math.random();
+            return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2); // N(0,1)
+        }
+
+        // Generate sample means
+        function generateSampleMeans(distributionFunc, sampleSize, numSamples) {
+            const sampleMeans = [];
+            for (let i = 0; i < numSamples; i++) {
+                let sum = 0;
+                for (let j = 0; j < sampleSize; j++) {
+                    sum += distributionFunc();
+                }
+                sampleMeans.push(sum / sampleSize);
+            }
+            return sampleMeans;
+        }
+
+        // Create histogram data
+        function createHistogram(data, bins = 30) {
+            const min = Math.min(...data);
+            const max = Math.max(...data);
+            const binWidth = (max - min) / bins;
+            const labels = [];
+            const frequencies = Array(bins).fill(0);
+
+            for (let i = 0; i < bins; i++) {
+                labels.push((min + i * binWidth).toFixed(2));
+            }
+
+            data.forEach(value => {
+                const binIndex = Math.min(Math.floor((value - min) / binWidth), bins - 1);
+                frequencies[binIndex]++;
+            });
+
+            return { labels, frequencies };
+        }
+
+        // Update chart
+        function updateChart(chart, data) {
+            const hist = createHistogram(data);
+            chart.data.labels = hist.labels;
+            chart.data.datasets[0].data = hist.frequencies;
+            chart.update();
+        }
+
+        // Generate all plots
+        function generatePlots() {
+            const sampleSize = parseInt(document.getElementById('sampleSize').value);
+            const numSamples = parseInt(document.getElementById('numSamples').value);
+
+            if (sampleSize < 1 || numSamples < 1 || sampleSize > 1000 || numSamples > 10000) {
+                alert('Please enter valid values: Sample Size (1-1000), Number of Samples (1-10000)');
+                return;
+            }
+
+            // Generate sample means
+            const uniformMeans = generateSampleMeans(uniformRandom, sampleSize, numSamples);
+            const exponentialMeans = generateSampleMeans(exponentialRandom, sampleSize, numSamples);
+            const binomialMeans = generateSampleMeans(binomialRandom, sampleSize, numSamples);
+            const normalMeans = generateSampleMeans(normalRandom, sampleSize, numSamples);
+
+            // Update charts
+            updateChart(uniformChart, uniformMeans);
+            updateChart(exponentialChart, exponentialMeans);
+            updateChart(binomialChart, binomialMeans);
+            updateChart(normalChart, normalMeans);
+        }
+
+        // Initialize on load
+        window.onload = () => {
+            initCharts();
+            generatePlots(); // Initial plots with default values
+        };
+    </script>
+</body>
+</html>
