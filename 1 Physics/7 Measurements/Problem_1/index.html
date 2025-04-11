@@ -92,6 +92,36 @@
 <ul class="current">
 <li class="toctree-l2 current"><a class="reference internal current" href="#">Problem 1</a>
 <ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="#materials-used">Materials Used</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#procedure-summary">Procedure Summary</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#1-tabulated-data">1. Tabulated Data</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#2-calculations">2. Calculations</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#mean-period-bart">Mean Period \(\bar{T}\):</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#standard-deviation-sigma">Standard Deviation \(\sigma\):</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#uncertainty-in-mean-time-delta-t">Uncertainty in Mean Time \(\Delta T\):</a>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#3-calculation-of-g">3. Calculation of \(g\):</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#4-uncertainty-in-g">4. Uncertainty in \(g\):</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#5-final-results">5. Final Results:</a>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#6-discussion">6. Discussion</a>
+<ul>
+<li class="toctree-l4"><a class="reference internal" href="#comparison-with-standard-value">Comparison with Standard Value:</a>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="#sources-of-uncertainty">Sources of Uncertainty:</a>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -171,7 +201,125 @@
 </div>
 <div class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
 <div class="section" itemprop="articleBody">
-<h1 id="problem-1">Problem 1</h1>
+<hr/>
+<h1 id="measuring-earths-gravitational-acceleration-with-a-pendulum"><strong>Measuring Earth's Gravitational Acceleration with a Pendulum</strong></h1>
+<h2 id="materials-used"><strong>Materials Used</strong></h2>
+<ul>
+<li>
+<p>String length: 1.0 m  </p>
+</li>
+<li>
+<p>Weight: [e.g., metal keychain]  </p>
+</li>
+<li>
+<p>Stopwatch resolution: ±0.01 s  </p>
+</li>
+<li>
+<p>Ruler resolution: ±0.005 m  </p>
+</li>
+</ul>
+<hr/>
+<h2 id="procedure-summary"><strong>Procedure Summary</strong></h2>
+<ul>
+<li>Pendulum length <span class="arithmatex">\(L\)</span>: Measured from suspension point to center of mass of the bob  </li>
+<li>
+<p>Time for 10 full oscillations recorded 10 times  </p>
+</li>
+<li>
+<p>Period <span class="arithmatex">\(T\)</span> calculated as <span class="arithmatex">\(\frac{t_{10}}{10}\)</span> </p>
+</li>
+<li>
+<p>Acceleration due to gravity <span class="arithmatex">\(g\)</span> found using the formula:  </p>
+</li>
+</ul>
+<p><span class="arithmatex">\(g = \frac{4\pi^2 L}{T^2}\)</span></p>
+<hr/>
+<h2 id="1-tabulated-data"><strong>1. Tabulated Data</strong></h2>
+<pre><code class="language-markdown">| Trial | Time for 10 Oscillations $t_{10}$ (s) | Period $T = \frac{t_{10}}{10}$ (s) |
+|-------|-------------------------------------------|----------------------------------------|
+| 1     |                                           |                                        |
+| 2     |                                           |                                        |
+| 3     |                                           |                                        |
+| 4     |                                           |                                        |
+| 5     |                                           |                                        |
+| 6     |                                           |                                        |
+| 7     |                                           |                                        |
+| 8     |                                           |                                        |
+| 9     |                                           |                                        |
+| 10    |                                           |                                        |
+</code></pre>
+<p>Add your measured values in the second column, compute the period for each in the third column.</p>
+<hr/>
+<h2 id="2-calculations"><strong>2. Calculations</strong></h2>
+<h3 id="mean-period-bart"><strong>Mean Period <span class="arithmatex">\(\bar{T}\)</span>:</strong></h3>
+<p><span class="arithmatex">\(\bar{T} = \frac{1}{10} \sum_{i=1}^{10} T_i\)</span></p>
+<h3 id="standard-deviation-sigma"><strong>Standard Deviation <span class="arithmatex">\(\sigma\)</span>:</strong></h3>
+<p><span class="arithmatex">\(\sigma = \sqrt{\frac{1}{n-1} \sum_{i=1}^{n} (T_i - \bar{T})^2}\)</span></p>
+<h3 id="uncertainty-in-mean-time-delta-t"><strong>Uncertainty in Mean Time <span class="arithmatex">\(\Delta T\)</span>:</strong></h3>
+<p><span class="arithmatex">\(\Delta T = \frac{\sigma}{\sqrt{n}}\)</span></p>
+<hr/>
+<h2 id="3-calculation-of-g"><strong>3. Calculation of <span class="arithmatex">\(g\)</span>:</strong></h2>
+<p><span class="arithmatex">\(g = \frac{4\pi^2 L}{\bar{T}^2}\)</span></p>
+<hr/>
+<h2 id="4-uncertainty-in-g"><strong>4. Uncertainty in <span class="arithmatex">\(g\)</span>:</strong></h2>
+<p>Use propagation of uncertainties:</p>
+<p><span class="arithmatex">\(\left(\frac{\Delta g}{g}\right)^2 = \left(\frac{\Delta L}{L}\right)^2 + \left(2 \cdot \frac{\Delta T}{\bar{T}}\right)^2\)</span></p>
+<p>Then:</p>
+<p><span class="arithmatex">\(\Delta g = g \cdot \sqrt{ \left(\frac{\Delta L}{L}\right)^2 + \left(2 \cdot \frac{\Delta T}{\bar{T}}\right)^2 }\)</span></p>
+<hr/>
+<h2 id="5-final-results"><strong>5. Final Results:</strong></h2>
+<pre><code class="language-markdown">- Measured Pendulum Length $L$: ___ m ± ___ m
+
+- Mean Period $\bar{T}$: ___ s ± ___ s
+
+- Gravitational Acceleration $g$: ___ m/s² ± ___ m/s²
+
+- Standard Value of $g$: 9.80665 m/s²
+
+- Percent Error: ___%
+</code></pre>
+<hr/>
+<h2 id="6-discussion"><strong>6. Discussion</strong></h2>
+<h3 id="comparison-with-standard-value"><strong>Comparison with Standard Value:</strong></h3>
+<p>Compare your value of <span class="arithmatex">\(g\)</span> with 9.81 m/s². If there's a significant deviation, consider the following sources of error.</p>
+<h3 id="sources-of-uncertainty"><strong>Sources of Uncertainty:</strong></h3>
+<ol>
+<li><strong>Measurement of Length <span class="arithmatex">\(L\)</span>:</strong></li>
+<li>
+<p>Uncertainty due to the resolution of the ruler.</p>
+</li>
+<li>
+<p>Misalignment of the ruler or measuring from incorrect reference points.</p>
+</li>
+<li>
+<p><strong>Timing Variability:</strong></p>
+</li>
+<li>
+<p>Human reaction time when using a stopwatch (can be ±0.2s cumulatively over 10 oscillations).</p>
+</li>
+<li>
+<p>Multiple trials reduce this uncertainty.</p>
+</li>
+<li>
+<p><strong>Amplitude Assumption:</strong></p>
+</li>
+<li>
+<p>Pendulum motion should be small-angle (&lt;15°) to satisfy the simple harmonic motion approximation.</p>
+</li>
+<li>
+<p>Larger angles introduce systematic error in <span class="arithmatex">\(T\)</span>.</p>
+</li>
+<li>
+<p><strong>Other Experimental Limitations:</strong></p>
+</li>
+<li>
+<p>Air resistance and friction at the pivot.</p>
+</li>
+<li>
+<p>Non-rigid string or slight changes in the swing plane.</p>
+</li>
+</ol>
+<hr/>
 </div>
 </div><footer>
 <div aria-label="Footer Navigation" class="rst-footer-buttons" role="navigation">
