@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monte Carlo π Estimation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .controls {
+            margin: 20px;
+        }
+        .controls label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .controls input {
+            padding: 5px;
+            width: 80px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .controls button {
+            padding: 8px 16px;
+            margin: 0 5px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .controls button:hover {
+            background-color: #2980b9;
+        }
+        .plot-container {
+            text-align: center;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            margin: 10px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin: 10px 0;
+        }
+        .result {
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        .result span {
+            font-weight: bold;
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <h1>Estimating π with Monte Carlo Simulation</h1>
+    <div class="controls">
+        <label for="nPoints">Number of Points:</label>
+        <input type="number" id="nPoints" value="1000" min="10" max="100000">
+        <button onclick="simulatePi()">Generate</button>
+        <button onclick="resetSimulation()">Reset</button>
+    </div>
+    <div class="container">
+        <div class="plot-container" id="plotContainer">
+            <canvas id="piCanvas" width="400" height="400"></canvas>
+            <div class="result" id="piResult">π Estimate: <span>0.0000</span> (Error: <span>0.0000</span>)</div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('piCanvas');
+        const ctx = canvas.getContext('2d');
+        const width = canvas.width;
+        const height = canvas.height;
+        const scale = width / 2;
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const truePi = Math.PI;
+
+        // Draw base circle and square
+        function drawBase() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = 2;
+
+            // Draw square
+            ctx.strokeRect(0, 0, width, height);
+
+            // Draw circle
+            ctx.beginPath();
+            ctx.arc(centerX, centerY, scale, 0, 2 * Math.PI);
+            ctx.stroke();
+        }
+
+        // Simulate π estimation
+        function simulatePi() {
+            const nPoints = parseInt(document.getElementById('nPoints').value);
+            if (nPoints < 10 || nPoints > 100000) {
+                alert('Please enter a number of points between 10 and 100,000.');
+                return;
+            }
+
+            drawBase();
+            let insideCount = 0;
+
+            // Generate random points
+            for (let i = 0; i < nPoints; i++) {
+                const x = Math.random() * 2 - 1; // [-1, 1]
+                const y = Math.random() * 2 - 1; // [-1, 1]
+                const distance = Math.sqrt(x * x + y * y);
+                const isInside = distance <= 1;
+
+                const plotX = centerX + x * scale;
+                const plotY = centerY + y * scale;
+
+                ctx.beginPath();
+                ctx.arc(plotX, plotY, 1, 0, 2 * Math.PI);
+                ctx.fillStyle = isInside ? 'blue' : 'red';
+                ctx.fill();
+
+                if (isInside) insideCount++;
+            }
+
+            // Calculate π estimate and error
+            const piEstimate = (4 * insideCount) / nPoints;
+            const error = Math.abs(truePi - piEstimate);
+
+            // Update result
+            const resultDiv = document.getElementById('piResult');
+            resultDiv.innerHTML = `π Estimate: <span>${piEstimate.toFixed(4)}</span> (Error: <span>${error.toFixed(4)}</span>)`;
+
+            console.log(`N = ${nPoints}: Estimated π = ${piEstimate.toFixed(4)}, Error = ${error.toFixed(4)}`);
+        }
+
+        // Reset simulation
+        function resetSimulation() {
+            document.getElementById('nPoints').value = 1000;
+            drawBase();
+            const resultDiv = document.getElementById('piResult');
+            resultDiv.innerHTML = `π Estimate: <span>0.0000</span> (Error: <span>0.0000</span>)`;
+        }
+
+        // Initial setup
+        window.onload = () => {
+            drawBase();
+        };
+    </script>
+</body>
+</html>
