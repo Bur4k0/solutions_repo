@@ -88,6 +88,7 @@ for dist_name, population in populations.items():
 [Exploring the Central Limit Theorem](statistic.html)
 
 [Central Limit Theorem Simulation](Central_Limit_Theorem_Simulation.html)
+
 ---
 
 ### Results and Observations
