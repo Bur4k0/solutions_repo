@@ -99,6 +99,8 @@ $\Delta g = g \cdot \sqrt{ \left(\frac{\Delta L}{L}\right)^2 + \left(2 \cdot \fr
 
 [Simulation](deneme_2.html)
 
+[Simulation-2](deneme.html)
+
 ## **6. Discussion**
 
 ### **Comparison with Standard Value:**
