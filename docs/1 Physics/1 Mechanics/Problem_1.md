@@ -62,6 +62,8 @@ This model applies to:
 
 [Simulation](simulation.html)
 
+[Simulation 3D](new_simulation.html)
+
 ---
 
 This document provides a theoretical foundation, computational implementation, and practical insights into projectile motion.
