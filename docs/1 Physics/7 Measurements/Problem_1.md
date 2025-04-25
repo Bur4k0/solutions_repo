@@ -128,6 +128,7 @@ Since no specific data is provided, I’ll assume typical experimental values to
 
 [Pendulum Gravity Measurement Simulation](deneme_2.html)
 
+[Simulation](simulation.html)
 
 - **Recommendations**:
   - Use a metronome or automated release mechanism to reduce timing variability.
