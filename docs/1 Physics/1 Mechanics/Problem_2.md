@@ -39,6 +39,8 @@ Adding forcing introduces new parameters, such as the amplitude and frequency of
 
 [Simulation2](simulation2.html)
 
+[new simulation](problem2sim.html)
+
 ## Hints and Resources
 - For small angles, approximate $\sin\theta \approx \theta$ to simplify the differential equation.
 - Employ numerical techniques (e.g., Runge-Kutta methods) for exploring the dynamics beyond the small-angle approximation.
