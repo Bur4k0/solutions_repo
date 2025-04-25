@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pendulum Gravity Measurement Simulation</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.2/p5.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #f0f0f0;
+    }
+    canvas {
+      border: 1px solid #000;
+      margin-top: 20px;
+    }
+    .controls {
+      margin: 20px;
+      text-align: left;
+    }
+    .controls label {
+      display: inline-block;
+      width: 180px;
+    }
+    .controls input {
+      width: 100px;
+    }
+    button {
+      margin: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #results {
+      margin-top: 20px;
+      max-width: 600px;
+      text-align: left;
+      font-size: 14px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-top: 10px;
+    }
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h2>Pendulum Gravity Measurement Simulation</h2>
+  <div class="controls">
+    <label>Pendulum Length (L, meters):</label>
+    <input type="number" id="lengthInput" min="0.5" max="2" value="1" step="0.01">
+    <br>
+    <label>Number of Oscillations (N):</label>
+    <input type="number" id="oscillationsInput" min="1" max="20" value="10" step="1">
+    <br>
+    <button onclick="startSimulation()">Start Simulation</button>
+    <button onclick="resetSimulation()">Reset</button>
+  </div>
+  <div id="results"></div>
+  <script>
+    let theta, t;
+    let L = 1; // Pendulum length (m)
+    let g = 9.81; // True gravity for simulation (m/s^2)
+    let omega0 = Math.sqrt(g / L);
+    let theta0 = 0.1; // Initial angle (~5.7°)
+    const timingError = 0.05; // Human timing error (±0.05 s)
+    const rulerResolution = 0.001; // Ruler resolution (1 mm)
+
+    function setup() {
+      createCanvas(600, 400);
+      resetSimulation();
+      console.log("Setup complete: L =", L, "omega0 =", omega0);
+    }
+
+    function resetSimulation() {
+      theta = theta0;
+      t = 0;
+      document.getElementById("results").innerHTML = "";
+      document.getElementById("lengthInput").value = "1";
+      document.getElementById("oscillationsInput").value = "10";
+      updateParameters();
+      console.log("Simulation reset");
+    }
+
+    function updateParameters() {
+      L = parseFloat(document.getElementById("lengthInput").value);
+      let N = parseInt(document.getElementById("oscillationsInput").value);
+      if (isNaN(L) || L < 0.5 || L > 2) L = 1;
+      if (isNaN(N) || N < 1 || N > 20) N = 10;
+      omega0 = Math.sqrt(g / L);
+      console.log("Parameters updated: L =", L, "N =", N);
+      return N;
+    }
+
+    function simulateTrial(N) {
+      let truePeriod = 2 * Math.PI / omega0;
+      let trueTime = N * truePeriod;
+      // Gaussian-like noise: approximate with uniform for simplicity
+      let error = random(-timingError, timingError);
+      return trueTime + error;
+    }
+
+    function startSimulation() {
+      document.getElementById("results").innerHTML = "Running simulation...";
+      let N = updateParameters();
+      let times = [];
+
+      // Run 10 trials
+      for (let i = 0; i < 10; i++) {
+        times.push(simulateTrial(N));
+      }
+      console.log("Trial times:", times);
+
+      // Calculate results
+      let meanTime = times.reduce((sum, val) => sum + val, 0) / times.length;
+      let stdDev = Math.sqrt(times.reduce((sum, val) => sum + Math.pow(val - meanTime, 2), 0) / (times.length - 1));
+      let timeUncertainty = stdDev / Math.sqrt(times.length);
+      let period = meanTime / N;
+      let periodUncertainty = timeUncertainty / N;
+      let gCalc = 4 * Math.PI * Math.PI * L / (period * period);
+      let deltaL = rulerResolution / 2;
+      let relativeUncertainty = Math.sqrt(Math.pow(deltaL / L, 2) + Math.pow(2 * periodUncertainty / period, 2));
+      let gUncertainty = gCalc * relativeUncertainty;
+
+      // Generate table
+      let table = `
+        <table>
+          <tr><th>Parameter</th><th>Value</th><th>Uncertainty</th></tr>
+          <tr><td>Length (L)</td><td>${L.toFixed(3)} m</td><td>${deltaL.toFixed(4)} m</td></tr>
+          <tr><td>Time for ${N} Oscillations</td><td>[${times.map(t => t.toFixed(3)).join(", ")}] s</td><td>-</td></tr>
+          <tr><td>Mean Time (t̄)</td><td>${meanTime.toFixed(3)} s</td><td>${timeUncertainty.toFixed(3)} s</td></tr>
+          <tr><td>Period (T)</td><td>${period.toFixed(3)} s</td><td>${periodUncertainty.toFixed(3)} s</td></tr>
+          <tr><td>Gravitational Acceleration (g)</td><td>${gCalc.toFixed(3)} m/s²</td><td>${gUncertainty.toFixed(3)} m/s²</td></tr>
+        </table>
+      `;
+
+      // Uncertainty discussion
+      let percentError = Math.abs((gCalc - 9.81) / 9.81 * 100).toFixed(2);
+      let discussion = `
+        <h3>Uncertainty Analysis</h3>
+        <p><b>Comparison with Standard Value</b>: The calculated g = ${gCalc.toFixed(3)} ± ${gUncertainty.toFixed(3)} m/s² compares to the standard g = 9.81 m/s², with a ${percentError}% error. Discrepancies may stem from simulated timing variability.</p>
+        <p><b>Measurement Resolution (L)</b>: Ruler resolution of 1 mm gives δL = ${deltaL.toFixed(4)} m, contributing ${(deltaL / L * 100).toFixed(2)}% relative uncertainty to L. A caliper (0.1 mm) would improve precision.</p>
+        <p><b>Timing Variability</b>: Standard deviation of times (σ = ${stdDev.toFixed(3)} s) reflects human reaction time (±0.05 s). This yields a ${(periodUncertainty / period * 100).toFixed(2)}% uncertainty in T, amplified to ${(2 * periodUncertainty / period * 100).toFixed(2)}% in g due to g ∝ 1/T².</p>
+        <p><b>Assumptions and Limitations</b>:
+          <ul>
+            <li><b>Small Angles</b>: Assumes θ < 15°. Larger angles increase T, lowering g.</li>
+            <li><b>No Damping</b>: Ignores air resistance and friction, which may extend T in real setups.</li>
+            <li><b>Point Mass</b>: Assumes a point-mass bob. A distributed mass alters effective L.</li>
+          </ul>
+        </p>
+        <p><b>Recommendations</b>: Increase N (e.g., 20) to reduce timing uncertainty. Use precise length measurements and ensure small angles in real experiments.</p>
+      `;
+
+      document.getElementById("results").innerHTML = `<h3>Results</h3>${table}${discussion}`;
+      console.log("Results calculated: g =", gCalc, "±", gUncertainty);
+    }
+
+    function draw() {
+      background(255);
+      translate(width / 2, height / 4);
+
+      // Animate pendulum
+      t += 1 / 60; // 60 FPS
+      theta = theta0 * cos(omega0 * t);
+
+      // Draw pendulum
+      let x = 200 * sin(theta);
+      let y = 200 * cos(theta);
+      stroke(0);
+      line(0, 0, x, y);
+      fill(0, 0, 255);
+      ellipse(x, y, 20, 20);
+      fill(255, 0, 0);
+      ellipse(0, 0, 10, 10);
+    }
+  </script>
+</body>
+</html>
