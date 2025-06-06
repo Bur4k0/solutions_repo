@@ -116,11 +116,11 @@ Where:
 ( r ) is the distance from Earth's center to the payload.
 
 The acceleration of the payload is:
-$ mathbf{a} = -\frac{G M}{r^3} \mathbf{r} $
+$$ mathbf{a} = -\frac{G M}{r^3} \mathbf{r} $$
 Where ( \mathbf{r} ) is the position vector, and ( r = |\mathbf{r}| ).
 Types of Trajectories
 The trajectory type depends on the payload's specific energy (( \epsilon )) and specific angular momentum. The specific energy is given by:
-$ epsilon = \frac{v^2}{2} - \frac{G M}{r} $
+$$ epsilon = \frac{v^2}{2} - \frac{G M}{r} $$
 Where ( v ) is the payload's speed. The trajectory is:
 
 Elliptical (( \epsilon < 0 )): The payload follows a closed orbit (e.g., satellite orbit).
@@ -141,7 +141,7 @@ Escape: If the velocity exceeds the escape velocity (( v_e = \sqrt{\frac{2 G M}{
 
 Numerical Simulation
 To simulate the payload's trajectory, we solve the differential equations of motion using numerical integration. The equations in 2D Cartesian coordinates are:
-$ ddot{x} = -\frac{G M x}{(x^2 + y^2)^{3/2}}, \quad \ddot{y} = -\frac{G M y}{(x^2 + y^2)^{3/2}} $
+$$ ddot{x} = -\frac{G M x}{(x^2 + y^2)^{3/2}}, \quad \ddot{y} = -\frac{G M y}{(x^2 + y^2)^{3/2}} $$
 We use the SciPy library's solve_ivp to integrate these equations and Matplotlib to visualize the trajectories.
 Python Code
 Below is a Python script that simulates and visualizes the payload's trajectory for different initial conditions.
