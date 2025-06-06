@@ -119,15 +119,15 @@ The acceleration of the payload is:
 $$ mathbf{a} = -\frac{G M}{r^3} \mathbf{r} $$
 Where ( \mathbf{r} ) is the position vector, and ( r = |\mathbf{r}| ).
 Types of Trajectories
-The trajectory type depends on the payload's specific energy (( \epsilon )) and specific angular momentum. The specific energy is given by:
+The trajectory type depends on the payload's specific energy $ \epsilon $ and specific angular momentum. The specific energy is given by:
 $$ epsilon = \frac{v^2}{2} - \frac{G M}{r} $$
 Where ( v ) is the payload's speed. The trajectory is:
 
-Elliptical (( \epsilon < 0 )): The payload follows a closed orbit (e.g., satellite orbit).
-Parabolic (( \epsilon = 0 )): The payload escapes to infinity with zero residual speed (escape velocity).
-Hyperbolic (( \epsilon > 0 )): The payload escapes with excess speed.
+Elliptical $ \epsilon < 0 $: The payload follows a closed orbit (e.g., satellite orbit).
+Parabolic $ \epsilon = 0 $: The payload escapes to infinity with zero residual speed (escape velocity).
+Hyperbolic $ \epsilon > 0 $: The payload escapes with excess speed.
 
-The eccentricity (( e )) determines the shape:
+The eccentricity $ e $ determines the shape:
 
 ( e < 1 ): Elliptical orbit.
 ( e = 1 ): Parabolic trajectory.
@@ -135,9 +135,9 @@ The eccentricity (( e )) determines the shape:
 
 Orbital Scenarios
 
-Orbital Insertion: If the payload is released with a velocity close to the circular orbit velocity (( v_c = \sqrt{\frac{G M}{r}} )), it enters a stable orbit.
+Orbital Insertion: If the payload is released with a velocity close to the circular orbit velocity $ v_c = \sqrt{\frac{G M}{r}} $, it enters a stable orbit.
 Reentry: If the velocity is insufficient or directed toward Earth, the payload may reenter the atmosphere.
-Escape: If the velocity exceeds the escape velocity (( v_e = \sqrt{\frac{2 G M}{r}} )), the payload escapes Earth's gravity.
+Escape: If the velocity exceeds the escape velocity $ v_e = \sqrt{\frac{2 G M}{r}} $, the payload escapes Earth's gravity.
 
 Numerical Simulation
 To simulate the payload's trajectory, we solve the differential equations of motion using numerical integration. The equations in 2D Cartesian coordinates are:
@@ -189,7 +189,7 @@ def simulate_trajectory(h, v0, angle_deg, t_max=10000, label="Trajectory"):
     epsilon = v**2 / 2 - mu / r
     if np.mean(epsilon) < -1e-6:
         traj_type = "Elliptical"
-    elif np.abs(np.mean(epsilon)) < 1e-6:
+    elif np.abs(np.mean(epsilon$ < 1e-6:
         traj_type = "Parabolic"
     else:
         traj_type = "Hyperbolic"
@@ -204,8 +204,8 @@ plt.plot(np.cos(theta), np.sin(theta), 'k-', label="Earth")
 
 # Simulate different scenarios
 h = 200e3  # Altitude: 200 km
-v_circular = np.sqrt(mu / (R_earth + h))  # Circular orbit velocity
-v_escape = np.sqrt(2 * mu / (R_earth + h))  # Escape velocity
+v_circular = np.sqrt(mu / (R_earth + h$  # Circular orbit velocity
+v_escape = np.sqrt(2 * mu / (R_earth + h$  # Escape velocity
 
 # Case 1: Circular orbit
 simulate_trajectory(h, v_circular, 90, label="Circular Orbit")
@@ -228,9 +228,9 @@ plt.show()
 Results and Analysis
 The script simulates three scenarios starting from an altitude of 200 km:
 
-Circular Orbit: Velocity equals the circular orbit velocity (( v_c \approx 7.79 , \text{km/s} )). The trajectory is elliptical (nearly circular), indicating a stable orbit.
+Circular Orbit: Velocity equals the circular orbit velocity $ v_c \approx 7.79 , \text{km/s} $. The trajectory is elliptical (nearly circular), indicating a stable orbit.
 Suborbital (Reentry): Velocity is 80% of the circular velocity. The trajectory is elliptical but intersects Earth's surface, suggesting atmospheric reentry.
-Escape Trajectory: Velocity is 110% of the escape velocity (( v_e \approx 11.01 , \text{km/s} )). The trajectory is hyperbolic, indicating the payload escapes Earth's gravity.
+Escape Trajectory: Velocity is 110% of the escape velocity $ v_e \approx 11.01 , \text{km/s} $. The trajectory is hyperbolic, indicating the payload escapes Earth's gravity.
 
 Graphical Representation
 The plot shows:
